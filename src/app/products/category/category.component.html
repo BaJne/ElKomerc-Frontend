@@ -1,0 +1,15 @@
+<div class="layout">
+  <div class="leftPanel">
+    <div *ngFor="let category of categories">
+      <div class="category-item">
+        <span>{{ category.naziv | uppercase }} </span>
+      </div>
+      <div class="sub-category-item" *ngFor="let sub of category.podKategorija" >
+          <span>{{ sub.naziv | uppercase }} </span>
+      </div>
+    </div>
+  </div>
+  <div class="datasheet">
+    datasheet
+  </div>
+</div>

@@ -1,0 +1,201 @@
+a:hover {
+  text-decoration: none;
+}
+
+.mycontainer {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#hamburgerBanner {
+  display: none;
+}
+
+/* Banner */
+.headBanner {
+  background-color: #333;
+  color: white;
+}
+.headBanner #right{
+  align-self: right;
+}
+.headBanner a {
+  text-decoration: none;
+  color: white;
+  padding: 8px;
+}
+.headContent {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+/* Glavni meni */
+.primary-container {
+  background-color: #376AD5;
+  padding: 8px;
+  /* box-sizing: border-box; */
+}
+.myMenu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+  /* Logo */
+.inlineContent {
+  display: flex;
+  align-items:center;
+}
+.logo-text {
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 25px;
+  font-style: italic;
+  font-weight: 700;
+  text-decoration: none;
+}
+.logo-img {
+  max-width:50px;
+}
+
+  /* Buttons */
+.menu-buttons ul{
+  list-style: none;
+}
+.menu-buttons ul li{
+  float: left;
+  padding: 10px;
+  margin-right: 10px ;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 13px;
+  transition-property: 'background' ;
+  transition-duration: 500ms;
+}
+.menu-buttons ul li:hover {
+  background-color: #3494E9;
+}
+.menu-buttons a{
+  color:white;
+}
+  /* Search */
+#search input {
+  max-width: 450px;
+  padding: 5px;
+  border-radius: 5px 0px 0px 5px;
+  border: 1px solid #333;
+  color: #333;
+}
+#search button{
+  padding: 5px;
+  border: 0px;
+  width: 35px;
+  border-radius: 0px 5px 5px 0px;
+  transition-property: 'background' ;
+  transition-duration: 500ms;
+  transition-timing-function: ease-out;
+  margin-right: 10px;
+}
+#search button:hover {
+  background-color: #FCD857;
+}
+  /* Shopping chart */
+#shoppingChart {
+  background-color: #333 ;
+  border: 2px solid #2D2B55;
+  border-radius: 5px;
+  color:white;
+  padding: 8px;
+  transition-property: 'background';
+  transition-duration:500ms;
+}
+#shoppingChart:hover {
+  background-color: #2D2B55;
+}
+
+@media screen and (max-width: 990px) and (min-width: 532px) {
+  #template {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 5px;
+    /* max-width: 500px; */
+    margin-left: 10px;
+    flex:1;
+  }
+  /* #logo{
+    flex:1;
+  } */
+
+  .menu-buttons {
+    grid-column: 1/span 2;
+    grid-row-start: 2;
+    align-self: flex-end;
+  }
+  #search button{
+    margin-right: 0px;
+  }
+  #search input {
+    margin: 0px;
+    width: 85%;
+  }
+  .logo-text {
+    font-size: 15px;
+  }
+  .logo-img {
+    max-width:35px;
+  }
+}
+@media screen and (max-width: 730px) {
+  .logo-text{
+    display: none;
+  }
+}
+
+@media screen and (max-width: 532px) {
+  .myMenu {
+    flex-direction: column;
+  }
+  #template {
+    margin-top: 5px ;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .logo-text{
+    display: block;
+    font-size: 15px
+  }
+  .logo-img {
+    max-width:35px;
+  }
+  .menu-buttons ul li {
+    padding: 3px;
+  }
+
+  #shoppingChart {
+    width: 100%;
+  }
+  #search {
+    width: 100%;
+  }
+  #search input {
+    width: 85%;
+    margin-left: 0px !important;
+  }
+  #search button {
+    margin-right: 0px;
+  }
+  #right {
+    display: none;
+  }
+  #hamburgerBanner {
+    margin-right: 10px ;
+    display: block;
+    cursor: pointer;
+  }
+  #hamburgerBanner:hover {
+    color: #FCD857;
+  }
+}

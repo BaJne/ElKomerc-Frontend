@@ -1,0 +1,30 @@
+.layout {
+  display: flex;
+  height: 100%;
+}
+
+.leftPanel {
+  min-width: 200px;
+  height: 100%;
+}
+.datasheet {
+  flex: 1;
+  background-color: #e3e3e3;
+  height: 100%;
+}
+
+.category-item {
+  border:1px solid white;
+  color: white;
+  background-color: #333;
+  padding: 10px 10px 10px 20px;
+  font: size 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition-property: all;
+  transition-duration: 500ms;
+}
+.category-item:hover {
+  background-color: #DBDBDB;
+  color: #333;
+}
