@@ -1,0 +1,64 @@
+<div class="layout">
+  <div class="leftPanel" >
+    <!-- <div *ngFor="let category of categories">
+      <app-panel header="{{ category.naziv | uppercase }}">
+          <div *ngFor="let sub of category.podKategorija">
+            <div>{{ sub.naziv | uppercase }} </div>
+          </div>
+      </app-panel>
+    </div> -->
+    <app-accordition (search)="onCategorySwitch($event)">
+      <div *ngFor="let category of categories">
+        <app-accordition-tab header="{{category.naziv}}">
+          <div *ngFor="let sub of category.podKategorija">
+            <div>{{ sub.naziv | uppercase }} </div>
+          </div>
+        </app-accordition-tab>
+      </div>
+    </app-accordition>
+
+  </div>
+  <div class="datasheet">
+      <div>
+          <!-- parametri radi lakse pretrage  -->
+        <div class="header-search">
+          <div id="byPrice">
+            <span>Sortiraj po:</span>
+            <select name="sortOption" id="select">
+              <option value="priceDec">Ceni Opadajuce</option>
+              <option value="priceDec">Ceni Rastuce</option>
+              <option value="priceDec">Proizvodjacu</option>
+            </select>
+          </div>
+          <div id="nextPages">
+            <button><i class="fas fa-angle-left"></i></button>
+            <button><i class="fas fa-angle-right"></i></button>
+          </div>
+          <div id="layout">
+              <!-- <span><img src="assets/img/vertical-grid-layout.png"></span> -->
+              <span><i class="fas fa-th"></i></span>
+              <span><i class="fas fa-bars"></i></span>
+          </div>
+
+        </div>
+
+        <!-- Proizvodi koji se pretrazuju -->
+
+        <div class="items" *ngFor="let artical of articals" >
+
+          <div class="item">
+            <span id="name">{{ artical.proizvod.naziv }}</span>
+            <div id="picture">
+              <img  src="assets/img/logo.png" alt="">
+            </div>
+            <hr>
+            <span id="price">Cena: {{ artical.cena }} RSD</span>
+            <button>Stavite u korpu <i class="fas fa-shopping-cart"></i></button>
+          </div>
+
+        </div>
+
+
+      </div>
+  </div>
+</div>

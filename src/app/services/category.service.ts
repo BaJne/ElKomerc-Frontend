@@ -112,8 +112,6 @@ export class CategoryService {
   }
 
   getCategories() {
-    console.log(this.loadedCategory);
-
     return this.loadedCategory.slice(0);
   }
 }

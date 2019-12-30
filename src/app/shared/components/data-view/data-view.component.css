@@ -1,0 +1,43 @@
+.items{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin: auto;
+  max-width: 1300px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+.item {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 5px;
+  border: 1px solid #e3e3e3;
+  margin: 0.75rem;
+  padding: 5px;
+}
+.item hr{
+  margin: 3px;
+}
+.item #name{
+  background-color: #e3e3e3;
+  color: #333;
+  font-weight: bold;
+  padding: 5px;
+}
+#picture img {
+  min-height: 200px;
+}
+#price{
+  margin-bottom: 7px;
+}
+.item button {
+  border:0px;
+  padding: 10px;
+  background-color: #007BFF;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+}
+.item button:hover {
+  background-color: #376AD5;
+}

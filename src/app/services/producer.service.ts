@@ -1,15 +1,8 @@
-
-export interface Producer {
-  naziv: string,
-  link: string;
-  opis: string;
-  slika: string;
-}
+import { Producer } from './../models/producer.model';
 
 export class ProducerService {
   loadedProducers: Producer[];
-
-  ngOnInit(): void {
+  constructor() {
     this.loadedProducers = [
       {
         naziv: 'Aling-conel d.o.o',

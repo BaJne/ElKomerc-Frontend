@@ -1,0 +1,13 @@
+<div #div [ngStyle]="style" >
+  <header class="panel-header" [ngClass]="{'panel-inactive': !isToggled,'panel-active':isToggled}" >
+    <span>{{ header}}</span>
+    <a (click)="onToggle()">
+      <i [ngClass]="{'fa-plus': !isToggled,'fa-minus':isToggled}" class="fas"></i>
+    </a>
+  </header>
+  <ng-template [ngIf]="isToggled" >
+    <div class="panel-content">
+      <ng-content #name></ng-content>
+    </div>
+  </ng-template>
+</div>

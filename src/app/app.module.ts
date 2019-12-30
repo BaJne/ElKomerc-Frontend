@@ -1,3 +1,6 @@
+import { AccorditionTabComponent } from './shared/components/accordition/accordition-tab/accordition-tab.component';
+import { AccorditionComponent } from './shared/components/accordition/accordition.component';
+import { PanelComponent } from './shared/components/panel/panel.component';
 import { CategoryService } from './services/category.service';
 import { ProductService } from './services/products.service';
 import { ProducerService } from './services/producer.service';
@@ -7,10 +10,12 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { ProductsComponent } from './products/products.component';
-import { CategoryComponent } from './products/category/category.component';
-import { ProductComponent } from './products/product/product.component';
+
+import { ProductComponent } from './ui/products/product/product.component';
+import { CategoryComponent } from './ui/products/category/category.component';
+import { ProductsComponent } from './ui/products/products.component';
+import { HeaderComponent } from './ui/header/header.component';
+import { DataViewComponent } from './shared/components/data-view/data-view.component';
 
 @NgModule({
   declarations: [
@@ -18,14 +23,22 @@ import { ProductComponent } from './products/product/product.component';
     HeaderComponent,
     ProductsComponent,
     CategoryComponent,
-    ProductComponent
+    ProductComponent,
+    PanelComponent,
+    AccorditionComponent,
+    AccorditionTabComponent,
+    DataViewComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule
   ],
-  providers: [ProducerService, ProductService, CategoryService],
+  providers: [
+    ProducerService,
+    ProductService,
+    CategoryService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

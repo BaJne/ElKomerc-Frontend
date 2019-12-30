@@ -1,6 +1,6 @@
-import { ProductComponent } from './products/product/product.component';
-import { CategoryComponent } from './products/category/category.component';
-import { ProductsComponent } from './products/products.component';
+import { ProductComponent } from './ui/products/product/product.component';
+import { CategoryComponent } from './ui/products/category/category.component';
+import { ProductsComponent } from './ui/products/products.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 

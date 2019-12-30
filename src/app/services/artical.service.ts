@@ -1,30 +1,15 @@
-import { Producer, ProducerService } from './producer.service';
-import { Product, ProductService } from './products.service';
-import { Injectable, OnInit } from '@angular/core';
+import { Artical } from './../models/artical.model';
+import { ProducerService } from './producer.service';
+import { ProductService } from './products.service';
+import { Injectable } from '@angular/core';
 
 
-interface Artical {
-  sifraArtikla: string;
-  proizvod: Product;
-  cena: number;
-  slika: string; // Potrebno je promeniti na sliku
-  dodatneSlike: string[];
-  prodato: number;
-  program: {
-    proizvodjac: Producer;
-    naziv: string;
-  };
-  popust: number;
-  bonusPoints: number;
-}
 
-Injectable({providedIn: 'root'});
-export class ArticalService implements OnInit {
+@Injectable({providedIn: 'root'})
+export class ArticalService {
   loadedArtical: Artical[];
 
-  constructor(private productService: ProductService, private producerService: ProducerService) {}
-
-  ngOnInit() {
+  constructor(private productService: ProductService, private producerService: ProducerService) {
     this.loadedArtical = [
       {
         sifraArtikla: '100',
@@ -57,4 +42,8 @@ export class ArticalService implements OnInit {
     ];
   }
 
+  getSomeArticals(s: string) {
+    // Potrebno je dohvatiti odgovarajuce artikle
+    return this.loadedArtical.slice(0);
+  }
 }

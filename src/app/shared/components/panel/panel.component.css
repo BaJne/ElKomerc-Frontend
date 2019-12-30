@@ -1,0 +1,35 @@
+.panel-header {
+  /* background-color: #17A2B8; */
+  border: 1px solid #333;
+
+  padding: 10px 15px 10px 15px;
+  font-size: 14px;
+  font-weight:bolder;
+  color: #333;
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.panel-header a{
+  color: #333;
+  cursor: pointer;
+}
+.panel-header a:hover{
+  color: #F8F9FA;
+}
+.panel-active {
+  background-color: #85CCD8;
+  border-radius: 3px 3px 0px 0px;
+}
+.panel-inactive {
+  background-color: #FFC107;
+  border-radius: 3px;
+}
+
+
+.panel-content {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  padding: 15px;
+  border:1px solid #333;
+  border-top: 0px;
+}

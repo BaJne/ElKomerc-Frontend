@@ -1,0 +1,25 @@
+<div class="socket">
+
+  <div *ngFor="let m of messages">
+    <div class="card" [ngClass]="{
+          'info': m.type === 3,
+          'success': m.type === 2,
+          'warn': m.type === 1,
+          'err': m.type === 0 }">
+
+      <i (click)="closeBox(m)" class="fas fa-times exit"></i>
+      <div class="content">
+        <i [ngClass]="{
+          'fa-info-circle': m.type === 3,
+          'fa-check-circle': m.type === 2,
+          'fa-exclamation-circle': m.type === 1,
+          'fa-times-circle': m.type === 0
+          }" class="fas fa-2x"></i>
+        <p> {{m.text}}</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

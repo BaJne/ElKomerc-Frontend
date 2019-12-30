@@ -1,0 +1,64 @@
+.layout {
+  display: flex;
+  height: 100%;
+  background: #333;
+}
+
+.leftPanel {
+  min-width: 200px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.category-item {
+  color: white;
+  background-color: #333;
+  padding: 10px 10px 10px 20px;
+  font: size 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition-property: all;
+  transition-duration: 500ms;
+}
+.category-item:hover {
+  background-color: #DBDBDB;
+  color: #333;
+}
+.sub-category-item {
+  padding: 10px;
+  border: 1px solid #333;
+  border-top: 0px;
+}
+
+
+/* ----------------------- datasheet -------------------------- */
+
+.datasheet {
+  flex: 1;
+  background-color: white;
+  height: 100%;
+}
+
+.header-search {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 20px;
+  background-color: #e3e3e3;
+  border-radius: 10px;
+  margin: 5px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.header-search #layout>span {
+  background: white;
+  padding: 5px;
+  border: 1px solid black;
+  margin-right: 3px;
+}
+.header-search #layout>span>img {
+  width: 20px;
+  height: 20px;
+}
+

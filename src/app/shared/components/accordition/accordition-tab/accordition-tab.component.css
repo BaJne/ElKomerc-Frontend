@@ -1,0 +1,38 @@
+.header-card {
+  padding: 10px 15px 10px 15px;
+  border-top: 1px solid #9A9DA0;
+  color: white;
+  cursor: pointer;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bolder;
+  transition-property: all;
+  transition-duration: 500ms;
+}
+.header-card:hover {
+  background-color: #e3e3e3;
+  color: #333;
+}
+.header-card span {
+  margin-left: 3px;
+}
+
+.active {
+  background-color: #e3e3e3;
+  color: #333;
+}
+.inactive {
+ background-color: #333333;
+ color:#e3e3e3;
+}
+
+/* Content */
+
+.content {
+  background-color: white;
+  padding: 10px 5px 10px 5px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-size:10px;
+  text-align: center;
+  gap: 5px;
+}

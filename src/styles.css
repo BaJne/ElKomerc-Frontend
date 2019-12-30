@@ -4,6 +4,10 @@
   margin: 0px;
 }
 
+:host {
+  --primary-color: #007BFF;
+  --secondary-color: #333;
+}
 
 html, body{
   min-height: 100%;
