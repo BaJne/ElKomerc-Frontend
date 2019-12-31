@@ -9,11 +9,12 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-  artical: Artical;
+  artical: Artical = null;
   constructor(private articalService: ArticalService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     const l = this.route.snapshot.queryParams['loaded'];
+    console.log(l);
     if (l === 'true') {
       this.artical = this.articalService.articalToDisplay;
     } else {

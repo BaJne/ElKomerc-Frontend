@@ -3,8 +3,8 @@
     <div class="item">
       <span id="name">{{ artical.proizvod.naziv }}</span>
       <div (mouseenter)="onHoverIn(e,m)" (mouseleave)="onHoverOut(e,m)" id="picture">
-        <div #e class="hideBox hidden">
-          <button (click)="onProductDetail(artical)" class="showProd">Pogledaj detalje</button>
+        <div #e class="hideBox hidden" (click)="onProductDetail(artical)">
+          <span id="details">Pogledaj detalje</span>
         </div>
         <img #m src="assets/img/logo.png" alt="">
       </div>

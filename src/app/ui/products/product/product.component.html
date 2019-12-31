@@ -1,6 +1,8 @@
-<div>
-<h3>{{artical.proizvod.naziv}}</h3>
-<p>Proizvodjac: <a target="_blank" href="artical.program.proizvodjac.link">{{artical.program.proizvodjac.naziv}}</a> </p>
-<p>Cena: {{artical.cena}}</p>
-<p>Bonus: {{artical.bonusPoints}}</p>
+<div *ngIf="artical" >
+  <h3>{{artical.proizvod.naziv}}</h3>
+  <p>Proizvodjac: <a target="_blank" href="artical.program.proizvodjac.link">{{artical.program.proizvodjac.naziv}}</a> </p>
+  <p>Cena: {{artical.cena}}</p>
+  <p>Bonus: {{artical.bonusPoints}}</p>
 </div>
+
+<p *ngIf="!artical" > Proizvod nije pronadjen!</p>

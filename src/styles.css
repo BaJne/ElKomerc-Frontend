@@ -1,4 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Fonts */
+/*
+@font-face {
+  font-family: Source Sans Pro;
+  src: url(assets/font/) format("opentype");
+} */
+
+
 * {
   padding: 0px;
   margin: 0px;
