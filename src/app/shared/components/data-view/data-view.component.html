@@ -4,7 +4,7 @@
       <span id="name">{{ artical.proizvod.naziv }}</span>
       <div (mouseenter)="onHoverIn(e,m)" (mouseleave)="onHoverOut(e,m)" id="picture">
         <div #e class="hideBox hidden">
-          <button class="showProd">Pogledaj detalje</button>
+          <button (click)="onProductDetail()" class="showProd">Pogledaj detalje</button>
         </div>
         <img #m src="assets/img/logo.png" alt="">
       </div>
