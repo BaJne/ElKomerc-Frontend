@@ -44,19 +44,7 @@
 
         <!-- Proizvodi koji se pretrazuju -->
 
-        <div class="items" *ngFor="let artical of articals" >
-
-          <div class="item">
-            <span id="name">{{ artical.proizvod.naziv }}</span>
-            <div id="picture">
-              <img  src="assets/img/logo.png" alt="">
-            </div>
-            <hr>
-            <span id="price">Cena: {{ artical.cena }} RSD</span>
-            <button>Stavite u korpu <i class="fas fa-shopping-cart"></i></button>
-          </div>
-
-        </div>
+        <app-data-view [value]="articals"></app-data-view>
 
 
       </div>

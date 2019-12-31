@@ -4,31 +4,85 @@
   max-width: 1300px;
   padding: 10px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap:0px;
+  grid-template-columns: repeat(4, auto);
 }
-.item {
+
+@media screen and (max-width: 1290px) and (min-width: 550px) {
+  .items {
+    grid-template-columns: auto auto;
+  }
+}
+@media screen and (max-width: 550px) {
+  .items {
+    grid-template-columns: auto;
+  }
+}
+/* za ng-content :host /deep/ */
+ .item {
   display: flex;
   flex-direction: column;
   text-align: center;
   gap: 5px;
   border: 1px solid #e3e3e3;
-  margin: 0.75rem;
-  padding: 5px;
+  min-width: 250px;
 }
 .item hr{
   margin: 3px;
 }
 .item #name{
-  background-color: #e3e3e3;
+  background-color: #F4F4F4;
   color: #333;
   font-weight: bold;
   padding: 5px;
+  margin: 0.75rem;
+}
+#picture {
+  cursor: pointer;
+  position: relative;
 }
 #picture img {
   min-height: 200px;
 }
+.hideBox {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background: rgb(51,51,51,0.2);
+  align-items: center;
+  justify-content: center;
+}
+.hideBox .showProd {
+  background-color: #333;
+  color:white;
+  border:2px solid white;
+  padding: 10px;
+  font-size:10px;
+}
+.hideBox .showProd:hover {
+  background-color: #e3e3e3;
+  color:#333;
+  border-color: #333;
+}
+.img-hover {
+  filter: blur(2px);
+}
+/* #picture button {
+  position: absolute;
+  top:70px;
+  left: 55px;
+  background-color: #333;
+  color:white;
+  border:1px solid white;
+  padding: 15px 20px 15px 20px;
+} */
+
+/* Price, dugme za kupovinu itd. */
 #price{
-  margin-bottom: 7px;
+  margin-top:15px;
+  margin-bottom: 15px;
 }
 .item button {
   border:0px;

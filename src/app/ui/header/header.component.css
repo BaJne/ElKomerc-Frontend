@@ -116,7 +116,7 @@ a:hover {
   background-color: #2D2B55;
 }
 
-@media screen and (max-width: 990px) and (min-width: 532px) {
+@media screen and (max-width: 1000px) and (min-width: 532px) {
   #template {
     display: grid;
     grid-template-columns: 2fr 1fr;

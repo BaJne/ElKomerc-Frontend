@@ -1,1 +1,16 @@
-<p>data-view works!</p>
+<div class="items" >
+  <div *ngFor="let artical of value" >
+    <div class="item">
+      <span id="name">{{ artical.proizvod.naziv }}</span>
+      <div (mouseenter)="onHoverIn(e,m)" (mouseleave)="onHoverOut(e,m)" id="picture">
+        <div #e class="hideBox hidden">
+          <button class="showProd">Pogledaj detalje</button>
+        </div>
+        <img #m src="assets/img/logo.png" alt="">
+      </div>
+      <hr>
+      <span id="price">Cena: {{ artical.cena }} RSD</span>
+      <button>Stavite u korpu <i class="fas fa-shopping-cart"></i></button>
+    </div>
+  </div>
+</div>

@@ -19,8 +19,6 @@ export class CategoryComponent implements OnInit {
   ngOnInit() {
     this.categories = this.categoryService.getCategories();
     this.articals = this.articalService.getSomeArticals('all');
-    console.log(this.articals);
-
   }
 
   // Test
