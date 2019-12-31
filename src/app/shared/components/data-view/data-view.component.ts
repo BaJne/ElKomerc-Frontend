@@ -1,6 +1,7 @@
+import { ArticalService } from './../../../services/artical.service';
 import { Artical } from './../../../models/artical.model';
 import { Component, OnInit, Input, Renderer2 } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-data-view',
@@ -10,7 +11,10 @@ import { Router } from '@angular/router';
 export class DataViewComponent implements OnInit {
   @Input() value: Artical[];
 
-  constructor(private render: Renderer2, private router: Router) { }
+  constructor(private articalService: ArticalService,
+              private render: Renderer2,
+              private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
   }
@@ -22,9 +26,11 @@ export class DataViewComponent implements OnInit {
     this.render.addClass(e, 'hidden');
     this.render.removeClass(m, 'img-hover');
   }
-  onProductDetail() {
 
-    this.router.navigate(['../product/'])
+  onProductDetail(el: Artical) {
+    this.articalService.setArticalToDisplay(el);
+    this.router.navigate(['../product/', el.sifraArtikla],
+                {relativeTo: this.route, queryParams: {loaded: true}});
   }
 
 

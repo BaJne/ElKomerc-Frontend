@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 @Injectable({providedIn: 'root'})
 export class ArticalService {
   loadedArtical: Artical[];
+  articalToDisplay: Artical = null;
 
   constructor(private productService: ProductService, private producerService: ProducerService) {
     this.loadedArtical = [
@@ -294,8 +295,14 @@ export class ArticalService {
     ];
   }
 
+  // Metoda kojom se prosledjuje artikal radi ispisivanja njegovih detalja
+  setArticalToDisplay(a: Artical) {
+    this.articalToDisplay = a;
+  }
   getSomeArticals(s: string) {
     // Potrebno je dohvatiti odgovarajuce artikle
     return this.loadedArtical.slice(0);
   }
+
+
 }
