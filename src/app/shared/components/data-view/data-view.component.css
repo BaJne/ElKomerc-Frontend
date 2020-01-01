@@ -1,10 +1,10 @@
 .items{
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: 'Source Sans Pro';
   margin: auto;
   max-width: 1300px;
-  padding: 10px;
+  padding: 12px;
   display: grid;
-  gap:0px;
+  gap:2px;
   grid-template-columns: repeat(4, auto);
 }
 
@@ -27,15 +27,13 @@
   border: 1px solid #e3e3e3;
   min-width: 250px;
 }
-.item hr{
-  margin: 3px;
-}
 .item #name{
   background-color: #F4F4F4;
   color: #333;
   font-weight: bold;
-  padding: 5px;
-  margin: 0.75rem;
+  padding: 5px 15px 5px 15px;
+  margin: 2px;
+  text-align: left;
 }
 #picture {
   cursor: pointer;
@@ -43,6 +41,7 @@
 }
 #picture img {
   min-height: 200px;
+  padding: 5px;
 }
 .hideBox {
   display: flex;
@@ -61,23 +60,30 @@
   font-family: source sans pro,sans-serif;
 }
 
-.img-hover {
-  filter: blur(2px);
-}
-
 /* Price, dugme za kupovinu itd. */
 #price{
-  margin-top:15px;
-  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 15px 5px 15px;
 }
 .item button {
   border:0px;
   padding: 10px;
   background-color: #007BFF;
   color: white;
-  font-size: 12px;
+  font-size: 14px;
+  font-family: 'Source Sans Pro';
   font-weight: 700;
 }
 .item button:hover {
   background-color: #376AD5;
+}
+
+
+/* Star */
+.hoverStar {
+  color: #FFC107;
+}
+.addedStar {
+  color: #FFC107;
 }

@@ -1,12 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* Fonts */
-/*
-@font-face {
-  font-family: Source Sans Pro;
-  src: url(assets/font/) format("opentype");
-} */
-
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
 * {
   padding: 0px;
@@ -16,10 +12,12 @@
 :host {
   --primary-color: #007BFF;
   --secondary-color: #333;
+  --btn-hover: #0052AA;
 }
 
 html, body{
   min-height: 100%;
+  font-family: 'Roboto', 'Verdana', sans-serif !important;
 }
 
 /* Utility classes */

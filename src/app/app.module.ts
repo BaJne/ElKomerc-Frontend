@@ -1,3 +1,4 @@
+import { ToastComponent } from './shared/components/toast/toast.component';
 import { AccorditionTabComponent } from './shared/components/accordition/accordition-tab/accordition-tab.component';
 import { AccorditionComponent } from './shared/components/accordition/accordition.component';
 import { PanelComponent } from './shared/components/panel/panel.component';
@@ -27,7 +28,8 @@ import { DataViewComponent } from './shared/components/data-view/data-view.compo
     PanelComponent,
     AccorditionComponent,
     AccorditionTabComponent,
-    DataViewComponent
+    DataViewComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,
