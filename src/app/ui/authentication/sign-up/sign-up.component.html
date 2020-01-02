@@ -1,0 +1,143 @@
+<div class="title labelLink" style="flex-direction: row;align-items: center;">
+  <a routerLink="['']">
+    <i class="fas fa-users fa-5x"></i>
+  </a>
+  <div style="flex: 1;text-align: center;">
+    <button style="margin-right: 10px;" class="btn-registrationType"
+      [ngClass]="{'active3': isPerson}" (click)="onChangeForm(true)"  >
+      <i style="vertical-align: middle; margin-right: 5px;"
+        class="fas fa-user fa-2x"></i>
+      Fizicko lice
+    </button>
+    <button class="btn-registrationType " [ngClass]="{'active3': !isPerson}"
+      (click)="onChangeForm(false)" >
+      <i style="vertical-align: middle; margin-right: 5px;"
+        class="fas fa-user-tie fa-2x"></i>
+      Pravno lice
+    </button>
+  </div>
+</div>
+<form class="myForm" (ngSubmit)="onSubmit()"  [formGroup]="signUpForm">
+
+  <label for="email">Email</label>
+  <input type="email"
+        id="email"
+        formControlName="email"
+        email
+        required
+  >
+
+  <div class="formGroup">
+    <div class="labelLink">
+      <label for="password">Lozinka</label>
+      <input type="password"
+            formControlName="password"
+            id="password"
+            required
+            minlength=6
+      >
+    </div>
+    <div class="labelLink">
+      <label for="repeat-password">Ponovite lozinku</label>
+      <input type="password"
+            id="repeat-password"
+            formControlName="repeatPassword"
+            required
+      >
+    </div>
+  </div>
+
+  <div class="formGroup" *ngIf="isPerson" formGroupName="person">
+    <div class="labelLink">
+      <label for="name">Ime</label>
+      <input type="text"
+            id="name"
+            formControlName="name"
+      >
+    </div>
+    <div class="labelLink">
+      <label for="last-name">Prezime</label>
+      <input type="text"
+            id="last-name"
+            formControlName="lastName"
+      >
+    </div>
+  </div>
+  <div class="formGroup" *ngIf="!isPerson" formGroupName="company">
+    <div class="labelLink">
+      <label for="company-name">Naziv</label>
+      <input type="text"
+            id="company-name"
+            formControlName="name"
+      >
+    </div>
+    <div class="labelLink">
+      <label for="bank-account">Ziro racun</label>
+      <input type="text"
+            id="bank-account"
+            formControlName="bankAccount"
+      >
+    </div>
+  </div>
+  <div class="formGroup">
+    <div class="labelLink">
+      <label for="address">Adresa</label>
+      <input type="text"
+            id="address"
+            formControlName="address"
+            required
+      >
+    </div>
+    <div class="labelLink">
+      <label for="town">Grad</label>
+      <input type="text"
+            id="town"
+            formControlName="city"
+            required
+      >
+    </div>
+  </div>
+  <div class="formGroup">
+
+    <div class="formGroup">
+      <div class="labelLink">
+        <label for="phone">Telefon</label>
+        <input type="number"
+              id="phone"
+              formControlName="phone"
+        >
+      </div>
+      <div class="labelLink">
+        <label for="zip">Post</label>
+        <input type="number"
+              id="zip"
+              formControlName="post"
+              required
+        >
+      </div>
+    </div>
+    <div *ngIf="isPerson" formGroupName="person">
+      <div class="labelLink">
+        <label for="date">Datum rodjenja</label>
+        <input type="date"
+              id="date"
+              formControlName="birthDate"
+        >
+      </div>
+    </div>
+    <div *ngIf="!isPerson" formGroupName="company">
+      <div class="labelLink">
+        <label for="pib">Pib</label>
+        <input type="number"
+              id="pib"
+              formControlName="pib"
+        >
+      </div>
+    </div>
+  </div>
+  <!-- Prepraviti disabled -->
+  <button class="btn" [disabled]="!signUpForm.valid" type="submit">Registruj se</button>
+  <hr>
+  <button routerLink="../sign-in" class="switchForms">Prijavi se</button>
+
+</form>

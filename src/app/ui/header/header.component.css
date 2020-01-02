@@ -34,7 +34,7 @@ a:hover {
 /* Glavni meni */
 .primary-container {
   /* #376AD5 */
-  background-color: #007BFF ;
+  background-color: #337ab7 ;
   padding: 8px;
   /* box-sizing: border-box; */
 }
@@ -76,7 +76,7 @@ a:hover {
   transition-duration: 500ms;
 }
 .menu-buttons ul li:hover {
-  background-color: #0052AA;
+  background-color: #23527C;
 }
 .menu-buttons a{
   color:white;
@@ -105,8 +105,8 @@ a:hover {
 }
   /* Shopping chart */
 #shoppingChart {
-  background-color: #0052AA ;
-  border: 2px solid #2D2B55;
+  background-color: #23527C;
+  border: 2px solid #333;
   border-radius: 5px;
   color:white;
   padding: 8px;
@@ -114,7 +114,7 @@ a:hover {
   transition-duration:500ms;
 }
 #shoppingChart:hover {
-  background-color: #2D2B55;
+  background-color: #333;
 }
 
 @media screen and (max-width: 1000px) and (min-width: 532px) {

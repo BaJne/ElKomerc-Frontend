@@ -8,7 +8,7 @@ import { ProducerService } from './services/producer.service';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 
@@ -17,6 +17,12 @@ import { CategoryComponent } from './ui/products/category/category.component';
 import { ProductsComponent } from './ui/products/products.component';
 import { HeaderComponent } from './ui/header/header.component';
 import { DataViewComponent } from './shared/components/data-view/data-view.component';
+import { AuthenticationComponent } from './ui/authentication/authentication.component';
+import { SignInComponent } from './ui/authentication/sign-in/sign-in.component';
+import { SignUpComponent } from './ui/authentication/sign-up/sign-up.component';
+import { RecoverComponent } from './ui/authentication/recover/recover.component';
+import { TooltipDirective } from './shared/directives/tooltip.directive';
+import { TooltipComponent } from './shared/components/tooltip/tooltip.component';
 
 @NgModule({
   declarations: [
@@ -29,11 +35,18 @@ import { DataViewComponent } from './shared/components/data-view/data-view.compo
     AccorditionComponent,
     AccorditionTabComponent,
     DataViewComponent,
-    ToastComponent
+    ToastComponent,
+    AuthenticationComponent,
+    SignInComponent,
+    SignUpComponent,
+    RecoverComponent,
+    TooltipDirective,
+    TooltipComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule
   ],
   providers: [

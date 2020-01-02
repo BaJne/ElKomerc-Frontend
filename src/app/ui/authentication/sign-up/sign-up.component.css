@@ -1,0 +1,35 @@
+.formGroup {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: 15px;
+}
+.labelLink {
+  display: flex;
+  flex-direction: column;
+}
+button[type='submit'] {
+  margin-bottom: 0px !important;
+}
+.btn-registrationType {
+  border: 2px solid white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 5px;
+  background-color: transparent;
+}
+
+.btn-registrationType:hover {
+  color: #337ab7;
+  border-color: #337ab7;
+}
+.active3 {
+  color: #337ab7;
+  border-color: #337ab7;
+}
+input.ng-invalid.ng-touched {
+  border-left: 5px solid red;
+}
+input.ng-touched {
+  border-left: 5px solid rgb(113, 255, 113);
+}

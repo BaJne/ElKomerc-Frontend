@@ -1,0 +1,32 @@
+<div class="title">
+  <a routerLink="['']">
+    <i class="fas fa-users fa-5x"></i>
+  </a>
+</div>
+<form class="myForm" #myForm="ngForm">
+  <label for="email">Email</label>
+  <input type="email" appTooltip="m" text="Morate uneti ispravnu email adresu"
+        id="email"
+        name="email"
+        ngModel
+        required
+        email
+  >
+  <ng-template #m>
+    <app-tooltip></app-tooltip>
+  </ng-template>
+  <label for="password">Lozinka</label>
+  <input type="password"
+        name="password"
+        id="password"
+        ngModel
+        required
+        password
+        minlength=6
+  >
+  <button type="submit">Prijavi se</button>
+  <a>Zaboravio si lozinku ?</a>
+  <hr>
+  <button routerLink="../sign-up" class="switchForms">Napravi nalog</button>
+
+</form>

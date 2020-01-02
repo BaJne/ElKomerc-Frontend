@@ -8,7 +8,12 @@
   grid-template-columns: repeat(4, auto);
 }
 
-@media screen and (max-width: 1290px) and (min-width: 550px) {
+@media screen and (max-width: 1290px) and (min-width: 995px) {
+  .items {
+    grid-template-columns: auto auto auto;
+  }
+}
+@media screen and (max-width: 995px) and (min-width: 550px) {
   .items {
     grid-template-columns: auto auto;
   }
@@ -69,14 +74,14 @@
 .item button {
   border:0px;
   padding: 10px;
-  background-color: #007BFF;
+  background-color: #337ab7;
   color: white;
   font-size: 14px;
   font-family: 'Source Sans Pro';
   font-weight: 700;
 }
 .item button:hover {
-  background-color: #376AD5;
+  background-color: #23527C;
 }
 
 
