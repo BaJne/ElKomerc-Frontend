@@ -11,7 +11,7 @@
   position:relative;
   background: url('../../../assets/img/1.jpg') no-repeat center center/cover;
   height: 100vh;
-  width: 50%;
+  width: 60%;
 }
 #loginSide > div {
   position: absolute;
@@ -40,14 +40,34 @@
   /* height: min-content; */
   padding: 20px;
   margin: 10px 20px;
-  width: 50%;
+  width: 35%;
+  min-width: 550px;
+  font-size: 12px;
 }
+@media screen and (max-width: 1080px){
+  #loginSide{
+    display: none;
+  }
+  .rightSide{
+    margin: 20px auto;
+    min-width: 300px;
+    width: 100%;
+    max-width: 550px;
+  }
+  .wrapper {
+    min-height: 100vh;
+    max-height: 100%;
+  }
+}
+
+:host /deep/ .title {
+  margin-bottom: 15px;
+}
+
+/* ---------------- FORMA -------------------- */
 :host /deep/ .myForm {
   display: flex;
   flex-direction: column;
-}
-:host /deep/ .title {
-  margin-bottom: 15px;
 }
 :host /deep/ .myForm a{
   text-align: center;
@@ -57,7 +77,8 @@
   padding: 8px;
   border: 0px;
   border-left: 5px solid white;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  font-size: 12px !important;
 }
 :host /deep/ .myForm button[type='submit'] {
   padding: 8px;
@@ -68,6 +89,7 @@
   background-color: #337ab7;
   margin-top: 10px;
   margin-bottom: 25px;
+  margin-left: 0px !important;
 }
 :host /deep/ .myForm button[type='submit']:hover {
   background-color: #23527C;
@@ -86,4 +108,36 @@
 :host /deep/ .switchForms:hover {
   color: #337ab7;
   border-color: #337ab7;
+}
+
+/* Error klasa */
+
+:host /deep/ .error {
+  padding: 2px 8px;
+  color: rgb(255, 145, 145);
+  text-align: left;
+}
+:host /deep/ ::placeholder {
+  color: rgb(82, 81, 81);
+}
+:host /deep/ .myForm input[type = 'email']:focus,
+:host /deep/ .myForm input[type = 'password']:focus
+{
+  border-color: #007BFF;
+}
+:host /deep/ .ui-inputtext:enabled:hover:not(.ui-state-error){
+  border-color: white;
+}
+:host /deep/ .ui-inputtext:enabled:active:not(.ui-state-error){
+  border-color: #007BFF;
+}
+
+:host /deep/ .ui-inputtext:enabled:focus:not(.ui-state-error) {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.0rem #007ad9;
+  border-color: #007BFF;
+}
+:host /deep/ p-inputmask .ng-dirty.ng-invalid > .ui-inputtext {
+  border: 0px !important;
 }

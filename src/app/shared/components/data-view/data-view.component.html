@@ -1,6 +1,7 @@
 <div class="items" >
   <div *ngFor="let artical of value" >
-    <div class="item">
+
+    <div class="item" style="flex: 1;">
       <div (mouseenter)="onHoverIn(e,m)" (mouseleave)="onHoverOut(e,m)" id="picture">
         <div #e class="hideBox hidden" (click)="onProductDetail(artical)">
           <span id="details">Pogledaj detalje</span>
@@ -10,19 +11,20 @@
       <span id="name">{{ artical.proizvod.naziv }}</span>
       <div id="price">
         <span>Cena: {{ artical.cena }} RSD</span>
-        
+
         <div #star>
-          <i *ngFor="let i of [1, 2, 3, 4, 5]" 
-              id="star_{{i}}" 
-              class="fas fa-star"
-              (mouseenter)="onStarHover(star, i)"
-              (mouseleave)="onStarOut(star, i)"
-              (click)="onStarClick(star, i)"></i>
+          <i *ngFor="let i of [1, 2, 3, 4, 5]"
+          id="star_{{i}}"
+          class="fas fa-star"
+          (mouseenter)="onStarHover(star, i)"
+          (mouseleave)="onStarOut(star, i)"
+          (click)="onStarClick(star, i)"></i>
         </div>
       </div>
       <button (click)="addToCart(artical)">
         Stavite u korpu <i class="fas fa-shopping-cart"></i>
       </button>
     </div>
+
   </div>
 </div>

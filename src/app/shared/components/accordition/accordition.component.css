@@ -2,3 +2,102 @@
   display: flex;
   flex-direction: column;
 }
+
+/* Group layout */
+:host /deep/ .header-card.group {
+  border-top: 1px solid #9A9DA0;
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bolder;
+}
+:host /deep/  .header-card.group {
+  background-color: #333333;
+  color:#e3e3e3;
+}
+:host /deep/  .header-card.group:hover {
+  background-color: #23527c;
+  color:white;
+}
+:host /deep/ .header-card.group span {
+  margin-left: 3px;
+}
+
+:host /deep/ .header-card.group.active {
+  background-color: #23527c;
+  color:white;
+}
+
+/* List layout */
+:host /deep/ .header-card.list {
+  border-bottom: 1px solid #2b3642;
+  color: rgb(179, 203, 221);;
+  font-family: 'Roboto', Verdana, Tahoma, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+}
+:host /deep/  .header-card.list {
+  background-color: #242d37;
+}
+:host /deep/  .header-card.list:hover {
+  background-color: #23527c;
+  color:white;
+}
+:host /deep/ .header-card.list span {
+  margin-left: 3px;
+}
+
+:host /deep/ .header-card.list.active {
+  background-color: #23527c;
+  color:white;
+}
+
+/* Content */
+
+/* Group style */
+:host /deep/ .content.group {
+  background-color: white;
+  /* padding: 10px 5px 10px 5px; */
+  display: grid;
+  grid-template-columns: 1fr;
+  font-size:12px;
+  /* text-align: center; */
+  /* gap: 5px; */
+}
+
+/* For list style */
+:host /deep/ .content.list div {
+  padding: 10px;
+  background-color: #52a9f5;
+}
+:host /deep/ .content.list div > a {
+  color: #23527c;
+  text-decoration: none;
+}
+
+:host /deep/ .content.list ul {
+  font-family: 'Source Sans Pro';
+  font-size: 16px;
+  list-style: none;
+  box-sizing: border-box;
+  margin: 0px;
+}
+:host /deep/ .content.list ul > a {
+  text-decoration: none;
+  color: #0b91d2;
+}
+:host /deep/ .content.list ul > a:hover {
+  color: #0b91d2;
+}
+:host /deep/ .content.list ul > a > li {
+  padding: 10px 10px 10px 34px;
+  background-color: #293141;
+  font-family: 'Source Sans Pro';
+  font-size: 14px;
+  transition: all 300ms;
+  /* #1873ae */
+}
+:host /deep/ .content.list ul > a:hover > li {
+  background-color: #242d37;
+  padding-left: 40px;
+}
+

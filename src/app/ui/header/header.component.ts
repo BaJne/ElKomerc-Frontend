@@ -1,5 +1,8 @@
-import { UserService } from './../../services/user.Service';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { ArticalService } from './../../services/artical.service';
+import { AuthService } from './../../services/auth.service';
+import { User } from './../../models/user.model';
+import { Component, OnInit, OnDestroy, Renderer2, ElementRef } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -7,15 +10,21 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  @Output() users = new EventEmitter<string>();
-  name = 'Branislav';
+  user: User = null;
 
-  constructor(public userService: UserService) { }
-
-  onAddNewUser() { this.users.emit(this.name); }
+  constructor(
+    private authService: AuthService,
+    public articalService: ArticalService,
+    private render: Renderer2
+  ) {}
 
   ngOnInit() {
+    // this.user = this.authService.logedUser;
+    this.authService.user.subscribe(data => {
+      this.user = data;
+    });
   }
-
-
+  logout() {
+    this.authService.logout();
+  }
 }

@@ -3,26 +3,41 @@
     <div id="left"></div>
     <div id="right">
       <i class="fas fa-phone"></i>
-      0658058009
-      <a href="#">
-        <i class="fas fa-address-book"></i>
-        My Account
-        <i class="fas fa-arrow-down"></i>
-      </a>
-      <a href="#">
+      &nbsp; 0658058009
+      <a routerLink='/products/all'>
         <i class="fas fa-heart"></i>
         Wish List(#num)
       </a>
-      <a href="#">
+      <a routerLink='/products/all'>
         <i class="fas fa-shopping-cart"></i>
         Shopping Cart
       </a>
+
+      <a [routerLink]= "['/login','sign-in']" *ngIf="!user" >
+        <i class="fas fa-sign-in-alt"></i>
+        Prijavi se
+      </a>
+      <app-drop-down *ngIf="user" [text]="user.email"  >
+        <ul>
+          <li>
+            <a>Pregled naloga</a>
+          </li>
+          <li>
+            <a>Podesavanje</a>
+          </li>
+          <li>
+            <a (click)= "logout()">Odjavi se</a>
+          </li>
+        </ul>
+      </app-drop-down>
     </div>
+    <!-- Toggler for responsive layout -->
     <div id="hamburgerBanner">
         <i class="fas fa-lightbulb"></i>
     </div>
   </div>
 </div>
+<!-- Second layer -->
 <div class="primary-container">
   <nav class="myMenu mycontainer">
 
@@ -64,7 +79,7 @@
 
       <button id="shoppingChart">
         <i class="fas fa-shopping-bag"></i>
-        {{userService.addedArticals.length}} stavki - ${{ userService.toPay }}
+        {{articalService.addedArticals.length}} stavki - ${{ articalService.toPay }}
       </button>
     </div>
 

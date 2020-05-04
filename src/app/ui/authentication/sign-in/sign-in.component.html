@@ -1,32 +1,61 @@
-<div class="title">
+<div class="title" >
   <a routerLink="['']">
     <i class="fas fa-users fa-5x"></i>
   </a>
+  <span *ngIf="isLoading" style="text-align: center;" >
+    <app-spinner></app-spinner>
+  </span>
 </div>
-<form class="myForm" #myForm="ngForm">
+<form class="myForm" #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
   <label for="email">Email</label>
-  <input type="email" appTooltip="m" text="Morate uneti ispravnu email adresu"
-        id="email"
-        name="email"
-        ngModel
-        required
-        email
+  <input type="email"
+    id="email"
+    name="email"
+    ngModel
+    #email="ngModel"
+    required
+    email
   >
-  <ng-template #m>
-    <app-tooltip></app-tooltip>
-  </ng-template>
+  <div *ngIf="email.invalid && email.touched"
+  class="error">
+
+    <div *ngIf="email.errors.required">
+      Morate popuniti ovo polje
+    </div>
+    <div *ngIf="email.errors.email">
+      Morate uneti validnu email adresu.
+    </div>
+
+  </div>
   <label for="password">Lozinka</label>
   <input type="password"
         name="password"
         id="password"
         ngModel
+        #pass="ngModel"
         required
-        password
         minlength=6
   >
-  <button type="submit">Prijavi se</button>
+  <div *ngIf="pass.invalid && pass.touched" class="error">
+
+      <div *ngIf="pass.errors.required">
+        Morate popuniti ovo polje.
+      </div>
+
+  </div>
+
+  <button type="submit"> Prijavi se </button>
+  <div class="error" style="text-align: center;" *ngIf="errorMessage && !isLoading">
+    <div>
+      <ul style="list-style: none;">
+        <li *ngFor="let item of errorMessage" > {{ item }}</li>
+      </ul>
+    </div>
+  </div>
   <a>Zaboravio si lozinku ?</a>
   <hr>
-  <button routerLink="../sign-up" class="switchForms">Napravi nalog</button>
+  <button routerLink="../sign-up" class="switchForms">
+    Napravi nalog
+  </button>
 
 </form>

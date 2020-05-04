@@ -1,7 +1,7 @@
-<div #div [ngStyle]="style" >
-  <header class="panel-header" [ngClass]="{'panel-inactive': !isToggled,'panel-active':isToggled}" >
+<div #div [ngStyle]="divStyle" >
+  <header [ngStyle]="headerStyle" class="panel-header" [ngClass]="{'panel-inactive': !isToggled,'panel-active':isToggled}" >
     <span>{{ header}}</span>
-    <a (click)="onToggle()">
+    <a (click)="onToggle()" *ngIf="togglable" >
       <i [ngClass]="{'fa-plus': !isToggled,'fa-minus':isToggled}" class="fas"></i>
     </a>
   </header>

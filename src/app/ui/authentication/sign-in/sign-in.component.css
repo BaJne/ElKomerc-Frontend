@@ -1,0 +1,10 @@
+input.ng-invalid.ng-touched {
+  border-left-color: red;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 20px;
+}

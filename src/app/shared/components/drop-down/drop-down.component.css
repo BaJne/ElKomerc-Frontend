@@ -1,0 +1,44 @@
+:host /deep/ ul{
+  list-style-type: none;
+}
+
+/* Drop down */
+.drop-down {
+  display: inline-block;
+  background-color: #337ab7;
+  padding: 5px;
+  height: 100%;
+  position: relative;
+}
+/* Modifikovanje izgleda na prelazak misa */
+.drop-down:hover {
+  cursor: pointer;
+}
+.drop-down:hover .drop-down-box {
+  display: block;
+}
+/* Ovrada div kontejnera koji se pojavljuje */
+.drop-down-box {
+  display: none;
+  position: absolute;
+  top:100%;
+  transform: translateX(-5px);
+  z-index: 1;
+  background-color: #333;
+  padding: 5px 0px 0px 0px;
+  width: 100%;
+  min-width: 120px;
+  height: min-content;
+}
+:host /deep/ .drop-down-box li {
+  padding: 5px;
+}
+:host /deep/ .drop-down-box li a {
+  color: white !important;
+}
+:host /deep/ ul li a:hover{
+  color: white !important;
+}
+:host /deep/ .drop-down-box li:hover{
+  background-color: #23527c;
+}

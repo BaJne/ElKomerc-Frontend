@@ -1,0 +1,15 @@
+<div class="log" [ngClass]="{'error-log': status !== 200, 'success-log': status === 200}"  >
+    <i style="margin-right: 5px;" class="fas" [ngClass]="{'fa-check-circle': status === 200, 'fa-times-circle': status !== 200}"></i>
+    <span *ngIf="status === 400" >
+      Aktivacioni link više nije aktivan. Molimo pokušajte ponovo.
+      <a routerLink="/login/sign-in">Prijavite se!</a>
+    </span>
+    <span *ngIf="status === 200" >
+      Uspešno ste aktivirali vaš nalog.&nbsp;&nbsp;
+      <a routerLink="/login/sign-in">Prijavite se!</a>
+    </span>
+    <span *ngIf="status === 404" >
+      Stranica nije pronađena. &nbsp;&nbsp;
+      <a routerLink="/login/sign-in">Vrati se nazad.</a>
+    </span>
+</div>

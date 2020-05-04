@@ -1,8 +1,10 @@
-import { EventEmitter, ElementRef } from '@angular/core';
+import { EventEmitter, ElementRef, Injectable } from '@angular/core';
 
+@Injectable()
 export class AccorditionService {
   toggled: EventEmitter<number>;
   search: EventEmitter<string>;
+  appearance: string = null;
   old: number;
 
   constructor() {

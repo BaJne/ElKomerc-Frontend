@@ -7,12 +7,14 @@
 * {
   padding: 0px;
   margin: 0px;
+  box-sizing: border-box;
 }
 
-:host {
+:host /deep/ {
   --primary-color: #007BFF;
-  --secondary-color: #333;
+  --secondary-color: #06203a;
   --btn-hover: #0052AA;
+  --blend: #f6f6f6;
 }
 
 html, body{
@@ -20,8 +22,127 @@ html, body{
   font-family: 'Roboto', 'Verdana', sans-serif !important;
 }
 
+a {
+  text-decoration: none;
+}
+
 /* Utility classes */
 
 .mar-5  { margin-top: 5px; }
 .mar-10 { margin-top: 10px; }
 .mar-15 { margin-top: 15px; }
+
+/* buttons */
+.bttn{
+  border: 0px;
+  padding: 8px 10px;
+  font-size: 14px;
+  font-family: 'Roboto';
+  color: white;
+  transition: all 0.4s;
+}
+.bttn-primary{
+  background-color: #0078de;
+}
+.bttn-primary:hover {
+  background-color: #0052AA;
+}
+.bttn-secondary{
+  background-color: #f6f6f6;
+  color: #333;
+}
+.bttn-secondary:hover{
+  background-color: #dfdfdf;
+}
+.bttn-adding {
+  background-color: #57d692;
+}
+.bttn-adding:hover {
+  background-color: #44aa74;
+}
+
+/* Forme */
+.inline-layout{
+  display: flex;
+  align-items: center;
+}
+.inline-layout .sb {
+  justify-content: space-between;
+}
+.column-layout{
+  display: flex;
+  flex-direction: column;
+}
+.form-grid{
+  display: grid;
+  grid-template-columns: auto 1fr;
+  row-gap: 5px;
+  column-gap: 8px;
+  align-items: center;
+  align-content: center;
+}
+/* labele */
+.myForm label{
+  padding: 0.492rem 0px;
+}
+/* Text input */
+.myForm input[type = 'text']{
+  font-size: 14px;
+  color: #333;
+  background: white;
+  padding: 0.492rem;
+  border: 1px solid #a6a6a6;
+  transition: all 0.3s;
+}
+.myForm input[type = 'text']:focus{
+  border-color: #007BFF;
+}
+/* Select input */
+.myForm input[type = 'select']{
+  font-size: 14px;
+  color: #333;
+  background: white;
+  padding: 0.492rem;
+  border: 1px solid #a6a6a6;
+  transition: all 0.3s;
+}
+.myForm input[type = 'text']:focus{
+  border-color: #007BFF;
+}
+/* Cekbox */
+.myForm input[type = 'checkbox']{
+  -webkit-appearance: none;
+  border: 1px solid #a6a6a6;
+  margin: 0px !important;
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+	display: inline-block;
+	position: relative;
+}
+.myForm input[type = 'checkbox']:checked {
+  background-color: #2196F3;
+	border-color: #2196F3;
+	color: white;
+}
+.myForm input[type = 'checkbox']:checked:after {
+	content:"✓";
+	font-size: 14px;
+	position: absolute;
+  top: -1px;
+	left: 4px;
+	color: white;
+}
+
+/* Submit button */
+.myForm button[type = 'submit']{
+  padding: 8px 10px;
+  background-color: #0078de;
+  border: 0px;
+  color:white;
+  transition: all 0.4s;
+  margin-left: 1rem;
+}
+.myForm button[type = 'submit']:hover {
+  background-color: #0052AA;
+}

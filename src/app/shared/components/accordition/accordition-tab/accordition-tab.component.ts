@@ -9,25 +9,34 @@ import { Component, OnInit, Input, ElementRef } from '@angular/core';
 export class AccorditionTabComponent implements OnInit {
   private static idd = 0;
   id: number;
+  appearance: string;
+  isToggled: boolean;
 
   @Input() header: string;
-  isToggled: boolean;
+  @Input() togglable = true;
 
   constructor(private a: AccorditionService) {}
 
   ngOnInit() {
     this.isToggled = false;
+    this.appearance = this.a.appearance;
     this.id = AccorditionTabComponent.idd++;
-    this.a.toggled.subscribe((e: number) => {
-      if (e === this.id) {
-        this.isToggled = false;
-      }
-    });
+
+    if (this.togglable) {
+      this.a.toggled.subscribe((e: number) => {
+        if (e === this.id) {
+          this.isToggled = false;
+        }
+      });
+    }
   }
+
   onToggle() {
     if (!this.isToggled) {
       this.a.signal(this.id, this.header);
     }
-    this.isToggled = !this.isToggled;
+    if (this.togglable) {
+      this.isToggled = !this.isToggled;
+    }
   }
 }

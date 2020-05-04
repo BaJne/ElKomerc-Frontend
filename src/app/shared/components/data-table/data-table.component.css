@@ -1,0 +1,92 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+/* Search div */
+#dataView {
+  max-width: max-content;
+  padding: 5px;
+}
+.paginator {
+  background-color: #242d37;
+  padding: 10px;
+  font-family: 'Roboto', Verdana;
+}
+.paginator input{
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px;
+}
+
+.bottomPaginator {
+  font-size: 13px;
+}
+.bottomPaginator span {
+  color: white;
+  margin: 0px 20px;
+}
+#select {
+  min-width: 35px;
+  font-size: 13px;
+}
+#changePage > i {
+  color: white;
+  cursor: pointer;
+  padding: 2px;
+}
+.disabledI {
+  color: #3e4b58 !important;
+  pointer-events: none;
+}
+
+/* Content Div */
+/* #content {
+} */
+/* Table */
+table {
+  border-collapse: collapse;
+  font-family: 'Roboto', Verdana;
+  width: 100%;
+}
+table td,
+table th {
+  padding: 10px;
+  margin: 0px;
+}
+table td {
+  border: 1px solid #e3e3e3;
+  font-size: 14px;
+}
+table th {
+  font-size: 13px;
+  border: 1px solid #0078de;
+  border-right-color: white;
+  background-color: #0078de;
+  color: white;
+  text-align: center;
+}
+table th:last-child {
+  border-right-color: #0078de;
+}
+
+th > span > i {
+  font-size: 10px;
+}
+
+/* Strelice za sortiranje */
+
+.point {
+  cursor: pointer;
+}
+
+.hiddenTH {
+  opacity: 0;
+}
+.shownTH {
+  opacity: 1;
+}
+
+.noneVisible {
+  display: none;
+}

@@ -1,0 +1,88 @@
+<div id="dataView">
+  <div class="paginator">
+    <input #s type="text" placeholder="Pretrazite tabelu..."  (keyup)= "update()">
+  </div>
+  <!-- Sadrzaj tabela -->
+  <div id="content">
+    <table cellpadding="0">
+      <tr>
+        <th *ngFor="let hItem of header;let i = index">
+          <span
+            [ngClass] = "{'point': hItem.sort !== 'none'}"
+            (click) = "sort(i, hItem.sort, icon)"
+          >
+            {{hItem.name}}
+          </span>
+          <span style="margin-left: 5px;">
+            <i #icon class="fas fa-sort" [ngClass]="{noneVisible : hItem.sort === 'none'}" ></i>
+          </span>
+        </th>
+      </tr>
+      <!-- <ng-container  *ngTemplateOutlet="body"></ng-container> -->
+      <tr *ngFor="let item of dataToDisplay" >
+        <td *ngFor="let name of names">
+
+          <!-- Obican prikaz kolone -->
+          <span *ngIf="name.style === undefined" >
+            {{item[name]}}
+          </span>
+
+          <!-- Specifican prikaz kolone -->
+          <div *ngIf="name.style !== undefined" [ngSwitch] = "name.style">
+
+            <span *ngSwitchCase="0">
+              {{item[name.columnName]}}
+            </span>
+            <span *ngSwitchCase="1" style="text-align: center;">
+              {{item[name.columnName]['length']}}
+            </span>
+            <span style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px" *ngSwitchCase="2">      <!-- Potrebno testiranje -->
+              <div *ngFor="let sub of item[name.columnName]">
+                <span [innerHTML] = "parse(sub, name.content)">
+                </span>
+              </div>
+            </span>
+
+          </div>
+        </td>
+      </tr>
+      <tr *ngIf="dataToDisplay.length === 0" >
+        <td [attr.colSpan] = "header.length">
+          Nema podataka za prikazivanje
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="paginator bottomPaginator">
+    <span style="margin: 1px;">
+      Stavki po stranici
+    </span>
+    <select #select name="selectItemPerPage" id="select" (change)="update()">
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="20">20</option>
+    </select>
+    <span>
+      {{(currentPage - 1) *selectValue + 1}}
+      -
+      {{
+      ((currentPage-1)*selectValue + +selectValue >= elLength) ?
+        elLength : +(currentPage - 1)*selectValue + +selectValue
+      }}
+       od
+      {{elLength}}
+    </span>
+    <div style="display: inline-flex; gap: 8px;" id="changePage">
+      <i class="fas fa-step-backward" [ngClass]="{'disabledI': currentPage===1}"
+        (click)="firstPage()" ></i>
+      <i class="fas fa-chevron-left" [ngClass]="{'disabledI': currentPage === 1}"
+        (click)="changePage(false)"></i>
+      <i class="fas fa-chevron-right"
+       [ngClass]="{'disabledI': ((currentPage-1)*selectValue + +selectValue >= elLength)}"
+       (click)="changePage(true)"></i>
+      <i class="fas fa-step-forward"
+       [ngClass]="{'disabledI': ((currentPage-1)*selectValue + +selectValue >= elLength)}"
+       (click)="lastPage()" ></i>
+    </div>
+  </div>
+</div>

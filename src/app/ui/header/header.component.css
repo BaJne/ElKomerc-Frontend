@@ -23,8 +23,51 @@ a:hover {
 .headBanner a {
   text-decoration: none;
   color: white;
-  padding: 8px;
+  padding: 5px;
 }
+.headBanner #right a:hover {
+  color: #62aef0;
+}
+/* Ikonice dizajn */
+.headBanner #right a i {
+  transition: 300ms;
+  margin-right: 3px;
+}
+/* .headBanner #right a i {
+  display: inline-block;
+  border-radius: 60px;
+  box-shadow: 0px 0px 2px #888;
+  padding: 0.5em 0.6em;
+  position: relative;
+}
+
+.headBanner #right a:nth-child(2) i{
+  background: linear-gradient(45deg, #ff0057, #e64a19)
+}
+.headBanner #right a:nth-child(3) i{
+  background: linear-gradient(45deg, #89ff00, #00bcd4)
+}
+.headBanner #right a:nth-child(4) i{
+  background: linear-gradient(45deg, #e91e63, #5d02ff)
+}*/
+.headBanner #right a:nth-child(2):hover i{
+  /* transform: scale(1.2); */
+  text-shadow: 0px 0px 5px #ff0057;
+  color: #ff0057;
+}
+.headBanner #right a:nth-child(3):hover i{
+  /* transform: scale(1.2); */
+  text-shadow: 0px 0px 5px #FCD857;
+  color: #FCD857;
+}
+.headBanner #right a:nth-child(4):hover i{
+  /* transform: scale(1.2); */
+  text-shadow: 0px 0px 5px #5496fa;
+  color: #5496fa;
+}
+
+/* Kraj dizajna ikonica */
+
 .headContent {
   display: flex;
   justify-content: space-between;
@@ -105,7 +148,7 @@ a:hover {
 }
   /* Shopping chart */
 #shoppingChart {
-  background-color: #23527C;
+  background-color:#333;
   border: 2px solid #333;
   border-radius: 5px;
   color:white;
@@ -114,7 +157,7 @@ a:hover {
   transition-duration:500ms;
 }
 #shoppingChart:hover {
-  background-color: #333;
+  background-color: #23527C;
 }
 
 @media screen and (max-width: 1000px) and (min-width: 532px) {

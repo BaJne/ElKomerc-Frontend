@@ -1,5 +1,9 @@
-import { Product } from './../models/product.model';
 
+import { MessageService } from './message.service';
+import { Product } from './../models/product.model';
+import { Injectable } from "@angular/core";
+
+@Injectable()
 export class ProductService {
   loadedProducts: Product[];
 
@@ -48,5 +52,4 @@ export class ProductService {
       }
     ];
   }
-
 }

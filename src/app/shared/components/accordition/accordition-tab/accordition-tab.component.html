@@ -1,10 +1,14 @@
 <div>
-  <header class="header-card" [ngClass]="{'active': isToggled, 'inactive': !isToggled}"  (click)="onToggle()">
-    <i [ngClass]="{'fa-angle-right': !isToggled, 'fa-angle-down': isToggled}" class="fas" ></i>
+<header
+  class="header-card {{appearance}}"
+  [ngClass]="{'active': isToggled}"
+  (click)="onToggle()">
+
+  <i [ngClass]="{'fa-angle-right': !isToggled, 'fa-angle-down': isToggled}" class="fas" *ngIf="togglable"></i>
     <span> {{header}} </span>
   </header>
   <ng-template [ngIf]="isToggled" >
-      <div class="content">
+      <div class="content {{appearance}}" >
         <ng-content #name></ng-content>
       </div>
   </ng-template>

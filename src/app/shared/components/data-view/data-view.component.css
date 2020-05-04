@@ -1,14 +1,26 @@
 .items{
   font-family: 'Source Sans Pro';
   margin: auto;
-  max-width: 1300px;
+  max-width: 100%;
   padding: 12px;
   display: grid;
   gap:2px;
-  grid-template-columns: repeat(4, auto);
+  grid-template-columns: repeat(auto-fill, minmax(250px, 320fr));
+  /* justify-content: center; */
 }
 
-@media screen and (max-width: 1290px) and (min-width: 995px) {
+@media (min-width: 2100px) {
+  .items {
+    grid-template-columns: repeat(6, 1fr);
+    max-width: 1500px;
+   }
+}
+/*
+@media (min-width: 900px) {
+  .items { grid-template-columns: repeat(3, 1fr); }
+} */
+
+/* @media screen and (max-width: 1290px) and (min-width: 995px) {
   .items {
     grid-template-columns: auto auto auto;
   }
@@ -22,7 +34,7 @@
   .items {
     grid-template-columns: auto;
   }
-}
+} */
 /* za ng-content :host /deep/ */
  .item {
   display: flex;
@@ -30,6 +42,7 @@
   text-align: center;
   gap: 5px;
   border: 1px solid #e3e3e3;
+  max-width: 100%;
   min-width: 250px;
 }
 .item #name{
@@ -86,9 +99,7 @@
 
 
 /* Star */
-.hoverStar {
-  color: #FFC107;
-}
+.hoverStar,
 .addedStar {
   color: #FFC107;
 }

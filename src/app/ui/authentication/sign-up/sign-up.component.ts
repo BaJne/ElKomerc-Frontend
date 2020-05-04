@@ -1,5 +1,7 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { AuthService } from '../../../services/auth.service';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { PasswordValidator } from './validators.validator';
 
 @Component({
   selector: 'app-sign-up',
@@ -7,30 +9,37 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
+  cities: string[];
+  postCodes: string[];
+
   isPerson = true;
+  errorMessage = null;            // String za ispisivanje greske ukoliko se desila na serverskoj strani
+  isLoading = false;               // Indikator za signaliziranje komunikacije sa serverom
+  isAccountCreated = false;       // Indikator za dalje korake ukoliko je nalog kreiran
 
   signUpForm = new FormGroup({
-    email: new FormControl(null),
-    password: new FormControl(null),
-    repeatPassword: new FormControl(null),
-    address: new FormControl(null),
-    city: new FormControl(null),
-    phone: new FormControl(null),
-    post: new FormControl(null),
+    email: new FormControl('branislavgrom@gmail.com', [Validators.required, Validators.email]),
+    password: new FormControl('123123aA', [Validators.required, Validators.minLength(6), PasswordValidator.strong] ),
+    repeatPassword: new FormControl('123123aA', [Validators.required]),
+    address: new FormControl('Volgina 20 A', Validators.required),
+    city: new FormControl('Beograd', Validators.required),
+    post: new FormControl('11000', [Validators.required]),
+    phone: new FormControl('0658058009', [Validators.required]),
 
     person: new FormGroup({
-      name: new FormControl(null, Validators.required),
-      lastName: new FormControl(null , Validators.required),
-      birthDate: new FormControl(new Date(), Validators.required)
+      name: new FormControl('Branislav', Validators.required),
+      lastName: new FormControl('null' , Validators.required),
+      birthDate: new FormControl(null)
     }),
     company: new FormGroup({
-      name: new FormControl(null, Validators.required),
-      bankAccount: new FormControl(null, Validators.required),
-      pib: new FormControl(null, Validators.required)
+      name: new FormControl('null', Validators.required),
+      fax: new FormControl('null'),
+      pib: new FormControl('1000000', Validators.required)
     })
-  });
+  }, PasswordValidator.match
+  );
 
-  constructor(private render: Renderer2) { }
+  constructor(private authService: AuthService ) { }
 
   ngOnInit() {
     this.signUpForm.get('company').disable();
@@ -38,7 +47,6 @@ export class SignUpComponent implements OnInit {
 
   onChangeForm(b: boolean) {
     if (b === this.isPerson) { return; }
-    console.log(b);
     if (b) {
       this.signUpForm.get('person').enable();
       this.signUpForm.get('company').disable();
@@ -49,14 +57,62 @@ export class SignUpComponent implements OnInit {
     this.isPerson = b;
   }
 
-  // Validators
-  requiredProperty(control: FormControl): {[s: string]: boolean} {
-    if (true) { return {propertyIsRequired: true}; }
-    return null;
+  // City autocomplete
+  onCitySelected(city: string) {
+    let index = 0;
+    while (this.cities[index] !== city) { index++; }
+    this.signUpForm.get('post').setValue(this.postCodes[index]);
+  }
+  searchForCity(event) {
+    this.authService.getCityInfo(event.query).subscribe( data => {
+      this.cities = data.cities;
+      this.postCodes = data.zip_codes;
+    });
   }
 
   // Submit method
   onSubmit() {
-    console.log(this.signUpForm);
+    if (!this.signUpForm.valid) { return; }
+
+    this.isLoading = true;
+    const user = {
+      email: this.signUpForm.value.email,
+      password: this.signUpForm.value.password,
+      address: this.signUpForm.value.address,
+      city: this.signUpForm.value.city,
+      post: this.signUpForm.value.post,
+      phone: 9999999999, // this.signUpForm.value.phone,
+      type: this.isPerson ? 'USR' : 'CMP'
+    };
+
+    // User or company data
+    let additionalData;
+    if (!this.isPerson) {
+      additionalData = {
+        company_name: this.signUpForm.value.company.name,
+        pib: this.signUpForm.value.company.pib,
+        fax: this.signUpForm.value.company.fax
+      };
+    } else {
+      additionalData = {
+        first_name: this.signUpForm.value.person.name,
+        last_name: this.signUpForm.value.person.lastName,
+        date_of_birth: this.signUpForm.value.person.birthDate
+      };
+    }
+
+    this.authService.signup(
+      user,
+      additionalData
+    )
+    .subscribe((data) => {
+      this.isLoading = false;
+      this.isAccountCreated = true;
+      console.log(data);
+    }, (error) => {
+      this.errorMessage = error;
+      this.isLoading = false;
+    });
+
   }
 }

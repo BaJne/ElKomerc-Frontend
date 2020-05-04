@@ -14,8 +14,10 @@ import {
   styleUrls: ['./panel.component.css']
 })
 export class PanelComponent implements OnInit {
-  @Input() style;
+  @Input() divStyle;
+  @Input() headerStyle;
   @Input() header;
+  @Input() togglable = true;
   @ViewChild('div', {static: true}) elem: ElementRef;
 
   isToggled: boolean;
@@ -23,7 +25,7 @@ export class PanelComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.isToggled = false;
+    this.isToggled = !this.togglable;
   }
   onToggle() {
     this.isToggled = !this.isToggled;

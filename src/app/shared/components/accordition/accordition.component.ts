@@ -1,5 +1,5 @@
 import { AccorditionService } from './accordition.service';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-accordition',
@@ -9,9 +9,11 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class AccorditionComponent implements OnInit {
   @Output() search = new EventEmitter<string>();
+  @Input() style = 'group';
   constructor(private a: AccorditionService) { }
 
   ngOnInit() {
+    this.a.appearance = this.style;                     // Setovanje izgleda
     this.a.search.subscribe((s: string) => {
       this.search.emit(s);
     });

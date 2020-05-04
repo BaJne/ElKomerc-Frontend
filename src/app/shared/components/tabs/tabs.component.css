@@ -1,0 +1,33 @@
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+ul {
+  list-style: none;
+  display: flex;
+  width: 100%;
+}
+ul a{
+  text-decoration: none;
+  color:black;
+}
+ul li {
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.active{
+  font-weight: 600;
+  background-color: #0078de !important;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  color: white;
+}
+
+.content {
+  padding: 15px;
+  border: 1px solid #6f6f6f;
+}
