@@ -14,7 +14,7 @@
       <div *ngFor="let category of categories">
         <app-accordition-tab header="{{category.category_name}}">
           <div *ngFor="let sub of category.sub_categories">
-            <div class="sub-category-item">{{ sub.subcategory_name | uppercase }} </div>
+            <div class="sub-category-item" (click)="onSubCategorySelect(sub.subcategory_name)" >{{ sub.subcategory_name | uppercase }} </div>
           </div>
         </app-accordition-tab>
       </div>

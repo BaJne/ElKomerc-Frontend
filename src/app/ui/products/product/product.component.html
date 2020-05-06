@@ -1,8 +1,49 @@
-<div *ngIf="artical" >
-  <h3>{{artical.proizvod.naziv}}</h3>
-  <p>Proizvodjac: <a target="_blank" href="artical.program.proizvodjac.link">{{artical.program.proizvodjac.naziv}}</a> </p>
-  <p>Cena: {{artical.cena}}</p>
-  <p>Bonus: {{artical.bonusPoints}}</p>
-</div>
+<div class="product-wrapper">
+  <button class="bttn bttn-primary" style="font-size: 11px;"
+    (click)="backToProducts()" >
+    <i class="fas fa-reply"></i>
+    Nastavi sa pretragom
+  </button>
+  <div *ngIf="artical" class="product-container">
+    <div class="product-title">
+      <h3>
+        {{artical.article_name}}
+      </h3>
+      <hr style="margin: 0px 0px 5px 0px;">
+    </div>
 
-<p *ngIf="!artical" > Proizvod nije pronadjen!</p>
+    <div class="product-images">
+      <app-gallery [images]="images"></app-gallery>
+    </div>
+    <div class="product-details">
+      <div class="product-status">
+        <span class="positive">
+          <i class="fas fa-check-circle"></i>
+           Na stanju
+        </span>
+        <span class="positive">
+          <i class="fas fa-clock"></i>
+           Rok isporuke 3 dana
+        </span>
+        <span class="positive">
+          <i class="fas fa-truck"></i>
+          Besplatna isporuka
+        </span>
+      </div>
+      <span class="mp">
+        MP 111.11 din.
+      </span><br>
+      <span class="price">{{artical.price}} din.</span><br>
+      <span class="dis">Ušteda: 30.21 din.</span>
+
+      <div class="product-order">
+
+        <button id="Order" class="bttn bttn-primary">
+          <i class="fas fa-shopping-cart"></i>
+          Stavi u korpu
+        </button>
+      </div>
+    </div>
+  </div>
+  <p *ngIf="!artical" > Proizvod nije pronadjen!</p>
+</div>

@@ -1,25 +1,44 @@
+import { Subscription } from 'rxjs';
 import { Artical } from './../../../models/artical.model';
 import { ArticalService } from './../../../services/artical.service';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent implements OnInit, OnDestroy {
   artical: Artical = null;
-  constructor(private articalService: ArticalService, private route: ActivatedRoute) { }
+  images: string[] = [];
+  private routeSub: Subscription;
+
+  constructor(private articalService: ArticalService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    const l = this.route.snapshot.queryParams['loaded'];
-    console.log(l);
-    if (l === 'true') {
-      this.artical = this.articalService.articalToDisplay;
-    } else {
-      // Odraditi odgovarajuca ucitavanja sa baze
-    }
+    this.routeSub = this.route.params.subscribe(params => {
+
+      if (
+        this.articalService.articalToDisplay !== null &&
+        this.articalService.articalToDisplay.id === +params.id
+      ) {
+        this.artical = this.articalService.articalToDisplay;
+        this.artical.article_images.forEach(data => {
+          this.images.push(data.uri);
+        });
+      } else {
+        // Zahtev ka serveru
+      }
+    });
+
+  }
+
+  ngOnDestroy(): void {
+    this.routeSub.unsubscribe();
+  }
+  backToProducts() {
+    this.router.navigate(['../../products/all'], {relativeTo: this.route});
   }
 
 }

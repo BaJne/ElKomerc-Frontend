@@ -34,19 +34,8 @@ export class CategoryService implements OnDestroy {
         myObject.sub_categories.forEach(subCategory => {
           const sub_category = {
             id: subCategory.id,
-            subcategory_name: subCategory.sub_category_name,
-            features: []
+            subcategory_name: subCategory.sub_category_name
           };
-
-          subCategory.features.forEach((feat) => {
-            const feature: Feature = {
-              data_type: feat.data_type,
-              feature_name : feat.feature_name,
-              id : feat.id
-            };
-            subCategory.features.push(feature);
-          });
-
           categoryObj.sub_categories.push(sub_category);
         });
         catData.push(categoryObj);

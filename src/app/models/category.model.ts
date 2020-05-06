@@ -4,7 +4,6 @@ export interface Category {
   sub_categories: {
     id: number;
     subcategory_name: string;
-    features: Feature[];
   }[];
 }
 export interface Feature {

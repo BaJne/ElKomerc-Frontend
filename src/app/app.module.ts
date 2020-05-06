@@ -5,12 +5,12 @@ import { ToastComponent } from './shared/components/toast/toast.component';
 import { AccorditionTabComponent } from './shared/components/accordition/accordition-tab/accordition-tab.component';
 import { AccorditionComponent } from './shared/components/accordition/accordition.component';
 import { PanelComponent } from './shared/components/panel/panel.component';
+import { GalleryComponent } from './shared/components/gallery/gallery.component';
 
 // Primeface components
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {InputMaskModule} from 'primeng/inputmask';
 
-import { ProductService } from './services/products.service';
 import { ProducerService } from './services/producer.service';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -56,7 +56,8 @@ import { ActivateComponent } from './ui/authentication/activate/activate.compone
     DataTableComponent,
     TabComponent,
     TabsComponent,
-    ActivateComponent
+    ActivateComponent,
+    GalleryComponent
   ],
   imports: [
     AutoCompleteModule,
@@ -69,8 +70,7 @@ import { ActivateComponent } from './ui/authentication/activate/activate.compone
     HttpClientModule
   ],
   providers: [
-    ProducerService,
-    ProductService
+    ProducerService
   ],
   bootstrap: [AppComponent]
 })

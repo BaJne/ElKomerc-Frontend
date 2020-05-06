@@ -1,6 +1,10 @@
 export interface Producer {
-  naziv: string;
-  link: string;
-  opis: string;
-  slika: string;
+  id: number;
+  producer_name: string;
+  uri: string;
+  profile_image: string;
+  // slike: {
+  //   naziv: string,
+  //   namena: string
+  // }[];
 }

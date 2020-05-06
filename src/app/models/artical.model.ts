@@ -1,17 +1,36 @@
+import { Feature } from './category.model';
 import { Producer } from './producer.model';
-import { Product } from './product.model';
 
 export interface Artical {
-  sifraArtikla: string;
-  proizvod: Product;
-  cena: number;
-  slika: string; // Potrebno je promeniti na sliku
-  dodatneSlike: string[];
-  prodato: number;
-  program: {
-    proizvodjac: Producer;
-    naziv: string;
+  id: number;
+  article_name: string;
+  producer_info: Producer;
+  category: {
+    category_id: number;
+    category_name: string;
+    sub_category_id: number;
+    sub_category_name: string;
   };
-  popust: number;
-  bonusPoints: number;
+  attributes: {
+    attribute_id: number;
+    attribute_name: string;
+    value: string;
+    is_selectable: boolean;
+  }[];
+  article_images: {
+    uri: string;
+    purpose: string;
+    content_type: string;
+    height: number;
+    width: number;
+  }[];
+  discount_group: {
+    id: number;
+    group_name: string;
+  };
+  description: string;
+  unit_of_measure: string;
+  price: string;
+  currency: string;
+  is_available: boolean;
 }

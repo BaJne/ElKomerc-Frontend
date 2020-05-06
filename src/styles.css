@@ -21,6 +21,9 @@ html, body{
   min-height: 100%;
   font-family: 'Roboto', 'Verdana', sans-serif !important;
 }
+body {
+  overflow-x: hidden;
+}
 
 a {
   text-decoration: none;
@@ -36,7 +39,7 @@ a {
 .bttn{
   border: 0px;
   padding: 8px 10px;
-  font-size: 14px;
+  font-size: 12px;
   font-family: 'Roboto';
   color: white;
   transition: all 0.4s;

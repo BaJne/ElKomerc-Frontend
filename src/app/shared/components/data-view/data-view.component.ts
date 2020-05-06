@@ -1,4 +1,4 @@
-import { ProductService } from './../../../services/products.service';
+
 import { AuthService } from '../../../services/auth.service';
 import { ArticalService } from './../../../services/artical.service';
 import { Artical } from './../../../models/artical.model';
@@ -60,7 +60,7 @@ export class DataViewComponent implements OnInit {
 
   onProductDetail(el: Artical) {
     this.articalService.setArticalToDisplay(el);
-    this.router.navigate(['../product/', el.sifraArtikla], {relativeTo: this.route, queryParams: {loaded: true}});
+    this.router.navigate(['../product/', el.id], {relativeTo: this.route});
   }
 
   addToCart(a: Artical) {

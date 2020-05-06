@@ -6,11 +6,11 @@
         <div #e class="hideBox hidden" (click)="onProductDetail(artical)">
           <span id="details">Pogledaj detalje</span>
         </div>
-        <img #m src="assets/img/logo.png" alt="">
+        <img #m src='{{artical.article_images[0].uri}}' alt="">
       </div>
-      <span id="name">{{ artical.proizvod.naziv }}</span>
+      <span id="name">{{ artical.article_name }}</span>
       <div id="price">
-        <span>Cena: {{ artical.cena }} RSD</span>
+        <span>Cena: {{ artical.price }} RSD</span>
 
         <div #star>
           <i *ngFor="let i of [1, 2, 3, 4, 5]"

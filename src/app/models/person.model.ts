@@ -1,6 +1,6 @@
 import { User } from './user.model';
 
-export class Person{
+export class Person {
 
   public ime: string = null;
   public prezime: string = null;

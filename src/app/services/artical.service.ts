@@ -1,318 +1,55 @@
+import { Globals } from './globals';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { messagetype } from 'src/app/models/message.model';
 import { MessageService } from './message.service';
 import { Artical } from './../models/artical.model';
 import { ProducerService } from './producer.service';
-import { ProductService } from './products.service';
 import { Injectable } from '@angular/core';
-
 
 @Injectable({ providedIn: 'root' })
 export class ArticalService {
-  loadedArtical: Artical[];
   articalToDisplay: Artical = null;
-  addedArticals: Artical[] = [];
+  loadedArticals: Artical[] = [];
+  cart: Artical[] = [];
   toPay = 0;
 
   constructor(
-    private productService: ProductService,
     private producerService: ProducerService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private http: HttpClient,
+    private globals: Globals
   ) {
-    this.loadedArtical = [
-      {
-        sifraArtikla: '100',
-        proizvod: this.productService.loadedProducts[0],
-        cena: 80.9,
-        slika: 'ppy3x2.5.png',
-        dodatneSlike: [],
-        prodato: 5,
-        program: {
-          proizvodjac: this.producerService.loadedProducers[1],
-          naziv: 'opste'
-        },
-        popust: 0,
-        bonusPoints: 50
-      },
-      {
-        sifraArtikla: '101',
-        proizvod: this.productService.loadedProducts[1],
-        cena: 120.9,
-        slika: 'ppy5x2.5.png',
-        dodatneSlike: [],
-        prodato: 10,
-        program: {
-          proizvodjac: this.producerService.loadedProducers[1],
-          naziv: 'opste'
-        },
-        popust: 0,
-        bonusPoints: 100
-      },
-      {
-        sifraArtikla: '100',
-        proizvod: this.productService.loadedProducts[0],
-        cena: 80.9,
-        slika: 'ppy3x2.5.png',
-        dodatneSlike: [],
-        prodato: 5,
-        program: {
-          proizvodjac: this.producerService.loadedProducers[1],
-          naziv: 'opste'
-        },
-        popust: 0,
-        bonusPoints: 50
-      },
-      {
-        sifraArtikla: '101',
-        proizvod: this.productService.loadedProducts[1],
-        cena: 120.9,
-        slika: 'ppy5x2.5.png',
-        dodatneSlike: [],
-        prodato: 10,
-        program: {
-          proizvodjac: this.producerService.loadedProducers[1],
-          naziv: 'opste'
-        },
-        popust: 0,
-        bonusPoints: 100
-      },
-      {
-        sifraArtikla: '100',
-        proizvod: this.productService.loadedProducts[0],
-        cena: 80.9,
-        slika: 'ppy3x2.5.png',
-        dodatneSlike: [],
-        prodato: 5,
-        program: {
-          proizvodjac: this.producerService.loadedProducers[1],
-          naziv: 'opste'
-        },
-        popust: 0,
-        bonusPoints: 50
-      },
-      {
-        sifraArtikla: '101',
-        proizvod: this.productService.loadedProducts[1],
-        cena: 120.9,
-        slika: 'ppy5x2.5.png',
-        dodatneSlike: [],
-        prodato: 10,
-        program: {
-          proizvodjac: this.producerService.loadedProducers[1],
-          naziv: 'opste'
-        },
-        popust: 0,
-        bonusPoints: 100
-      },
-      {
-        sifraArtikla: '100',
-        proizvod: this.productService.loadedProducts[0],
-        cena: 80.9,
-        slika: 'ppy3x2.5.png',
-        dodatneSlike: [],
-        prodato: 5,
-        program: {
-          proizvodjac: this.producerService.loadedProducers[1],
-          naziv: 'opste'
-        },
-        popust: 0,
-        bonusPoints: 50
-      },
-      {
-        sifraArtikla: '101',
-        proizvod: this.productService.loadedProducts[1],
-        cena: 120.9,
-        slika: 'ppy5x2.5.png',
-        dodatneSlike: [],
-        prodato: 10,
-        program: {
-          proizvodjac: this.producerService.loadedProducers[1],
-          naziv: 'opste'
-        },
-        popust: 0,
-        bonusPoints: 100
-      },
-      {
-        sifraArtikla: '100',
-        proizvod: this.productService.loadedProducts[0],
-        cena: 80.9,
-        slika: 'ppy3x2.5.png',
-        dodatneSlike: [],
-        prodato: 5,
-        program: {
-          proizvodjac: this.producerService.loadedProducers[1],
-          naziv: 'opste'
-        },
-        popust: 0,
-        bonusPoints: 50
-      },
-      {
-        sifraArtikla: '101',
-        proizvod: this.productService.loadedProducts[1],
-        cena: 120.9,
-        slika: 'ppy5x2.5.png',
-        dodatneSlike: [],
-        prodato: 10,
-        program: {
-          proizvodjac: this.producerService.loadedProducers[1],
-          naziv: 'opste'
-        },
-        popust: 0,
-        bonusPoints: 100
-      },
-      {
-        sifraArtikla: '100',
-        proizvod: this.productService.loadedProducts[0],
-        cena: 80.9,
-        slika: 'ppy3x2.5.png',
-        dodatneSlike: [],
-        prodato: 5,
-        program: {
-          proizvodjac: this.producerService.loadedProducers[1],
-          naziv: 'opste'
-        },
-        popust: 0,
-        bonusPoints: 50
-      },
-      {
-        sifraArtikla: '101',
-        proizvod: this.productService.loadedProducts[1],
-        cena: 120.9,
-        slika: 'ppy5x2.5.png',
-        dodatneSlike: [],
-        prodato: 10,
-        program: {
-          proizvodjac: this.producerService.loadedProducers[1],
-          naziv: 'opste'
-        },
-        popust: 0,
-        bonusPoints: 100
-      },
-      {
-        sifraArtikla: '100',
-        proizvod: this.productService.loadedProducts[0],
-        cena: 80.9,
-        slika: 'ppy3x2.5.png',
-        dodatneSlike: [],
-        prodato: 5,
-        program: {
-          proizvodjac: this.producerService.loadedProducers[1],
-          naziv: 'opste'
-        },
-        popust: 0,
-        bonusPoints: 50
-      },
-      {
-        sifraArtikla: '101',
-        proizvod: this.productService.loadedProducts[1],
-        cena: 120.9,
-        slika: 'ppy5x2.5.png',
-        dodatneSlike: [],
-        prodato: 10,
-        program: {
-          proizvodjac: this.producerService.loadedProducers[1],
-          naziv: 'opste'
-        },
-        popust: 0,
-        bonusPoints: 100
-      },
-      {
-        sifraArtikla: '100',
-        proizvod: this.productService.loadedProducts[0],
-        cena: 80.9,
-        slika: 'ppy3x2.5.png',
-        dodatneSlike: [],
-        prodato: 5,
-        program: {
-          proizvodjac: this.producerService.loadedProducers[1],
-          naziv: 'opste'
-        },
-        popust: 0,
-        bonusPoints: 50
-      },
-      {
-        sifraArtikla: '101',
-        proizvod: this.productService.loadedProducts[1],
-        cena: 120.9,
-        slika: 'ppy5x2.5.png',
-        dodatneSlike: [],
-        prodato: 10,
-        program: {
-          proizvodjac: this.producerService.loadedProducers[1],
-          naziv: 'opste'
-        },
-        popust: 0,
-        bonusPoints: 100
-      },
-      {
-        sifraArtikla: '100',
-        proizvod: this.productService.loadedProducts[0],
-        cena: 80.9,
-        slika: 'ppy3x2.5.png',
-        dodatneSlike: [],
-        prodato: 5,
-        program: {
-          proizvodjac: this.producerService.loadedProducers[1],
-          naziv: 'opste'
-        },
-        popust: 0,
-        bonusPoints: 50
-      },
-      {
-        sifraArtikla: '101',
-        proizvod: this.productService.loadedProducts[1],
-        cena: 120.9,
-        slika: 'ppy5x2.5.png',
-        dodatneSlike: [],
-        prodato: 10,
-        program: {
-          proizvodjac: this.producerService.loadedProducers[1],
-          naziv: 'opste'
-        },
-        popust: 0,
-        bonusPoints: 100
-      },
-      {
-        sifraArtikla: '100',
-        proizvod: this.productService.loadedProducts[0],
-        cena: 80.9,
-        slika: 'ppy3x2.5.png',
-        dodatneSlike: [],
-        prodato: 5,
-        program: {
-          proizvodjac: this.producerService.loadedProducers[1],
-          naziv: 'opste'
-        },
-        popust: 0,
-        bonusPoints: 50
-      },
-      {
-        sifraArtikla: '101',
-        proizvod: this.productService.loadedProducts[1],
-        cena: 120.9,
-        slika: 'ppy5x2.5.png',
-        dodatneSlike: [],
-        prodato: 10,
-        program: {
-          proizvodjac: this.producerService.loadedProducers[1],
-          naziv: 'opste'
-        },
-        popust: 0,
-        bonusPoints: 100
-      }
-    ];
+    this.articalToDisplay = JSON.parse(localStorage.getItem('toDisplay'));
+    this.cart = JSON.parse(localStorage.getItem('cart'));
+    this.toPay = +JSON.parse(localStorage.getItem('toPay'));
+    if (this.cart === null) {
+      this.cart = [];
+      this.toPay = 0;
+    }
+  }
+
+  // Metoda za dohvatanje proizvoda
+  getArticals(subCategoryID: number, features: string[]) {
+    let queryParams = new HttpParams();
+    // queryParams = queryParams.append('value', v)
+    queryParams = queryParams.append('sub_category_id', subCategoryID + '');
+    return this.http.get(
+      this.globals.location + '/api/product/articles/',
+      {params: queryParams}
+    );
   }
 
   // Metoda kojom se prosledjuje artikal radi ispisivanja njegovih detalja
   setArticalToDisplay(a: Artical) {
+    localStorage.setItem('toDisplay', JSON.stringify(a));
     this.articalToDisplay = a;
   }
-  getSomeArticals(s: string) {
-    // Potrebno je dohvatiti odgovarajuce artikle
-    return this.loadedArtical.slice(0);
-  }
+
   addToCart(a: Artical) {
-    this.addedArticals.push(a);
-    this.toPay += a.cena;
+    this.cart.push(a);
+    this.toPay += +a.price;
+    localStorage.setItem('cart', JSON.stringify(this.cart));
+    localStorage.setItem('toPay', JSON.stringify(this.toPay));
     this.messageService.sendMessage({
       key: '',
       text: 'Uspesno ste dodali proizvod.',

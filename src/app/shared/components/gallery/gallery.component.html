@@ -1,0 +1,19 @@
+<div class="gallery">
+  <div *ngIf="images === undefined || images.length === 0" >Nema slike za ovaj proizvod</div>
+  <div>
+    <div class='box'>
+      <div class='content'>
+        <img class="top-image" src="{{images[selected]}}" alt="slika">
+      </div>
+    </div>
+    <div class="image-list">
+      <div (click)="onSelectImg(i)"
+           class="image-item"
+           *ngFor="let img of images;let i = index"
+           [ngClass]="{'selected': i === selected}"
+      >
+        <img src="{{img}}" alt="">
+      </div>
+    </div>
+  </div>
+</div>

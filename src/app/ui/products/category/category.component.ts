@@ -5,14 +5,14 @@ import { Category, Feature } from './../../../models/category.model';
 import { ArticalService } from './../../../services/artical.service';
 import { Artical } from './../../../models/artical.model';
 
-import { Component, OnInit, OnDestroy, HostListener, ElementRef, ViewChild, Renderer2, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.css'],
 })
-export class CategoryComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CategoryComponent implements OnInit, OnDestroy {
   @ViewChild('leftRef', {static: true}) el: ElementRef;
   @ViewChild('content', {static: true}) con: ElementRef;
   showPan: ElementRef;
@@ -22,7 +22,7 @@ export class CategoryComponent implements OnInit, AfterViewInit, OnDestroy {
     if (content) { // initially setter gets called with undefined
         this.showPan = content;
     }
- }
+  }
 
   categories: Category[];
   articals: Artical[];
@@ -40,6 +40,8 @@ export class CategoryComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.onResizeWindow();
+    const h = 'calc(100vh - ' + (102) + 'px)';
+    this.renderer.setStyle(this.el.nativeElement, 'height', h);
 
     this.categories = this.categoryService.getCategories();
     // Ukoliko kategorije jos nisu ucitane pozovi observable
@@ -50,12 +52,11 @@ export class CategoryComponent implements OnInit, AfterViewInit, OnDestroy {
           this.categories = data;
         });
     }
+
     // Potrebno ucitati artikle
-    this.articals = this.articalService.getSomeArticals('all');
-  }
-  ngAfterViewInit() {
-    const h = 'calc(100vh - ' + (this.con.nativeElement.getBoundingClientRect().top) + 'px)';
-    this.renderer.setStyle(this.el.nativeElement, 'height', h);
+    this.articalService.getArticals(2, []).subscribe(data => {
+      this.articals = data['results'];
+    });
   }
   ngOnDestroy() {
     if (this.categorySubscription !== undefined) {
@@ -63,7 +64,7 @@ export class CategoryComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  // LEFT MENU
+  // EVENT LISTENERS
   @HostListener('window:resize', ['$event'])
     onResize(event) {
 
@@ -75,18 +76,13 @@ export class CategoryComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   @HostListener('click', ['$event'])
     clickInside(event) {
-      console.log(this.showPan.nativeElement.contains(event.target));
-
       if (this.showPan !== undefined && this.showPan.nativeElement.contains(event.target)) {
-        console.log('Kliknuto ovo');
         this.wasInside = true;
       }
 
     }
   @HostListener('document:click', ['$event'])
     clickHandler(event) {
-      console.log(this.wasInside);
-
       if (
         !this.el.nativeElement.contains(event.target) &&
         !this.wasInside &&
@@ -127,11 +123,13 @@ export class CategoryComponent implements OnInit, AfterViewInit, OnDestroy {
   onResizeWindow() {// Dodati klase za menjanje pozicije datasheet
     if ( window.innerWidth >= 670 && this.isWindowSmall) {
       this.isWindowSmall = false;
+      this.renderer.setStyle(this.con.nativeElement, 'margin-left', '0px');
       if (this.isLeftPanelHidden) {
         this.onToggleLeftPanel();
       }
     } else if (window.innerWidth < 670 && !this.isWindowSmall) {
       this.isWindowSmall = true;
+      this.renderer.setStyle(this.con.nativeElement, 'margin-left', '0px');
       if (!this.isLeftPanelHidden) {
         this.onToggleLeftPanel();
       }
@@ -151,6 +149,11 @@ export class CategoryComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Test
   onCategorySwitch(s: any) {
+    console.log(s);
+  }
+  onSubCategorySelect(s: any) {
+    this.isWindowSmall = false;
+    this.onResizeWindow();
     console.log(s);
   }
 }
