@@ -12,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ProductComponent implements OnInit, OnDestroy {
   artical: Artical = null;
   images: string[] = [];
+  itemCount = 1;
   private routeSub: Subscription;
 
   constructor(private articalService: ArticalService, private router: Router, private route: ActivatedRoute) { }

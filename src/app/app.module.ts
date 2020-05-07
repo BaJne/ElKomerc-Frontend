@@ -10,6 +10,7 @@ import { GalleryComponent } from './shared/components/gallery/gallery.component'
 // Primeface components
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {InputMaskModule} from 'primeng/inputmask';
+import {SpinnerModule} from 'primeng/spinner';
 
 import { ProducerService } from './services/producer.service';
 import { AppRoutingModule } from './app-routing.module';
@@ -62,6 +63,7 @@ import { ActivateComponent } from './ui/authentication/activate/activate.compone
   imports: [
     AutoCompleteModule,
     InputMaskModule,
+    SpinnerModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
