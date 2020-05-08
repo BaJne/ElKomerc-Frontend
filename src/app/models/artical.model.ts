@@ -3,34 +3,37 @@ import { Producer } from './producer.model';
 
 export interface Artical {
   id: number;
+  article_code: string;
   article_name: string;
-  producer_info: Producer;
-  category: {
+  price: string;
+
+  producer_info?: Producer;
+  uri?: string;
+  category?: {
     category_id: number;
     category_name: string;
     sub_category_id: number;
     sub_category_name: string;
   };
-  attributes: {
+  attributes?: {
     attribute_id: number;
     attribute_name: string;
     value: string;
     is_selectable: boolean;
   }[];
-  article_images: {
+  article_images?: {
     uri: string;
-    purpose: string;
-    content_type: string;
-    height: number;
-    width: number;
+    purpose?: string;
+    content_type?: string;
+    height?: number;
+    width?: number;
   }[];
-  discount_group: {
+  discount_group?: {
     id: number;
     group_name: string;
   };
-  description: string;
-  unit_of_measure: string;
-  price: string;
-  currency: string;
-  is_available: boolean;
+  description?: string;
+  unit_of_measure?: string;
+  currency?: string;
+  is_available?: boolean;
 }

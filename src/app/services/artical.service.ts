@@ -1,3 +1,4 @@
+import { tap } from 'rxjs/operators';
 import { Globals } from './globals';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { messagetype } from 'src/app/models/message.model';
@@ -36,7 +37,26 @@ export class ArticalService {
     return this.http.get(
       this.globals.location + '/api/product/articles/',
       {params: queryParams}
-    );
+    ).pipe(tap(responseData => {
+      const data: Artical[] = [];
+      responseData['results'].forEach(art => {
+        const a = {
+          id: art.id,
+          article_code: art.article_code,
+          article_name: art.article_name,
+          price: art.price,
+          uri: art.uri,
+          article_images: []
+        };
+        if (art.profile_image !== null) {
+          a.article_images.push({
+            uri: art.profile_image
+          });
+        }
+        data.push(a);
+      });
+
+    }));
   }
 
   // Metoda kojom se prosledjuje artikal radi ispisivanja njegovih detalja

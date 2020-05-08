@@ -9,7 +9,8 @@ import { Subscription } from 'rxjs';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
+  isAutincated: Subscription;
   user: User = null;
 
   constructor(
@@ -19,10 +20,12 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.user = this.authService.logedUser;
-    this.authService.user.subscribe(data => {
+    this.isAutincated = this.authService.user.subscribe(data => {
       this.user = data;
     });
+  }
+  ngOnDestroy() {
+    this.isAutincated.unsubscribe();
   }
   logout() {
     this.authService.logout();

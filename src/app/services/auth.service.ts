@@ -98,8 +98,8 @@ export class AuthService {
     .pipe(
       catchError(this.errorHandling.bind(this)),
       tap( (responseData: any) => {
-        console.log(responseData.expires);
-
+        console.log(responseData);
+        // localStorage.setItem('')
         const expireDate = new Date(responseData.expires);
 
         const user = new User(

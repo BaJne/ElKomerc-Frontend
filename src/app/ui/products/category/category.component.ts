@@ -54,7 +54,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     }
 
     // Potrebno ucitati artikle
-    this.articalService.getArticals(2, []).subscribe(data => {
+    this.articalService.getArticals(1, []).subscribe(data => {
       this.articals = data['results'];
     });
   }

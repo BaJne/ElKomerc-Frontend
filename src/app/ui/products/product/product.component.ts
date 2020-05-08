@@ -25,9 +25,13 @@ export class ProductComponent implements OnInit, OnDestroy {
         this.articalService.articalToDisplay.id === +params.id
       ) {
         this.artical = this.articalService.articalToDisplay;
-        this.artical.article_images.forEach(data => {
-          this.images.push(data.uri);
-        });
+        if (this.artical.article_images === undefined) {
+          this.images.push('assets/img/no-img.png');
+        } else {
+          this.artical.article_images.forEach(data => {
+            this.images.push(data.uri);
+          });
+        }
       } else {
         // Zahtev ka serveru
       }

@@ -6,7 +6,10 @@
         <div #e class="hideBox hidden" (click)="onProductDetail(artical)">
           <span id="details">Pogledaj detalje</span>
         </div>
-        <img #m src='{{artical.article_images[0].uri}}' alt="">
+        <img #m
+          src='{{(artical.article_images !== undefined) ? artical.article_images[0].uri: "assets/img/no-img.png"}}'
+          alt=""
+        >
       </div>
       <span id="name">{{ artical.article_name }}</span>
       <div id="price">
