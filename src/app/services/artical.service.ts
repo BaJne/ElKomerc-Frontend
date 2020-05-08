@@ -59,6 +59,7 @@ export class ArticalService {
     }));
   }
 
+
   // Metoda kojom se prosledjuje artikal radi ispisivanja njegovih detalja
   setArticalToDisplay(a: Artical) {
     localStorage.setItem('toDisplay', JSON.stringify(a));
@@ -72,7 +73,7 @@ export class ArticalService {
     localStorage.setItem('toPay', JSON.stringify(this.toPay));
     this.messageService.sendMessage({
       key: '',
-      text: 'Uspesno ste dodali proizvod.',
+      text: 'Uspešno ste dodali proizvod.',
       type: messagetype.succes
     });
   }

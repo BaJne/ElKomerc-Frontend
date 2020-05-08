@@ -23,10 +23,13 @@ export class CategoryComponent implements OnInit, OnDestroy {
         this.showPan = content;
     }
   }
-
   categories: Category[];
   articals: Artical[];
   categorySubscription: Subscription;
+  selectedSubcategory = 1;
+  currentPage: number;
+  maxPage: number;
+
   isLeftPanelSticked = false;
   isLeftPanelHidden = false;
   isWindowSmall = false;
@@ -44,20 +47,38 @@ export class CategoryComponent implements OnInit, OnDestroy {
     this.renderer.setStyle(this.el.nativeElement, 'height', h);
 
     this.categories = this.categoryService.getCategories();
-    // Ukoliko kategorije jos nisu ucitane pozovi observable
-    if (this.categories.length === 0) {
+    if (this.categories === null) {
       this.categorySubscription = this.categoryService
         .requestCategories()
         .subscribe((data: any) => {
           this.categories = data;
-        });
+      });
     }
-
-    // Potrebno ucitati artikle
-    this.articalService.getArticals(1, []).subscribe(data => {
+    this.getArticals(this.selectedSubcategory,[]);
+  }
+  // Test
+  onCategorySwitch(s: any) {
+    console.log(s);
+  }
+  onSubCategorySelect(id: any) {
+    this.isWindowSmall = false;
+    this.onResizeWindow();
+    if (id !== this.selectedSubcategory) {
+      this.selectedSubcategory = id
+      this.getArticals(this.selectedSubcategory,[]);
+    }
+  }
+  getArticals(id: number, params: string[]) {
+    this.articalService.getArticals(this.selectedSubcategory, []).subscribe(data => {
+      this.currentPage = 1;
+      this.maxPage = Math.floor(data['count']/ 20);
+      if (data['count'] % 20 !== 0) {
+        this.maxPage++;
+      }
       this.articals = data['results'];
     });
   }
+
   ngOnDestroy() {
     if (this.categorySubscription !== undefined) {
       this.categorySubscription.unsubscribe();
@@ -147,13 +168,4 @@ export class CategoryComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Test
-  onCategorySwitch(s: any) {
-    console.log(s);
-  }
-  onSubCategorySelect(s: any) {
-    this.isWindowSmall = false;
-    this.onResizeWindow();
-    console.log(s);
-  }
 }

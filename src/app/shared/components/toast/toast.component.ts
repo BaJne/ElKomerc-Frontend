@@ -7,21 +7,33 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./toast.component.css']
 })
 export class ToastComponent implements OnInit {
-  messages: Message[] = [];
+  msgToExpire: Message[] = [];
+  msgToHold: Message[] =[];
   constructor(private messageService: MessageService) { }
 
   ngOnInit() {
     this.messageService.messanger.subscribe((data: Message) => {
-      this.messages.push(data);
-      setTimeout(() => {
-        this.messages.splice(0, 1);
-      }, 3000);
+      console.log(data.key);
+      if (data.key === 'hold') {
+        this.msgToHold.push(data);
+      }
+      else {
+        this.msgToExpire.push(data);
+        setTimeout(() => {
+          this.msgToExpire.splice(0, 1);
+        }, 3000);
+      }
     });
   }
 
-  closeBox(mm: Message) {
-    const i = this.messages.findIndex( el => el === mm);
-    this.messages.splice(i, 1);
+  closeBox(mm: Message, ind: boolean) {
+    if (!ind) {
+      const i = this.msgToHold.findIndex( el => el === mm);
+      this.msgToHold.splice(i, 1);
+    } else {
+      const i = this.msgToHold.findIndex( el => el === mm);
+      this.msgToExpire.splice(i, 1);
+    }
   }
 
 }

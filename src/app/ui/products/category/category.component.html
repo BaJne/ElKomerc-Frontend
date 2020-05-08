@@ -14,7 +14,8 @@
       <div *ngFor="let category of categories">
         <app-accordition-tab header="{{category.category_name}}">
           <div *ngFor="let sub of category.sub_categories">
-            <div class="sub-category-item" (click)="onSubCategorySelect(sub.subcategory_name)" >{{ sub.subcategory_name | uppercase }} </div>
+            <div class="sub-category-item" (click)="onSubCategorySelect(sub.id)"
+              [ngClass]="{'category-item-active': sub.id === selectedSubcategory}">{{ sub.subcategory_name | uppercase }} </div>
           </div>
         </app-accordition-tab>
       </div>
@@ -30,22 +31,44 @@
         <!-- parametri radi lakse pretrage  -->
       <div class="header-search">
         <div id="byPrice">
-          <span>Sortiraj po:</span>
-          <select name="sortOption" id="select">
+          Sortiraj po:
+          <select name="sortOption" class="selectpicker" id="select">
             <option value="priceDec">Ceni Opadajuce</option>
             <option value="priceDec">Ceni Rastuce</option>
             <option value="priceDec">Proizvodjacu</option>
           </select>
         </div>
-        <div id="nextPages">
-          <button><i class="fas fa-angle-left"></i></button>
-          <button><i class="fas fa-angle-right"></i></button>
-        </div>
-        <div id="layout">
-            <!-- <span><img src="assets/img/vertical-grid-layout.png"></span> -->
-            <span><i class="fas fa-th"></i></span>
-            <span><i class="fas fa-bars"></i></span>
-        </div>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="#">
+                <i class="fas fa-caret-left"></i>
+              </a>
+            </li>
+            <li class="page-item">
+              <span class="page-link">
+                {{currentPage}} / {{maxPage}}
+              </span>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="#">
+                <i class="fas fa-caret-right"></i>
+              </a>
+            </li>
+          </ul>
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="#">
+                <i class="fas fa-th"></i>
+              </a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="#">
+                <i class="fas fa-bars"></i>
+              </a>
+            </li>
+          </ul>
+        </nav>
 
       </div>
 

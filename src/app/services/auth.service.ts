@@ -3,6 +3,8 @@ import { User } from '../models/user.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
+import { messagetype } from 'src/app/models/message.model';
+import { MessageService } from './message.service';
 import { throwError, BehaviorSubject } from 'rxjs';
 
 interface SignUpResponseData {
@@ -14,9 +16,10 @@ interface SignUpResponseData {
   localId: string;
 }
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
   user = new BehaviorSubject<User>(null);
+  private tokenExpirationTimer: any;
 
   private TOO_MANY_ATTEMPTS_TRY_LATER: 'TOO_MANY_ATTEMPTS_TRY_LATER : Too many unsuccessful login attempts. Please try again later.';
   private INVALID_PASSWORD = 'INVALID_PASSWORD';
@@ -25,7 +28,13 @@ export class AuthService {
   private EMAIL_EXISTS = 'Account with this email address already exists.';
   private EMAIL_NOT_ACTIVE = 'USER_NOT_ACTIVE';
 
-  constructor(private http: HttpClient, private globals: Globals) {}
+  constructor(
+      private http: HttpClient,
+      private globals: Globals,
+      private messageService: MessageService
+    ) {
+    this.autoLogin();
+  }
 
   processErrorMassage(errorMessages, msg: string) {
     switch (msg) {
@@ -34,7 +43,7 @@ export class AuthService {
       case this.EMAIL_NOT_FOUND: errorMessages.push('Pogresna kombinacija email i lozinke.'); break;
       case this.USER_DISABLED: errorMessages.push('Ovaj nalog je trenutno suspendovan.'); break;
       case this.EMAIL_NOT_ACTIVE: errorMessages.push('Korisnički nalog nije aktiviran. Molimo da ga prvo aktivirajte.'); break;
-      case this.TOO_MANY_ATTEMPTS_TRY_LATER : errorMessages.push('Previse neuspesnih pokusaja. Molimo pokusajte kasnije.'); break;
+      case this.TOO_MANY_ATTEMPTS_TRY_LATER: errorMessages.push('Previse neuspesnih pokusaja. Molimo pokusajte kasnije.'); break;
       default: errorMessages.push('Dogodila se nepoznata greska prilikom slanja zahteva. Molimo pokusajte kasnije.');
     }
   }
@@ -53,7 +62,7 @@ export class AuthService {
         msgArray = errorRes.error[key];
 
         if (msgArray instanceof Array) {
-          msgArray.forEach( msg => {
+          msgArray.forEach(msg => {
             this.processErrorMassage(errorMessages, msg);
           });
         } else {
@@ -65,28 +74,54 @@ export class AuthService {
     return throwError(errorMessages);
   }
 
-  // Dohvataju se informacije grad / post_codes
-  getCityInfo(s: string) {
-    return this.http.get<ServerResponseData>(
-      this.globals.location + '/api/post-codes/',
-      {params: new HttpParams().set('city', s)}
-      )
-      .pipe(map(data => {
-        const cityData: {cities: string[], zip_codes: string[]} = {
-          cities: [],
-          zip_codes: []
-        };
-        data.results.forEach((x: {city: string, zip_code: string}, index) => {
-          cityData.cities.push(x.city);
-          cityData.zip_codes.push(x.zip_code);
-        });
-        return cityData;
-      }));
+  autoLogout(expireDate: Date) {
+    const expirationDuration =
+      (expireDate.getTime() - new Date().getTime());
+
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.messageService.sendMessage({
+        key: 'hold',
+        text: 'Vaša sesija je istekla.Molimo prijavite se ponovo.',
+        type: messagetype.warn
+      });
+      this.logout();
+    }, expirationDuration);
   }
 
+  autoLogin() {
+    const userData: {
+      email: string,
+      localId: string,
+      _token: string,
+      _tokenExpirationDate: string
+    }
+      = JSON.parse(localStorage.getItem('userData'));
+    if (userData === null) {
+      return;
+    }
+    const loadedUser = new User(
+      userData.email,
+      userData.localId,
+      userData._token,
+      new Date(userData._tokenExpirationDate)
+    );
+    if (loadedUser.token) {
+      if (this.tokenExpirationTimer) {
+        clearTimeout(this.tokenExpirationTimer);
+      }
+      this.tokenExpirationTimer = null;
+      this.autoLogout(new Date(userData._tokenExpirationDate));
+      this.user.next(loadedUser);
+    }
+  }
   // Metod za odjavljivanje trenutno aktivnog korisnika
   logout() {
+    localStorage.removeItem('userData');
     this.user.next(null);
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+    this.tokenExpirationTimer = null;
   }
 
   // Metoda za prijavljivanje korisnika na server
@@ -95,22 +130,22 @@ export class AuthService {
       email: name,
       password: pass
     })
-    .pipe(
-      catchError(this.errorHandling.bind(this)),
-      tap( (responseData: any) => {
-        console.log(responseData);
-        // localStorage.setItem('')
-        const expireDate = new Date(responseData.expires);
+      .pipe(
+        catchError(this.errorHandling.bind(this)),
+        tap((responseData: any) => {
+          const expireDate = new Date(responseData.expires);
 
-        const user = new User(
-          responseData.email,
-          responseData.localId,
-          responseData.token,
-          expireDate
-        );
-        this.user.next(user);
-      })
-    );
+          const user = new User(
+            responseData.email,
+            responseData.localId,
+            responseData.token,
+            expireDate
+          );
+          localStorage.setItem('userData', JSON.stringify(user));
+          this.autoLogout(expireDate);
+          this.user.next(user);
+        })
+      );
   }
 
   // Metoda za kreiranje novog naloga
@@ -134,5 +169,22 @@ export class AuthService {
       },
     ).pipe(catchError(this.errorHandling.bind(this)));
   }
-
+  // Dohvataju se informacije grad / post_codes
+  getCityInfo(s: string) {
+    return this.http.get<ServerResponseData>(
+      this.globals.location + '/api/post-codes/',
+      { params: new HttpParams().set('city', s) }
+    )
+      .pipe(map(data => {
+        const cityData: { cities: string[], zip_codes: string[] } = {
+          cities: [],
+          zip_codes: []
+        };
+        data.results.forEach((x: { city: string, zip_code: string }, index) => {
+          cityData.cities.push(x.city);
+          cityData.zip_codes.push(x.zip_code);
+        });
+        return cityData;
+      }));
+  }
 }

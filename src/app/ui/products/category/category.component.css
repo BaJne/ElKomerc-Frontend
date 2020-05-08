@@ -24,7 +24,6 @@
 }
 
 .leftPanel .dash-board {
-
   display: flex;
   justify-content: space-between;
   padding: 10px 10px;
@@ -68,7 +67,6 @@
 }
 
 .category-item {
-  color: white;
   background-color: #333;
   padding: 10px 10px 10px 20px;
   font: size 14px;
@@ -77,7 +75,8 @@
   transition-property: all;
   transition-duration: 500ms;
 }
-.category-item:hover {
+.category-item:hover,
+.category-item-active {
   background-color: #DBDBDB;
   color: #333;
 }
@@ -105,22 +104,12 @@
 .header-search {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
-  padding: 20px;
+  align-content: center;
+  align-items: center;
+  justify-content: space-around;
   background-color: #F4F4F4;
-  border-radius: 10px;
-  margin: 5px;
+
   font-family: 'Roboto', Verdana;
-}
-.header-search #layout>span {
-  background: white;
-  padding: 5px;
-  border: 1px solid black;
-  margin-right: 3px;
-}
-.header-search #layout>span>img {
-  width: 20px;
-  height: 20px;
 }
 
 
