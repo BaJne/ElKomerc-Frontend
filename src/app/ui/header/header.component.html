@@ -17,13 +17,13 @@
         <i class="fas fa-sign-in-alt"></i>
         Prijavi se
       </a>
-      <app-drop-down *ngIf="user" [text]="user.email"  >
+      <app-drop-down *ngIf="user" [text]="user.email">
         <ul>
           <li>
-            <a>Pregled naloga</a>
+            <a [routerLink]= "['/user','orders']">Pregled naloga</a>
           </li>
           <li>
-            <a>Podesavanje</a>
+            <a [routerLink]= "['/user','edit']">Podesavanje</a>
           </li>
           <li>
             <a (click)= "logout()">Odjavi se</a>
@@ -55,17 +55,17 @@
 
       <div class="menu-buttons">
         <ul>
-          <a href="#">
+          <a [routerLink]= "['/home']">
+            <li> Naslovna </li>
+          </a>
+          <a [routerLink]= "['/products/all']">
             <li> Proizvodi </li>
           </a>
-          <a href="#">
+          <a [routerLink]= "['/production']">
             <li> Proizvodnja </li>
           </a>
-          <a href="#">
+          <a [routerLink]= "['/contact']">
             <li> O Nama </li>
-          </a>
-          <a href="#">
-            <li> Kontakt </li>
           </a>
         </ul>
       </div>

@@ -1,4 +1,5 @@
-import { map } from 'rxjs/operators';
+import { ProducerService } from './../../../services/producer.service';
+import { Producer } from './../../../models/producer.model';
 import { Subscription } from 'rxjs';
 import { CategoryService } from './../../../services/category.service';
 import { Category, Feature } from './../../../models/category.model';
@@ -17,19 +18,25 @@ export class CategoryComponent implements OnInit, OnDestroy {
   @ViewChild('content', {static: true}) con: ElementRef;
   showPan: ElementRef;
   wasInside = false;
-
   @ViewChild('showPanel') set content(content: ElementRef) {
-    if (content) { // initially setter gets called with undefined
-        this.showPan = content;
-    }
+    if (content) { this.showPan = content; }
   }
-  categories: Category[];
+
+  // Proizvodjaci, Kategorije i Artikli
+  producers: Producer[];
+  allCategories: Category[];
   articals: Artical[];
-  categorySubscription: Subscription;
+
+  // Parametri
+  categories: Category[];
+  selectedProducer: Producer = null;
   selectedSubcategory = 1;
-  currentPage: number;
+  currentPage = 1;
   maxPage: number;
 
+  categorySubscription: Subscription;
+
+  showProducers = false;
   isLeftPanelSticked = false;
   isLeftPanelHidden = false;
   isWindowSmall = false;
@@ -37,48 +44,144 @@ export class CategoryComponent implements OnInit, OnDestroy {
   // Logika je da se ucitaju sve kategorije za prikaz preko CategoryServisa
   constructor(
     private categoryService: CategoryService,
+    private producerService: ProducerService,
     private articalService: ArticalService,
     private renderer: Renderer2
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.onResizeWindow();
     const h = 'calc(100vh - ' + (102) + 'px)';
     this.renderer.setStyle(this.el.nativeElement, 'height', h);
 
-    this.categories = this.categoryService.getCategories();
-    if (this.categories === null) {
+    this.allCategories = this.categoryService.getCategories();
+    this.producers = this.producerService.getProducers();
+    if (this.allCategories === null) {
       this.categorySubscription = this.categoryService
         .requestCategories()
         .subscribe((data: any) => {
-          this.categories = data;
+          this.allCategories = data;
+          this.updateCategories();
       });
     }
-    this.getArticals(this.selectedSubcategory,[]);
+    if (this.producers === null) {
+      this.producerService.requestProducers().subscribe(data => {
+        this.producers = data;
+      });
+    }
+    this.updateCategories();
+    this.getArticals(this.selectedSubcategory, [], 1, this.selectedProducer);
   }
+
+  onShowProducers() {
+    this.showProducers = !this.showProducers;
+  }
+  // Updejtovanje kategorija i prikaza
+  selectGroup(index: number) {
+    this.showProducers = !this.showProducers;
+    if (index !== -1) {
+      this.selectedProducer = this.producers[index];
+    } else {
+      this.selectedProducer = null;
+    }
+    console.log(this.allCategories);
+
+    this.updateCategories();
+
+    this.getArticals(
+      (this.selectedProducer === null) ? 1 : this.selectedProducer.sub_categories_id[0],
+      [],
+      1,
+      this.selectedProducer
+    );
+  }
+
   // Test
   onCategorySwitch(s: any) {
-    console.log(s);
   }
+
   onSubCategorySelect(id: any) {
     this.isWindowSmall = false;
     this.onResizeWindow();
     if (id !== this.selectedSubcategory) {
-      this.selectedSubcategory = id
-      this.getArticals(this.selectedSubcategory,[]);
+      this.selectedSubcategory = id;
+      this.getArticals(this.selectedSubcategory, [], 1, this.selectedProducer);
     }
   }
-  getArticals(id: number, params: string[]) {
-    this.articalService.getArticals(this.selectedSubcategory, []).subscribe(data => {
-      this.currentPage = 1;
-      this.maxPage = Math.floor(data['count']/ 20);
-      if (data['count'] % 20 !== 0) {
-        this.maxPage++;
-      }
-      this.articals = data['results'];
-    });
+  // PAGING
+  next(isNext: boolean) {
+    if (
+      (this.currentPage === 1 && !isNext) ||
+      (this.currentPage === this.maxPage && isNext)
+    ) {
+      return;
+    }
+    if (isNext) { this.nextPage(); } else { this.prevPage(); }
+
+    setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 200);
   }
 
+  prevPage() {
+    if (this.currentPage === 1) { return; }
+    this.getArticals(this.selectedSubcategory, [], --this.currentPage, this.selectedProducer);
+  }
+
+  nextPage() {
+    if (this.currentPage === this.maxPage) { return; }
+    this.getArticals(this.selectedSubcategory, [], ++this.currentPage, this.selectedProducer);
+  }
+
+  getArticals(id: number, params: string[], page: number, producer: Producer) {
+    this.articalService
+      .getArticals(this.selectedSubcategory, [], page, producer === null ? -1 : producer.id)
+      .subscribe((data) => {
+        const count = 'count'; const results = 'results';
+
+        this.currentPage = page;
+        this.maxPage = Math.floor(data[count] / 20);
+        if (data[count] % 20 !== 0 || data[count] === 0) {
+          this.maxPage++;
+        }
+        this.articals = data[results];
+      });
+  }
+
+  // Updejtovanje kategoriaj u zavisnosti od prodjuzera i search dugmeta koje jos uvek treba uraditi
+  updateCategories() {
+    if (this.selectedProducer === null) {
+      this.categories = this.allCategories;
+    } else {  // FILTER
+      this.categories = [];
+      let j = 0;
+
+      // tslint:disable-next-line: prefer-for-of
+      for (let i = 0; i < this.allCategories.length; i++) {
+        const tempCategory: Category = {
+          id: this.allCategories[i].id,
+          category_name: this.allCategories[i].category_name,
+          sub_categories: []
+        };
+
+        const lastSubCategory = this.allCategories[i].sub_categories[this.allCategories[i].sub_categories.length - 1];
+        while (
+          j < this.selectedProducer.sub_categories_id.length &&
+          this.selectedProducer.sub_categories_id[j] <= lastSubCategory.id
+        ) {
+          const m = this.selectedProducer.sub_categories_id[j] - this.allCategories[i].sub_categories[0].id;
+          tempCategory.sub_categories.push(this.allCategories[i].sub_categories[m]);
+          j++;
+        }
+        if (tempCategory.sub_categories.length !== 0) {
+          this.categories.push(tempCategory);
+        }
+        if (j >= this.selectedProducer.sub_categories_id.length) { break; }
+      }
+      // this.selectedSubcategory = this.categories[0].sub_categories[0].id;
+      console.log(this.selectedProducer);
+
+    }
+  }
   ngOnDestroy() {
     if (this.categorySubscription !== undefined) {
       this.categorySubscription.unsubscribe();
@@ -100,8 +203,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
       if (this.showPan !== undefined && this.showPan.nativeElement.contains(event.target)) {
         this.wasInside = true;
       }
-
-    }
+  }
   @HostListener('document:click', ['$event'])
     clickHandler(event) {
       if (

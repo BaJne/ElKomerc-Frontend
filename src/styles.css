@@ -27,7 +27,7 @@
   box-sizing: border-box;
 }
 
-:host /deep/ {
+:root {
   --primary-color: #007BFF;
   --secondary-color: #06203a;
   --btn-hover: #0052AA;

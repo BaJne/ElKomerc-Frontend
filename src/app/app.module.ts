@@ -11,6 +11,8 @@ import { GalleryComponent } from './shared/components/gallery/gallery.component'
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {InputMaskModule} from 'primeng/inputmask';
 import {SpinnerModule} from 'primeng/spinner';
+import {SidebarModule} from 'primeng/sidebar';
+import {CarouselModule} from 'primeng/carousel';
 
 import { ProducerService } from './services/producer.service';
 import { AppRoutingModule } from './app-routing.module';
@@ -35,6 +37,14 @@ import { SpinnerComponent } from './shared/components/spinner/spinner.component'
 import { DropDownComponent } from './shared/components/drop-down/drop-down.component';
 import { DataTableComponent } from './shared/components/data-table/data-table.component';
 import { ActivateComponent } from './ui/authentication/activate/activate.component';
+import { CarouselComponent } from './shared/components/carousel/carousel.component';
+import { HomeComponent } from './ui/home/home.component';
+import { ProductionComponent } from './ui/production/production.component';
+import { ContactComponent } from './ui/contact/contact.component';
+import { UserComponent } from './ui/user/user.component';
+import { UserDataComponent } from './ui/user/user-data/user-data.component';
+import { UserWishListComponent } from './ui/user/user-wish-list/user-wish-list.component';
+import { UserOrderHistoryComponent } from './ui/user/user-order-history/user-order-history.component';
 
 @NgModule({
   declarations: [
@@ -58,11 +68,21 @@ import { ActivateComponent } from './ui/authentication/activate/activate.compone
     TabComponent,
     TabsComponent,
     ActivateComponent,
-    GalleryComponent
+    GalleryComponent,
+    CarouselComponent,
+    HomeComponent,
+    ProductionComponent,
+    ContactComponent,
+    UserComponent,
+    UserDataComponent,
+    UserWishListComponent,
+    UserOrderHistoryComponent
   ],
   imports: [
     AutoCompleteModule,
+    CarouselModule,
     InputMaskModule,
+    SidebarModule,
     SpinnerModule,
     BrowserModule,
     BrowserAnimationsModule,

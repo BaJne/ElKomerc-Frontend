@@ -1,3 +1,11 @@
+import { AuthGuard } from './auth-guard.service';
+import { UserWishListComponent } from './ui/user/user-wish-list/user-wish-list.component';
+import { UserOrderHistoryComponent } from './ui/user/user-order-history/user-order-history.component';
+import { UserDataComponent } from './ui/user/user-data/user-data.component';
+import { UserComponent } from './ui/user/user.component';
+import { HomeComponent } from './ui/home/home.component';
+import { ContactComponent } from './ui/contact/contact.component';
+import { ProductionComponent } from './ui/production/production.component';
 import { ActivateComponent } from './ui/authentication/activate/activate.component';
 import { SignInComponent } from './ui/authentication/sign-in/sign-in.component';
 import { SignUpComponent } from './ui/authentication/sign-up/sign-up.component';
@@ -24,6 +32,14 @@ const routes: Routes = [
     { path: ':id', component: CategoryComponent},
     { path: 'product/:id', component: ProductComponent}
   ]},
+  { path: 'user', canActivate: [AuthGuard], component: UserComponent, children: [
+    { path: 'edit', component: UserDataComponent},
+    { path: 'orders', component: UserOrderHistoryComponent},
+    { path: 'wishList', component: UserWishListComponent}
+  ]},
+  { path: 'home', component: HomeComponent },
+  { path: 'production', component: ProductionComponent },
+  { path: 'contact', component: ContactComponent },
   { path: '**', redirectTo: '/products/all' },
 ];
 

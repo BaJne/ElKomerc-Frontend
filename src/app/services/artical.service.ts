@@ -30,14 +30,22 @@ export class ArticalService {
   }
 
   // Metoda za dohvatanje proizvoda
-  getArticals(subCategoryID: number, features: string[]) {
+  getArticals(subCategoryID: number, features: string[], page: number, idProducer: number) {
     let queryParams = new HttpParams();
     // queryParams = queryParams.append('value', v)
-    queryParams = queryParams.append('sub_category_id', subCategoryID + '');
+    queryParams = queryParams
+      .append('sub_category_id', subCategoryID + '')
+      .append('page', page + '');
+
+    if (idProducer !== -1) {
+      queryParams = queryParams.append('producer', idProducer + '');
+    }
+
     return this.http.get(
       this.globals.location + '/api/product/articles/',
       {params: queryParams}
-    ).pipe(tap(responseData => {
+    )
+    .pipe(tap(responseData => {
       const data: Artical[] = [];
       responseData['results'].forEach(art => {
         const a = {
@@ -58,7 +66,6 @@ export class ArticalService {
 
     }));
   }
-
 
   // Metoda kojom se prosledjuje artikal radi ispisivanja njegovih detalja
   setArticalToDisplay(a: Artical) {

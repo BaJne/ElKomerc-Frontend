@@ -1,0 +1,13 @@
+<app-header></app-header>
+<div>
+  <p-carousel [value]="pictures" [autoplayInterval]="3000" [circular]="true">
+    <p-header>
+        <h3>Vertical</h3>
+    </p-header>
+    <ng-template let-car pTemplate="item">
+        <div style="height:300px;background-color:red;width: 350px;margin-right: auto;margin-left: auto;">{{car}}</div>
+    </ng-template>
+  </p-carousel>
+</div>
+<!-- Ovde dolazi footer -->
+

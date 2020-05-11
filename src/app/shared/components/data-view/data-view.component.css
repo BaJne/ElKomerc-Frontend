@@ -39,19 +39,30 @@
  .item {
   display: flex;
   flex-direction: column;
-  text-align: center;
   gap: 5px;
+  text-align: center;
   border: 1px solid #e3e3e3;
   max-width: 100%;
   min-width: 250px;
+
 }
 .item #name{
+  display: grid;
   background-color: #F4F4F4;
   color: #333;
   font-weight: bold;
   padding: 5px 15px 5px 15px;
   margin: 2px;
+  align-items: center;
   text-align: left;
+  height: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.item #name span{
+  margin-top: auto;
+  margin-bottom: auto;
+  display: block;
 }
 #picture {
   cursor: pointer;

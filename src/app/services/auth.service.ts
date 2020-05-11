@@ -133,6 +133,8 @@ export class AuthService {
       .pipe(
         catchError(this.errorHandling.bind(this)),
         tap((responseData: any) => {
+          console.log(responseData);
+
           const expireDate = new Date(responseData.expires);
 
           const user = new User(
@@ -143,6 +145,8 @@ export class AuthService {
           );
           localStorage.setItem('userData', JSON.stringify(user));
           this.autoLogout(expireDate);
+          console.log(user);
+
           this.user.next(user);
         })
       );

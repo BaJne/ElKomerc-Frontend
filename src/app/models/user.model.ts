@@ -1,11 +1,22 @@
 
 export class User {
-  public slika: string = null;
-  public adresa: string = null;
-  public grad: string = null;
-  public post: string = null;
-  public telefon: number = null;
 
+  public details: {
+    profile_image: string;
+    address: string;
+    city: string;
+    zip_code: string;
+    phone_number: string;
+    account_type: string;
+    // User
+    first_name?: string;
+    last_name?: string;
+    date_of_birth?: Date;
+    // Company
+    company_name?: string;
+    pib?: number;
+    fax?: string;
+  } = null;
 
   constructor(
     public email: string,

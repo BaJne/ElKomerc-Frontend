@@ -1,0 +1,32 @@
+<app-header></app-header>
+<div class="main-container">
+
+  <nav id="sidebar">
+    <h4>Moj nalog</h4>
+    <ul class="list-unstyled user-sidebar">
+      <a routerLink="/user/edit">
+        <li>
+          <i class="fas fa-users-cog"></i>
+          Korisnički podaci
+        </li>
+      </a>
+      <a routerLink="/user/orders">
+        <li>
+          <i class="fas fa-book"></i>
+          Moje narudžbine
+        </li>
+      </a>
+      <a routerLink="/user/wishList">
+        <li>
+          <i class="fas fa-heart"></i>
+          Moje želje
+        </li>
+      </a>
+    </ul>
+  </nav>
+
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+
+</div>

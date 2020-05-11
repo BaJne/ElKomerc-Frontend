@@ -7,16 +7,10 @@ import { map, tap } from 'rxjs/operators';
 
 
 @Injectable({providedIn: 'root'})
-export class CategoryService implements OnDestroy {
-  categorySubscription: Subscription;
+export class CategoryService {
   loadedCategory: Category[] = [];
 
-  constructor(private http: HttpClient, private globals: Globals) {
-
-  }
-  ngOnDestroy() {
-    this.categorySubscription.unsubscribe();
-  }
+  constructor(private http: HttpClient, private globals: Globals) {}
 
   // Http request za dohvatanje kategorija
   requestCategories() {
@@ -32,11 +26,11 @@ export class CategoryService implements OnDestroy {
           };
 
           myObject.sub_categories.forEach(subCategory => {
-            const sub_category = {
+            const temp = {
               id: subCategory.id,
               subcategory_name: subCategory.sub_category_name
             };
-            categoryObj.sub_categories.push(sub_category);
+            categoryObj.sub_categories.push(temp);
           });
 
           catData.push(categoryObj);
@@ -50,7 +44,7 @@ export class CategoryService implements OnDestroy {
   }
 
   getCategories() {
-    if(this.loadedCategory.length > 0) {
+    if (this.loadedCategory.length > 0) {
       return this.loadedCategory;
     }
     this.loadedCategory = JSON.parse(localStorage.getItem('categories'));
