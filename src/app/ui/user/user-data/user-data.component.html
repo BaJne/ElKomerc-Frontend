@@ -1,1 +1,183 @@
-<p>user-data works!</p>
+<p-fileUpload name="profile_image" url="./upload.php"></p-fileUpload>
+<form class="myForm" (ngSubmit)="onSubmit()"  [formGroup]="signUpForm"
+ *ngIf="user !== null && user.details !== null"  >
+
+  <!-- EMAIL -->
+  <label for="email" >Email</label>
+  <input type="email"
+        id="email"
+        formControlName="email"
+  >
+  <div *ngIf="!signUpForm.get('email').valid && signUpForm.get('email').touched ">
+    <div class="error" *ngIf="signUpForm.get('email').errors['required']" >
+      Morate popuniti ovo polje.
+    </div>
+    <div class="error" *ngIf="signUpForm.get('email').errors['email']" >
+      Morate uneti validnu email adresu.
+    </div>
+
+  </div>
+
+
+  <!-- PERSON DITAILS : NAME , LASTNAME -->
+  <div *ngIf="user.details.account_type ==='USR'" formGroupName="person">
+    <!-- Name -->
+    <div>
+      <label for="name" >Ime</label>
+      <input type="text"
+            id="name"
+            formControlName="name"
+      >
+      <div *ngIf="!signUpForm.get('person.name').valid && signUpForm.get('person.name').touched ">
+        <div class="error" *ngIf="signUpForm.get('person.name').errors['required']" >
+          Morate popuniti ovo polje.
+        </div>
+      </div>
+
+    </div>
+    <!-- Last Name -->
+    <div>
+      <label for="last-name">Prezime</label>
+      <input type="text"
+            id="last-name"
+            formControlName="lastName"
+      >
+      <div *ngIf="!signUpForm.get('person.lastName').valid && signUpForm.get('person.lastName').touched ">
+        <div class="error" *ngIf="signUpForm.get('person.lastName').errors['required']" >
+          Morate popuniti ovo polje.
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- Kraj kontejnera za Ime i prezime -->
+  <!-- Informacije o kompaniji -->
+  <div *ngIf="user.details.account_type !=='USR'" formGroupName="company">
+    <!-- Naziv -->
+    <div >
+      <label for="company-name">Naziv</label>
+      <input type="text"
+            id="company-name"
+            formControlName="name"
+      >
+      <div *ngIf="!signUpForm.get('company.name').valid && signUpForm.get('company.name').touched ">
+        <div class="error" *ngIf="signUpForm.get('company.name').errors['required']" >
+          Morate popuniti ovo polje.
+        </div>
+      </div>
+    </div>
+    <!-- Broj Faksa -->
+    <div>
+      <label for="fax-num">Broj faksa</label>
+      <p-inputMask id="fax-num"
+                   formControlName="fax"
+                   mask="(999) 999-999?9"
+                   placeholder="(011) 555-555?5"
+      ></p-inputMask>
+    </div>
+
+  </div>   <!-- Kraj kontejnera sa kompanijinim informacijama -->
+  <!-- INFORMACIJE O MESTU -->
+  <div>
+    <!-- Adresa -->
+    <div>
+      <label for="address">Adresa</label>
+      <input type="text"
+            id="address"
+            formControlName="address"
+      >
+      <div *ngIf="!signUpForm.get('address').valid && signUpForm.get('address').touched ">
+        <div class="error" *ngIf="signUpForm.get('address').errors['required']" >
+          Morate popuniti ovo polje.
+        </div>
+      </div>
+    </div>
+    <!-- Grad -->
+    <div>
+      <label for="town">Grad</label>
+      <p-autoComplete [suggestions]="cities"
+                      (completeMethod)="searchForCity($event)"
+                      (onSelect)="onCitySelected($event)"
+                      formControlName="city"
+
+      ></p-autoComplete>
+      <div *ngIf="!signUpForm.get('city').valid && signUpForm.get('city').touched ">
+        <div class="error" *ngIf="signUpForm.get('city').errors['required']" >
+          Morate popuniti ovo polje.
+        </div>
+      </div>
+
+    </div>
+
+  </div> <!-- Kraj kontejnera -->
+  <!-- KONTAKT -->
+  <div>
+
+    <!-- Telefon -->
+    <div>
+      <label for="phone">Telefon</label>
+      <p-inputMask id="phone"
+                   formControlName="phone"
+                   mask="(999) 999-999?9"
+                   placeholder="(011) 555-555?5"
+      ></p-inputMask>
+      <div class="error" *ngIf="!signUpForm.get('phone').valid && signUpForm.get('phone').touched ">
+          Morate popuniti ovo polje.
+      </div>
+    </div>
+    <!-- Post broj -->
+    <div>
+      <label for="zip">Post kod</label>
+      <p-inputMask id="zip"
+                   formControlName="post"
+                   mask="9999?9999"
+      ></p-inputMask>
+      <div *ngIf="!signUpForm.get('post').valid && signUpForm.get('post').touched ">
+        <div class="error" *ngIf="signUpForm.get('post').errors['required']" >
+          Morate popuniti ovo polje.
+        </div>
+      </div>
+    </div>
+  </div> <!-- Kraj kontejnera -->
+
+  <div>
+    <!-- jedno od dva kontejnera se prikazuje -->
+    <!-- Datum rodjenja -->
+    <div *ngIf="user.details.account_type ==='USR'" formGroupName="person">
+      <div>
+        <label for="date">Datum rodjenja</label>
+        <input type="date"
+              id="date"
+              formControlName="birthDate"
+        >
+      </div>
+    </div>
+    <!-- Pib -->
+    <div *ngIf="user.details.account_type !=='USR'" formGroupName="company">
+      <div>
+        <label for="pib" >Pib</label>
+        <p-inputMask id="pib"
+                   formControlName="pib"
+                   mask="999999999"
+                   placeholder="10000001 do 999999999"
+      ></p-inputMask>
+        <div *ngIf="!signUpForm.get('company.pib').valid && signUpForm.get('company.pib').touched ">
+          <div class="error" *ngIf="signUpForm.get('company.pib').errors['required']" >
+            Morate popuniti ovo polje.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prepraviti disabled -->
+  <button class="btn" [disabled]="!signUpForm.valid" type="submit">Registruj se</button>
+  <div class="error"style="margin-top:15px;text-align:center" *ngIf="errorMessage">
+    <div>
+      <ul>
+        <li *ngFor="let item of errorMessage" > {{ item }}</li>
+      </ul>
+    </div>
+  </div>
+  <hr>
+
+</form>

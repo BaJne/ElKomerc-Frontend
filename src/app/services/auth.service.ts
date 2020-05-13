@@ -1,11 +1,12 @@
 import { Globals, ServerResponseData } from './globals';
 import { User } from '../models/user.model';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpHeaders } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
 import { messagetype } from 'src/app/models/message.model';
 import { MessageService } from './message.service';
 import { throwError, BehaviorSubject } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 
 interface SignUpResponseData {
   kind: string;
@@ -15,7 +16,27 @@ interface SignUpResponseData {
   expiresIn: string;
   localId: string;
 }
-
+interface UserDetails {
+  email: string;
+  id: number;
+  account_type: string;​
+  address: string;
+  city: string;​
+  is_active: boolean;​
+  phone_number: string;​
+  profile_image: string;
+  zip_code: string;
+  company: {
+    company_name: string;
+    pib: string;
+    fax: string;
+  } [];
+  user: {
+    date_of_birth: Date;​​​
+    first_name: string;​​​
+    last_name: string;
+  }[];​
+}
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user = new BehaviorSubject<User>(null);
@@ -31,7 +52,8 @@ export class AuthService {
   constructor(
       private http: HttpClient,
       private globals: Globals,
-      private messageService: MessageService
+      private messageService: MessageService,
+      private router: Router
     ) {
     this.autoLogin();
   }
@@ -85,6 +107,9 @@ export class AuthService {
         type: messagetype.warn
       });
       this.logout();
+      if (this.router.url.startsWith('/user')) {
+        this.router.navigate(['/home']);
+      }
     }, expirationDuration);
   }
 
@@ -92,6 +117,7 @@ export class AuthService {
     const userData: {
       email: string,
       localId: string,
+      isAdministrator: boolean,
       _token: string,
       _tokenExpirationDate: string
     }
@@ -102,6 +128,7 @@ export class AuthService {
     const loadedUser = new User(
       userData.email,
       userData.localId,
+      userData.isAdministrator,
       userData._token,
       new Date(userData._tokenExpirationDate)
     );
@@ -122,6 +149,40 @@ export class AuthService {
       clearTimeout(this.tokenExpirationTimer);
     }
     this.tokenExpirationTimer = null;
+    if (this.router.url.startsWith('/user')) {
+      this.router.navigate(['/home']);
+    }
+  }
+
+  // Dohvatanje user detalja
+  loadUserDetails() {
+    if (this.user.value.details !== null) { return; }
+    const userValue = this.user.value;
+    const header = new HttpHeaders()
+      .append('Authorization', 'JWT ' + userValue.token);
+    return this.http.get<UserDetails>(
+      this.globals.location + '/api/accounts/' + userValue.localId,
+      {headers: header}
+    ).pipe(map(responseData => {
+      userValue.details = {
+        profile_image: responseData.profile_image,
+        address: responseData.address,
+        city: responseData.city,
+        zip_code: responseData.phone_number,
+        phone_number: responseData.phone_number,
+        account_type: responseData.account_type
+      };
+      if (userValue.details.account_type === 'USR') {
+        userValue.details.first_name = responseData.user[0].first_name;
+        userValue.details.last_name = responseData.user[0].last_name;
+        userValue.details.date_of_birth = responseData.user[0].date_of_birth;
+      } else {
+        userValue.details.company_name = responseData.company[0].company_name;
+        userValue.details.pib = responseData.company[0].pib;
+        userValue.details.fax = responseData.company[0].fax;
+      }
+      localStorage.setItem('userData', JSON.stringify(userValue));
+    }));
   }
 
   // Metoda za prijavljivanje korisnika na server
@@ -133,19 +194,18 @@ export class AuthService {
       .pipe(
         catchError(this.errorHandling.bind(this)),
         tap((responseData: any) => {
-          console.log(responseData);
 
           const expireDate = new Date(responseData.expires);
 
           const user = new User(
             responseData.email,
-            responseData.localId,
+            responseData.local_id,
+            responseData.is_stuff,
             responseData.token,
             expireDate
           );
           localStorage.setItem('userData', JSON.stringify(user));
           this.autoLogout(expireDate);
-          console.log(user);
 
           this.user.next(user);
         })

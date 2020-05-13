@@ -13,6 +13,7 @@ import {InputMaskModule} from 'primeng/inputmask';
 import {SpinnerModule} from 'primeng/spinner';
 import {SidebarModule} from 'primeng/sidebar';
 import {CarouselModule} from 'primeng/carousel';
+import {FileUploadModule} from 'primeng/fileupload';
 
 import { ProducerService } from './services/producer.service';
 import { AppRoutingModule } from './app-routing.module';
@@ -82,6 +83,7 @@ import { UserOrderHistoryComponent } from './ui/user/user-order-history/user-ord
     AutoCompleteModule,
     CarouselModule,
     InputMaskModule,
+    FileUploadModule,
     SidebarModule,
     SpinnerModule,
     BrowserModule,

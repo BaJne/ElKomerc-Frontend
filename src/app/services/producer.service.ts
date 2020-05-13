@@ -16,7 +16,6 @@ export class ProducerService {
         const producers: Producer[] = [];
 
         data.forEach(obj => {
-          console.log(obj.profile_image);
           const prod: Producer = {
             id: obj.id,
             producer_name: obj.producer_name,

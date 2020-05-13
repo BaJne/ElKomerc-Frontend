@@ -12,15 +12,17 @@ export class User {
     first_name?: string;
     last_name?: string;
     date_of_birth?: Date;
+
     // Company
     company_name?: string;
-    pib?: number;
+    pib?: string;
     fax?: string;
   } = null;
 
   constructor(
     public email: string,
     public localId: string,
+    public isAdministrator: boolean,
     private _token: string,
     private _tokenExpirationDate: Date
   ) {}
