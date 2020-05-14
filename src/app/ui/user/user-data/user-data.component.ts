@@ -15,6 +15,8 @@ export class UserDataComponent implements OnInit, OnDestroy {
   user: User = null;
 
   // Forma usera
+  fileToUpload: File = null;
+  imgURL: any = null;
   errorMessage = null;
   cities: string[];
   postCodes: string[];
@@ -41,16 +43,15 @@ export class UserDataComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.isAutenticated = this.authService.loadUserDetails()
-    .subscribe(data => {
-      this.user = data.value;
-      console.log(this.user.details);
-      console.log(data.details);
-      if(this.user.details === null) { return; }
+    this.authService.loadUserDetails();
+    this.isAutenticated = this.authService.user.subscribe(data => {
+      if (data === null) { return; }
+      this.user = data;
+      if (this.user.details === null) { return; }
       this.signUpForm.controls['email'].setValue(this.user.email);
       this.signUpForm.controls['address'].setValue(this.user.details.address);
       this.signUpForm.controls['city'].setValue(this.user.details.city);
-      this.signUpForm.controls['post'].setValue(this.user.details.zip_code);
+      this.signUpForm.controls['post'].setValue(+this.user.details.zip_code);
       this.signUpForm.controls['phone'].setValue(this.user.details.phone_number);
       if (this.user.details.account_type === 'USR') {
         this.signUpForm.controls['person'].setValue({
@@ -66,9 +67,31 @@ export class UserDataComponent implements OnInit, OnDestroy {
         });
       }
     });
+
   }
   ngOnDestroy() {
     this.isAutenticated.unsubscribe();
+  }
+  // File upload
+  handleFileInput(files: FileList) {
+    if (files.length === 0) {
+      return;
+    }
+    this.fileToUpload = files.item(0);
+    console.log(this.fileToUpload);
+
+    const mimeType = files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+      // this.message = "Only images are supported.";    ISPISATI PORUKU
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload = (event) => {
+      this.imgURL = reader.result;
+    };
+
   }
   // City autocomplete
   onCitySelected(city: string) {

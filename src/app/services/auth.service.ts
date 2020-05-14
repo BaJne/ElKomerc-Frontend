@@ -2,7 +2,7 @@ import { Globals, ServerResponseData } from './globals';
 import { User } from '../models/user.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams, HttpHeaders } from '@angular/common/http';
-import { catchError, tap, map } from 'rxjs/operators';
+import { catchError, tap, map, take } from 'rxjs/operators';
 import { messagetype } from 'src/app/models/message.model';
 import { MessageService } from './message.service';
 import { throwError, BehaviorSubject } from 'rxjs';
@@ -160,10 +160,11 @@ export class AuthService {
     const userValue = this.user.value;
     const header = new HttpHeaders()
       .append('Authorization', 'JWT ' + userValue.token);
-    return this.http.get<UserDetails>(
+    this.http.get<UserDetails>(
       this.globals.location + '/api/accounts/' + userValue.localId,
       {headers: header}
-    ).pipe(map(responseData => {
+    ).pipe(take(1))
+    .subscribe(responseData => {
       userValue.details = {
         profile_image: responseData.profile_image,
         address: responseData.address,
@@ -182,7 +183,8 @@ export class AuthService {
         userValue.details.fax = responseData.company[0].fax;
       }
       localStorage.setItem('userData', JSON.stringify(userValue));
-    }));
+      this.user.next(this.user.value);
+    });
   }
 
   // Metoda za prijavljivanje korisnika na server
@@ -194,9 +196,7 @@ export class AuthService {
       .pipe(
         catchError(this.errorHandling.bind(this)),
         tap((responseData: any) => {
-
           const expireDate = new Date(responseData.expires);
-
           const user = new User(
             responseData.email,
             responseData.local_id,

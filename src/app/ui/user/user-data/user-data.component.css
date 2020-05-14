@@ -1,0 +1,58 @@
+.main-container{
+  padding: 20px;
+}
+.myForm{
+  min-width: 100%;
+}
+.auto-complete /deep/ .ui-widget{
+  width: 100%;
+}
+.user-photo {
+  position: relative;
+  height: 200px;
+  margin-bottom: 20px;
+}
+.user-photo > img{
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-width: 3px 3px 0px 3px;
+  border-style: solid;
+  border-color: black;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.fileUpload{
+  width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+.fileUpload + label {
+  position: absolute;
+  top: 170px;
+  text-align: center;
+  width: 200px;
+  min-width: 200px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-weight: 700;
+  color: #333;
+  background-color: rgba(255, 255, 255, 0.589);
+  display: inline-block;
+  cursor: pointer;
+  border-width: 0px 3px 3px 3px;
+  border-style: solid;
+  border-color: black;
+}
+
+.fileUpload:focus + label,
+.fileUpload + label:hover {
+  background-color: rgb(255, 251, 251);
+}
+.fileUpload:focus + label {
+	outline: 1px dotted #000;
+	outline: -webkit-focus-ring-color auto 5px;
+}
