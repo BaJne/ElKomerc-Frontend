@@ -116,26 +116,25 @@ export class UserDataComponent implements OnInit, OnDestroy {
   }
   onSubmit() {
     if (!this.signUpForm.valid) { return; }
-    const uploadFile = new FormData();
-    uploadFile.append('profile_image', this.fileToUpload, this.fileToUpload.name);
+    const formData = new FormData();
 
-    const updateData: {[k: string]: any} = {
-      address: this.signUpForm.value.address,
-      city: this.signUpForm.value.city,
-      zip_code: this.signUpForm.value.post,
-      phone_number: this.signUpForm.value.phone,
-      account_type: this.user.details.account_type,
-      profile_image: null
-    };
-    if (updateData.account_type === 'USR') {
-      updateData.first_name = this.signUpForm.value.person.name;
-      updateData.last_name = this.signUpForm.value.person.lastName;
-      updateData.date_of_birth = this.signUpForm.value.person.birthDate;
-    } else {
-      updateData.company_name = this.signUpForm.value.company.name;
-      updateData.pib = this.signUpForm.value.company.pib;
-      updateData.fax = this.signUpForm.value.company.fax;
+    formData.append('address', this.signUpForm.value.address);
+    formData.append('city', this.signUpForm.value.city);
+    formData.append('zip_code', this.signUpForm.value.post);
+    formData.append('phone_number', this.signUpForm.value.phone);
+    formData.append('account_type', this.user.details.account_type);
+    if (this.fileToUpload) {
+      formData.append('profile_image', this.fileToUpload, this.fileToUpload.name);
     }
-    this.authService.changeUserDetails( updateData );
+    if (this.user.details.account_type === 'USR') {
+      formData.append('first_name', this.signUpForm.value.person.name);
+      formData.append('last_name', this.signUpForm.value.person.lastName);
+      formData.append('date_of_birth', this.signUpForm.value.person.birthDate);
+    } else {
+      formData.append('company_name', this.signUpForm.value.company.name);
+      formData.append('pib', this.signUpForm.value.company.pib);
+      formData.append('fax', this.signUpForm.value.company.fax);
+    }
+    this.authService.changeUserDetails( formData );
   }
 }
