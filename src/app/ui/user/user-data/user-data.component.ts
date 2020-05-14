@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChildren } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Subscription } from 'rxjs';
 import { User } from '../../../models/user.model';
@@ -22,21 +22,21 @@ export class UserDataComponent implements OnInit, OnDestroy {
   postCodes: string[];
 
   signUpForm = new FormGroup({
-    email: new FormControl(null, [Validators.required, Validators.email]),
-    address: new FormControl(null, Validators.required),
-    city: new FormControl(null, Validators.required),
-    post: new FormControl(null, [Validators.required]),
-    phone: new FormControl(null, [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    address: new FormControl('', Validators.required),
+    city: new FormControl('', Validators.required),
+    post: new FormControl('', [Validators.required]),
+    phone: new FormControl('', [Validators.required]),
 
     person: new FormGroup({
-      name: new FormControl(null, Validators.required),
-      lastName: new FormControl(null , Validators.required),
-      birthDate: new FormControl(null)
+      name: new FormControl('', Validators.required),
+      lastName: new FormControl('' , Validators.required),
+      birthDate: new FormControl('')
     }),
     company: new FormGroup({
-      name: new FormControl(null, Validators.required),
-      fax: new FormControl(null),
-      pib: new FormControl(null, Validators.required)
+      name: new FormControl('', Validators.required),
+      fax: new FormControl(''),
+      pib: new FormControl('', Validators.required)
     })
   });
 
@@ -45,19 +45,17 @@ export class UserDataComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.authService.loadUserDetails();
     this.isAutenticated = this.authService.user.subscribe(data => {
-      if (data === null) { return; }
-      this.user = data;
+      if (data === null || data.details === null) { return; }
 
-      if (this.user.details === null) { return; }
+      this.user = data;
       if (this.user.details.profile_image !== null) {
         this.imgURL = this.user.details.profile_image;
       }
-      console.log(data);
 
       this.signUpForm.controls['email'].setValue(this.user.email);
       this.signUpForm.controls['address'].setValue(this.user.details.address);
       this.signUpForm.controls['city'].setValue(this.user.details.city);
-      this.signUpForm.controls['post'].setValue(+this.user.details.zip_code);
+      this.signUpForm.controls['post'].setValue(this.user.details.zip_code);
       this.signUpForm.controls['phone'].setValue(this.user.details.phone_number);
 
       if (this.user.details.account_type === 'USR') {
@@ -75,9 +73,10 @@ export class UserDataComponent implements OnInit, OnDestroy {
         });
         this.signUpForm.get('person').disable();
       }
-    });
 
+    });
   }
+
   ngOnDestroy() {
     this.isAutenticated.unsubscribe();
   }
@@ -87,7 +86,6 @@ export class UserDataComponent implements OnInit, OnDestroy {
       return;
     }
     this.fileToUpload = files.item(0);
-    console.log(this.fileToUpload);
 
     const mimeType = files[0].type;
     if (mimeType.match(/image\/*/) == null) {
@@ -100,8 +98,12 @@ export class UserDataComponent implements OnInit, OnDestroy {
     reader.onload = (event) => {
       this.imgURL = reader.result;
     };
-
   }
+  removeImg() {
+    this.imgURL = null;
+    this.fileToUpload = null;
+  }
+
   // City autocomplete
   onCitySelected(city: string) {
     let index = 0;
@@ -116,8 +118,30 @@ export class UserDataComponent implements OnInit, OnDestroy {
   }
   onSubmit() {
     if (!this.signUpForm.valid) { return; }
-    const formData = new FormData();
 
+    if ( // Ukoliko nije promenjena vrednost nista se nece uraditi
+      this.signUpForm.value.address === this.user.details.address &&
+      this.signUpForm.value.city === this.user.details.city &&
+      this.signUpForm.value.post === this.user.details.zip_code &&
+      this.signUpForm.value.phone === this.user.details.phone_number &&
+      (this.fileToUpload === null || this.imgURL === this.user.details.profile_image)
+    ) {
+      if (this.user.details.account_type === 'USR') {
+        if (
+          this.signUpForm.value.person.name === this.user.details.first_name &&
+          this.signUpForm.value.person.lastName === this.user.details.last_name &&
+          this.signUpForm.value.person.birthDate === this.user.details.date_of_birth
+        ) { return; }
+      } else {
+        if (
+          this.signUpForm.value.company.name === this.user.details.company_name &&
+          this.signUpForm.value.company.pib === this.user.details.pib &&
+          this.signUpForm.value.company.fax === this.user.details.fax
+        ) { return; }
+      }
+    }
+
+    const formData = new FormData();
     formData.append('address', this.signUpForm.value.address);
     formData.append('city', this.signUpForm.value.city);
     formData.append('zip_code', this.signUpForm.value.post);
@@ -135,6 +159,7 @@ export class UserDataComponent implements OnInit, OnDestroy {
       formData.append('pib', this.signUpForm.value.company.pib);
       formData.append('fax', this.signUpForm.value.company.fax);
     }
+
     this.authService.changeUserDetails( formData );
   }
 }

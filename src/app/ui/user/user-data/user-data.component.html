@@ -1,4 +1,8 @@
 <div class="main-container">
+  <div class="spinner" *ngIf="user === null || user.details === null">
+    Učitavanje... &nbsp;&nbsp;
+    <app-spinner></app-spinner>
+  </div>
   <form (ngSubmit)="onSubmit()"  [formGroup]="signUpForm"
     *ngIf="user !== null && user.details !== null">
 
@@ -10,27 +14,22 @@
           id="file"
           accept='image/*'
           (change)="handleFileInput($event.target.files)">
-        <label for="file">Učitajte sliku</label>
+        <label for="file">
+          <i class="fas fa-camera"></i> &nbsp;
+          Učitajte sliku
+        </label>
       </div>
+      <i *ngIf="imgURL !== null" (click)="(removeImg())" class="far fa-window-close close-img"></i>
     </div>
 
     <!-- EMAIL -->
     <div class="form-group ui-g ui-md-12 ui-sm-12">
       <label for="email" >Email</label>
-      <input type="email" class="form-control"
+      <input type="email" class="form-control" readonly
       id="email"
       formControlName="email"
       >
-      <div *ngIf="!signUpForm.get('email').valid && signUpForm.get('email').touched ">
-        <div class="error" *ngIf="signUpForm.get('email').errors['required']" >
-          Morate popuniti ovo polje.
-        </div>
-        <div class="error" *ngIf="signUpForm.get('email').errors['email']" >
-          Morate uneti validnu email adresu.
-        </div>
-      </div>
     </div>
-
 
     <!-- PERSON DITAILS : Ime, Preyime -->
     <div *ngIf="user.details.account_type ==='USR'" formGroupName="person" class="ui-g">
@@ -86,7 +85,7 @@
         formGroupName="person"
         class="form-group ui-md-6 ui-sm-12"
       >
-        <label for="date" class="col-form-label">Datum rodjenja</label>
+        <label for="date" class="col-form-label">Datum rođenja</label>
         <input type="date" id="date" formControlName="birthDate" class="form-control" style="line-height: normal;">
       </div>
 

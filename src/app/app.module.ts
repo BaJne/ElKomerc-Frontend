@@ -46,6 +46,7 @@ import { UserComponent } from './ui/user/user.component';
 import { UserDataComponent } from './ui/user/user-data/user-data.component';
 import { UserWishListComponent } from './ui/user/user-wish-list/user-wish-list.component';
 import { UserOrderHistoryComponent } from './ui/user/user-order-history/user-order-history.component';
+import { UserPasswordComponent } from './ui/user/user-password/user-password.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { UserOrderHistoryComponent } from './ui/user/user-order-history/user-ord
     UserComponent,
     UserDataComponent,
     UserWishListComponent,
-    UserOrderHistoryComponent
+    UserOrderHistoryComponent,
+    UserPasswordComponent
   ],
   imports: [
     AutoCompleteModule,

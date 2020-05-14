@@ -1,5 +1,7 @@
 .main-container{
   padding: 20px;
+  background-color: white;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
 }
 .myForm{
   min-width: 100%;
@@ -39,20 +41,44 @@
   padding-top: 5px;
   padding-bottom: 5px;
   font-weight: 700;
-  color: #333;
+  color: #06203a;
   background-color: rgba(255, 255, 255, 0.589);
   display: inline-block;
   cursor: pointer;
   border-width: 0px 3px 3px 3px;
   border-style: solid;
   border-color: black;
+  transition: all;
+  transition-duration: 300ms;
 }
 
 .fileUpload:focus + label,
 .fileUpload + label:hover {
-  background-color: rgb(255, 251, 251);
+  background-color: rgb(255, 255, 255);
 }
 .fileUpload:focus + label {
 	outline: 1px dotted #000;
 	outline: -webkit-focus-ring-color auto 5px;
+}
+
+.close-img{
+  position: absolute;
+  cursor: pointer;
+  top: 2px;
+  left: 171px;
+  font-size: 25px;
+  transition: all;
+  transition-duration: 300ms;
+}
+.close-img:hover{
+  color: #f15b6a;
+}
+.spinner{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 35px;
+  font-size: 20px;
+  color: #06203a;
+  width: 100%;
 }

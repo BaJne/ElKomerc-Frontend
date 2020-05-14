@@ -1,31 +1,37 @@
 <app-header></app-header>
 <div class="main-container">
-
   <nav id="sidebar">
     <h4>Moj nalog</h4>
     <ul class="list-unstyled user-sidebar">
       <a routerLink="/user/edit">
         <li>
-          <i class="fas fa-users-cog"></i>
+          <i class="fas fa-users-cog"></i> &nbsp;
           Korisnički podaci
+        </li>
+      </a>
+      <a routerLink="/user/password-change">
+        <li>
+          <i class="fas fa-key"></i> &nbsp;
+          Promena lozinke
         </li>
       </a>
       <a routerLink="/user/orders">
         <li>
-          <i class="fas fa-book"></i>
+          <i class="fas fa-book"></i> &nbsp;
           Moje narudžbine
         </li>
       </a>
       <a routerLink="/user/wishList">
         <li>
-          <i class="fas fa-heart"></i>
-          Moje želje
+          <i class="fas fa-heart"></i> &nbsp;
+          Lista želje
         </li>
       </a>
     </ul>
   </nav>
 
-  <div>
+  <div style="position: relative;">
+    <app-toast></app-toast>
     <router-outlet></router-outlet>
   </div>
 

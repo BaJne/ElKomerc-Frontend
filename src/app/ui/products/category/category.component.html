@@ -28,11 +28,9 @@
       <i class="fas fa-chevron-right" style="margin-left:1px"></i>
     </span>
     <div>
-      <app-toast></app-toast>
       <app-carousel [show]="showProducers">
         <div *ngFor="let prod of producers;let ind = index" (click)="selectGroup(ind)"
           style="background-size: cover;"
-
         >
           <img src="{{(prod.producer_icon !== null) ? prod.producer_icon: ''}}" alt="">
           <span *ngIf="prod.producer_icon === null" >{{prod.producer_name}}</span>

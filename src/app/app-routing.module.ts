@@ -16,11 +16,13 @@ import { CategoryComponent } from './ui/products/category/category.component';
 import { ProductsComponent } from './ui/products/products.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { UserPasswordComponent } from './ui/user/user-password/user-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/products/all', pathMatch: 'full' },
   { path: 'products', redirectTo: '/products/all', pathMatch: 'full' },
   { path: 'login', redirectTo: '/login/sign-in', pathMatch: 'full' },
+  { path: 'user', redirectTo: '/user/edit', pathMatch: 'full' },
 
   { path: 'login', component: AuthenticationComponent, children: [
     { path: 'sign-in', component: SignInComponent},
@@ -34,6 +36,7 @@ const routes: Routes = [
   ]},
   { path: 'user', canActivate: [AuthGuard], component: UserComponent, children: [
     { path: 'edit', component: UserDataComponent},
+    { path: 'password-change', component: UserPasswordComponent},
     { path: 'orders', component: UserOrderHistoryComponent},
     { path: 'wishList', component: UserWishListComponent}
   ]},

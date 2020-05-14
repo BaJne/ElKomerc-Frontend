@@ -159,8 +159,8 @@ export class AuthService {
   loadUserDetails() {
     if (this.user.value.details !== null) { return; }
     const userValue = this.user.value;
-    const header = new HttpHeaders()
-      .append('Authorization', 'JWT ' + userValue.token);
+    const header = new HttpHeaders().append('Authorization', 'JWT ' + userValue.token);
+
     this.http.get<UserDetails>(
       this.globals.location + '/api/accounts/' + userValue.localId,
       {headers: header}
@@ -170,7 +170,7 @@ export class AuthService {
         profile_image: responseData.profile_image,
         address: responseData.address,
         city: responseData.city,
-        zip_code: responseData.phone_number,
+        zip_code: responseData.zip_code,
         phone_number: responseData.phone_number,
         account_type: responseData.account_type
       };
@@ -190,12 +190,51 @@ export class AuthService {
 
   changeUserDetails(userUpdate) {
     const header = new HttpHeaders().append('Authorization', 'JWT ' + this.user.value.token);
-    this.http.put(
+    this.http.put<UserDetails>(
       this.globals.location + '/api/accounts/' + this.user.value.localId + '/',
-       userUpdate,
-       {headers: header}
+      userUpdate,
+      {headers: header}
     ).subscribe(responseData => {
-        console.log(responseData);
+      // Proveriti koje sve greske ovde mogu da se jave
+      // Azurirati usera
+      console.log(responseData);
+      this.user.value.details = {
+        profile_image: responseData.profile_image,
+        address: responseData.address,
+        city: responseData.city,
+        zip_code: responseData.zip_code,
+        phone_number: responseData.phone_number,
+        account_type: responseData.account_type
+      };
+      if (this.user.value.details.account_type === 'USR') {
+        this.user.value.details.first_name = responseData.user[0].first_name;
+        this.user.value.details.last_name = responseData.user[0].last_name;
+        this.user.value.details.date_of_birth = responseData.user[0].date_of_birth;
+      } else {
+        this.user.value.details.company_name = responseData.company[0].company_name;
+        this.user.value.details.pib = responseData.company[0].pib;
+        this.user.value.details.fax = responseData.company[0].fax;
+      }
+      localStorage.setItem('userData', JSON.stringify(this.user.value));
+      this.user.next(this.user.value);
+
+      this.messageService.sendMessage({
+        key: '',
+        text: 'Uspešno ste izmenili podatke.',
+        type: messagetype.succes
+      });
+    });
+  }
+
+  changePassword(passData) {
+    const header = new HttpHeaders().append('Authorization', 'JWT ' + this.user.value.token);
+    this.http.put<UserDetails>(
+      this.globals.location + '/api/accounts/change-password/' + this.user.value.localId + '/',
+      passData,
+      {headers: header}
+    ).subscribe(responseData => {
+      console.log(responseData);
+
     });
   }
 

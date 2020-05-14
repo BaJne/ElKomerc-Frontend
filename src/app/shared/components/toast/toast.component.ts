@@ -8,16 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToastComponent implements OnInit {
   msgToExpire: Message[] = [];
-  msgToHold: Message[] =[];
+  msgToHold: Message[] = [];
   constructor(private messageService: MessageService) { }
 
   ngOnInit() {
     this.messageService.messanger.subscribe((data: Message) => {
-      console.log(data.key);
       if (data.key === 'hold') {
         this.msgToHold.push(data);
-      }
-      else {
+      } else {
         this.msgToExpire.push(data);
         setTimeout(() => {
           this.msgToExpire.splice(0, 1);
