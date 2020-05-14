@@ -47,24 +47,33 @@ export class UserDataComponent implements OnInit, OnDestroy {
     this.isAutenticated = this.authService.user.subscribe(data => {
       if (data === null) { return; }
       this.user = data;
+
       if (this.user.details === null) { return; }
+      if (this.user.details.profile_image !== null) {
+        this.imgURL = this.user.details.profile_image;
+      }
+      console.log(data);
+
       this.signUpForm.controls['email'].setValue(this.user.email);
       this.signUpForm.controls['address'].setValue(this.user.details.address);
       this.signUpForm.controls['city'].setValue(this.user.details.city);
       this.signUpForm.controls['post'].setValue(+this.user.details.zip_code);
       this.signUpForm.controls['phone'].setValue(this.user.details.phone_number);
+
       if (this.user.details.account_type === 'USR') {
         this.signUpForm.controls['person'].setValue({
           name: this.user.details.first_name,
           lastName: this.user.details.last_name,
           birthDate: this.user.details.date_of_birth
         });
+        this.signUpForm.get('company').disable();
       } else {
         this.signUpForm.controls['company'].setValue({
           name: this.user.details.company_name,
           fax: this.user.details.fax,
           pib: this.user.details.pib
         });
+        this.signUpForm.get('person').disable();
       }
     });
 
@@ -106,6 +115,27 @@ export class UserDataComponent implements OnInit, OnDestroy {
     });
   }
   onSubmit() {
-    return;
+    if (!this.signUpForm.valid) { return; }
+    const uploadFile = new FormData();
+    uploadFile.append('profile_image', this.fileToUpload, this.fileToUpload.name);
+
+    const updateData: {[k: string]: any} = {
+      address: this.signUpForm.value.address,
+      city: this.signUpForm.value.city,
+      zip_code: this.signUpForm.value.post,
+      phone_number: this.signUpForm.value.phone,
+      account_type: this.user.details.account_type,
+      profile_image: null
+    };
+    if (updateData.account_type === 'USR') {
+      updateData.first_name = this.signUpForm.value.person.name;
+      updateData.last_name = this.signUpForm.value.person.lastName;
+      updateData.date_of_birth = this.signUpForm.value.person.birthDate;
+    } else {
+      updateData.company_name = this.signUpForm.value.company.name;
+      updateData.pib = this.signUpForm.value.company.pib;
+      updateData.fax = this.signUpForm.value.company.fax;
+    }
+    this.authService.changeUserDetails( updateData );
   }
 }

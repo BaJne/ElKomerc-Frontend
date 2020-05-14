@@ -32,7 +32,7 @@
     </div>
 
 
-    <!-- PERSON DITAILS : NAME , LASTNAME -->
+    <!-- PERSON DITAILS : Ime, Preyime -->
     <div *ngIf="user.details.account_type ==='USR'" formGroupName="person" class="ui-g">
       <div class="form-group ui-md-6 ui-sm-12">
         <label for="name" >Ime</label>
@@ -54,8 +54,7 @@
       </div>
     </div>
 
-    <!-- Informacije o kompaniji -->
-    <!-- Naziv -->
+    <!-- Naziv KOMPANIJE-->
     <div *ngIf="user.details.account_type !=='USR'"
           formGroupName="company"
           class="form-group ui-g ui-md-12 ui-sm-12"
@@ -78,7 +77,7 @@
           mask="(999) 999-999?9"
           placeholder="(011) 555-555?5"
           ></p-inputMask>
-          <div class="invalid-tooltip" *ngIf="!signUpForm.get('phone').valid && signUpForm.get('phone').touched ">
+          <div *ngIf="!signUpForm.get('phone').valid && signUpForm.get('phone').touched ">
             Morate popuniti ovo polje.
           </div>
       </div>
@@ -110,7 +109,7 @@
         <label for="pib" >Pib</label>
         <p-inputMask id="pib" formControlName="pib" mask="999999999" placeholder="10000001 do 999999999" class="auto-complete"></p-inputMask>
         <div *ngIf="!signUpForm.get('company.pib').valid && signUpForm.get('company.pib').touched ">
-          <div class="error" *ngIf="signUpForm.get('company.pib').errors['required']" >
+          <div class="error" *ngIf="signUpForm.get('company.pib').errors['required']">
             Morate popuniti ovo polje.
           </div>
         </div>
@@ -160,7 +159,7 @@
     <!-- Broj Faksa -->
 
     <!-- Prepraviti disabled -->
-      <div class="ui-g" style="padding-top: 15px;">
+      <div class="ui-g ui-md-12 ui-sm-12" style="padding-top: 15px;">
         <button class="btn bttn-primary" [disabled]="!signUpForm.valid" style="color: white;min-width: 100%;" type="submit">
           Sačuvaj izmene
         </button>

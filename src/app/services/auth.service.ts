@@ -141,6 +141,7 @@ export class AuthService {
       this.user.next(loadedUser);
     }
   }
+
   // Metod za odjavljivanje trenutno aktivnog korisnika
   logout() {
     localStorage.removeItem('userData');
@@ -184,6 +185,17 @@ export class AuthService {
       }
       localStorage.setItem('userData', JSON.stringify(userValue));
       this.user.next(this.user.value);
+    });
+  }
+
+  changeUserDetails(userUpdate) {
+    const header = new HttpHeaders().append('Authorization', 'JWT ' + this.user.value.token);
+    this.http.put(
+      this.globals.location + '/api/accounts/' + this.user.value.localId + '/',
+       userUpdate,
+       {headers: header}
+    ).subscribe(responseData => {
+        console.log(responseData);
     });
   }
 
