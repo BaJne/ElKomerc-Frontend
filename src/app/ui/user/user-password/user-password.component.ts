@@ -2,6 +2,8 @@ import { AuthService } from './../../../services/auth.service';
 import { PasswordValidator } from './../../authentication/sign-up/validators.validator';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { MessageService } from '../../../services/message.service';
+import { messagetype } from '../../../models/message.model';
 
 @Component({
   selector: 'app-user-password',
@@ -19,7 +21,10 @@ export class UserPasswordComponent implements OnInit {
     repeatPassword: new FormControl('', [Validators.required]),
   }, PasswordValidator.match);
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private messageService: MessageService
+  ) { }
 
   ngOnInit() {
     this.showErrors = false;
@@ -37,6 +42,24 @@ export class UserPasswordComponent implements OnInit {
     };
     console.log('password-Change');
 
-    this.authService.changePassword(passData);
+    this.authService.changePassword(passData)
+      .subscribe(responseData => {
+        this.messageService.sendMessage({
+          key: '',
+          text: 'Uspešno ste promenili lozinku.',
+          type: messagetype.succes
+        });
+      }, error => {
+        // TODO ispitati sve moguce error
+        console.log(error);
+
+        if (error.error.old_password[0] === 'Invalid password.') {
+          this.messageService.sendMessage({
+            key: '',
+            text: 'Stara lozinka nije ispravna.',
+            type: messagetype.err
+          });
+        }
+      });
   }
 }

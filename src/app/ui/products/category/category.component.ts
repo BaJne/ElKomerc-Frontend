@@ -22,6 +22,10 @@ export class CategoryComponent implements OnInit, OnDestroy {
     if (content) { this.showPan = content; }
   }
 
+  // Filter sort
+  filter: {label: string, value: number}[];
+  selectedFilter: string = null;
+
   // Proizvodjaci, Kategorije i Artikli
   producers: Producer[];
   allCategories: Category[];
@@ -48,6 +52,11 @@ export class CategoryComponent implements OnInit, OnDestroy {
     private articalService: ArticalService,
     private renderer: Renderer2
   ) {
+    this.filter = [
+      {label: 'Ceni Opadajuce', value: 0 },
+      {label: 'Ceni Rastuće',   value: 0 },
+      {label: 'Proizvođaču',    value: 0 }
+    ];
   }
 
   ngOnInit() {
@@ -85,8 +94,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
     } else {
       this.selectedProducer = null;
     }
-    console.log(this.allCategories);
-
     this.updateCategories();
 
     this.getArticals(
@@ -178,8 +185,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
         if (j >= this.selectedProducer.sub_categories_id.length) { break; }
       }
       // this.selectedSubcategory = this.categories[0].sub_categories[0].id;
-      console.log(this.selectedProducer);
-
     }
   }
   ngOnDestroy() {

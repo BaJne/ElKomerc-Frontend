@@ -142,14 +142,17 @@
 }
 
 .header-search {
+  background-color: #F4F4F4;
+  font-family: 'Roboto', Verdana;
+}
+.header-container{
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   flex-direction: row;
   align-content: center;
   align-items: center;
   justify-content: space-around;
-  background-color: #F4F4F4;
-
-  font-family: 'Roboto', Verdana;
+  max-width: 1300px;
 }
-
 

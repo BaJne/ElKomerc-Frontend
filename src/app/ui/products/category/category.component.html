@@ -39,66 +39,62 @@
 
       <!-- parametri radi lakse pretrage  -->
       <div class="header-search">
-        <div
-          class="producer-group" (click)="onShowProducers()"
-          [ngStyle]="{'background-color': (selectedProducer === null) ? '#337ab7': 'white'}"
-        >
-          <i *ngIf="selectedProducer === null" class="fas fa-industry"></i>
-          <span *ngIf="selectedProducer === null" >Izaberite grupu</span>
+        <div class="header-container">
+          <div
+            class="producer-group" (click)="onShowProducers()"
+            [ngStyle]="{'background-color': (selectedProducer === null) ? '#337ab7': 'white'}"
+          >
+            <i *ngIf="selectedProducer === null" class="fas fa-industry"></i>
+            <span *ngIf="selectedProducer === null" >Izaberite grupu</span>
 
-          <img *ngIf="selectedProducer !== null" src="{{selectedProducer.producer_icon}}">
-          <span id="producerName" *ngIf="selectedProducer !== null">{{selectedProducer.producer_name}}</span>
-          <i *ngIf="selectedProducer !== null"
-          (click)="(selectGroup(-1))"
-           class="far fa-window-close right"
-            id="closeGroup"></i>
+            <img *ngIf="selectedProducer !== null" src="{{selectedProducer.producer_icon}}">
+            <span id="producerName" *ngIf="selectedProducer !== null">{{selectedProducer.producer_name}}</span>
+            <i *ngIf="selectedProducer !== null"
+            (click)="(selectGroup(-1))"
+            class="far fa-window-close right"
+              id="closeGroup"></i>
+          </div>
+
+          <div>
+            <p-dropdown [options]="filter" [(ngModel)]="selectedFilter" placeholder="--Sortiraj po--"></p-dropdown>
+          </div>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li class="page-item"
+              [ngClass]="{'disabled': currentPage === 1}">
+                <a class="page-link" (click)="prevPage()"  ><i class="fas fa-caret-left"></i></a>
+              </li>
+              <li class="page-item">
+                <span class="page-link">
+                  {{currentPage}} / {{maxPage}}
+                </span>
+              </li>
+              <li class="page-item"
+              [ngClass]="{'disabled': currentPage === maxPage}">
+                <a class="page-link" (click)="nextPage()" ><i class="fas fa-caret-right"></i></a>
+              </li>
+            </ul>
+
+            <ul class="pagination">
+              <li class="page-item">
+                <a class="page-link" href="#">
+                  <i class="fas fa-th"></i>
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#">
+                  <i class="fas fa-bars"></i>
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
-
-        <div id="byPrice">
-          Sortiraj po:
-          <select name="sortOption" class="selectpicker" id="select">
-            <option value="priceDec">Ceni Opadajuce</option>
-            <option value="priceDec">Ceni Rastuce</option>
-            <option value="priceDec">Proizvodjacu</option>
-          </select>
-        </div>
-        <nav aria-label="Page navigation example">
-          <ul class="pagination">
-            <li class="page-item"
-            [ngClass]="{'disabled': currentPage === 1}">
-              <a class="page-link" (click)="prevPage()"  ><i class="fas fa-caret-left"></i></a>
-            </li>
-            <li class="page-item">
-              <span class="page-link">
-                {{currentPage}} / {{maxPage}}
-              </span>
-            </li>
-            <li class="page-item"
-            [ngClass]="{'disabled': currentPage === maxPage}">
-              <a class="page-link" (click)="nextPage()" ><i class="fas fa-caret-right"></i></a>
-            </li>
-          </ul>
-
-          <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" href="#">
-                <i class="fas fa-th"></i>
-              </a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="#">
-                <i class="fas fa-bars"></i>
-              </a>
-            </li>
-          </ul>
-        </nav>
-
       </div>
 
       <!-- Proizvodi koji se pretrazuju -->
       <app-data-view [value]="articals"></app-data-view>
 
-      <div class="header-search" *ngIf="maxPage > 1" >
+      <div class="header-search header-container" *ngIf="maxPage > 1" >
 
         <nav aria-label="Page navigation example">
           <ul class="pagination">

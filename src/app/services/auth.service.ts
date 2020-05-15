@@ -30,12 +30,12 @@ interface UserDetails {
     company_name: string;
     pib: string;
     fax: string;
-  } [];
+  };
   user: {
     date_of_birth: Date;​​​
     first_name: string;​​​
     last_name: string;
-  }[];​
+  };​
 }
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -166,6 +166,8 @@ export class AuthService {
       {headers: header}
     ).pipe(take(1))
     .subscribe(responseData => {
+      console.log(responseData);
+
       userValue.details = {
         profile_image: responseData.profile_image,
         address: responseData.address,
@@ -175,13 +177,13 @@ export class AuthService {
         account_type: responseData.account_type
       };
       if (userValue.details.account_type === 'USR') {
-        userValue.details.first_name = responseData.user[0].first_name;
-        userValue.details.last_name = responseData.user[0].last_name;
-        userValue.details.date_of_birth = responseData.user[0].date_of_birth;
+        userValue.details.first_name = responseData.user.first_name;
+        userValue.details.last_name = responseData.user.last_name;
+        userValue.details.date_of_birth = responseData.user.date_of_birth;
       } else {
-        userValue.details.company_name = responseData.company[0].company_name;
-        userValue.details.pib = responseData.company[0].pib;
-        userValue.details.fax = responseData.company[0].fax;
+        userValue.details.company_name = responseData.company.company_name;
+        userValue.details.pib = responseData.company.pib;
+        userValue.details.fax = responseData.company.fax;
       }
       localStorage.setItem('userData', JSON.stringify(userValue));
       this.user.next(this.user.value);
@@ -207,13 +209,13 @@ export class AuthService {
         account_type: responseData.account_type
       };
       if (this.user.value.details.account_type === 'USR') {
-        this.user.value.details.first_name = responseData.user[0].first_name;
-        this.user.value.details.last_name = responseData.user[0].last_name;
-        this.user.value.details.date_of_birth = responseData.user[0].date_of_birth;
+        this.user.value.details.first_name = responseData.user.first_name;
+        this.user.value.details.last_name = responseData.user.last_name;
+        this.user.value.details.date_of_birth = responseData.user.date_of_birth;
       } else {
-        this.user.value.details.company_name = responseData.company[0].company_name;
-        this.user.value.details.pib = responseData.company[0].pib;
-        this.user.value.details.fax = responseData.company[0].fax;
+        this.user.value.details.company_name = responseData.company.company_name;
+        this.user.value.details.pib = responseData.company.pib;
+        this.user.value.details.fax = responseData.company.fax;
       }
       localStorage.setItem('userData', JSON.stringify(this.user.value));
       this.user.next(this.user.value);
@@ -228,14 +230,11 @@ export class AuthService {
 
   changePassword(passData) {
     const header = new HttpHeaders().append('Authorization', 'JWT ' + this.user.value.token);
-    this.http.put<UserDetails>(
+    return this.http.put<UserDetails>(
       this.globals.location + '/api/accounts/change-password/' + this.user.value.localId + '/',
       passData,
       {headers: header}
-    ).subscribe(responseData => {
-      console.log(responseData);
-
-    });
+    ).pipe(take(1));
   }
 
   // Metoda za prijavljivanje korisnika na server
