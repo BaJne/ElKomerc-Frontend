@@ -62,6 +62,8 @@ export class ArticalService {
           article_images: []
         };
         this.wishList.wish.forEach((value, index) => {
+          console.log(value);
+
           if (value.id === a.id) {
             a.isOnWishList = index;
           }

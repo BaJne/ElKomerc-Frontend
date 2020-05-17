@@ -32,7 +32,7 @@
         <button class="buyBttn">
           Stavite u korpu <i class="fas fa-shopping-cart"></i>
           <div>
-            <p-spinner [(ngModel)]="numOfArt"></p-spinner>
+            <p-spinner [min]="1" [(ngModel)]="numOfArt"></p-spinner>
             <button (click)="addToCart(artical)"><i class="fas fa-check"></i></button>
           </div>
         </button>

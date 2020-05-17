@@ -55,16 +55,16 @@
 
       <div class="menu-buttons">
         <ul>
-          <a [routerLink]= "['/home']">
+          <a [routerLink]= "['/home']" routerLinkActive="active-link">
             <li> Naslovna </li>
           </a>
-          <a [routerLink]= "['/products/all']">
+          <a [routerLink]= "['/products/all']" routerLinkActive="active-link">
             <li> Proizvodi </li>
           </a>
-          <a [routerLink]= "['/production']">
+          <a [routerLink]= "['/production']" routerLinkActive="active-link">
             <li> Proizvodnja </li>
           </a>
-          <a [routerLink]= "['/contact']">
+          <a [routerLink]= "['/contact']" routerLinkActive="active-link">
             <li> O Nama </li>
           </a>
         </ul>
@@ -81,7 +81,11 @@
       <button id="shoppingChart" [ngClass]="{'scroll': artInCart.length > 5}"  (click)="op.toggle($event)">
         <p-overlayPanel #op>
           <ng-template pTemplate>
-            <p-scrollPanel [style]="{height: '250px'}">
+            <div style="padding: 10px;text-align: left; font-size: 12px;"
+                 *ngIf="artInCart === undefined || artInCart.length === 0">
+                Trenutno nemate nijedan proizvod u korpi.
+            </div>
+            <p-scrollPanel *ngIf="artInCart !== undefined && artInCart.length > 0"  [style]="{height: '250px'}">
               <div class="cart" *ngFor="let a of artInCart" >
                 <div>
                   <img src='{{(a.art.article_images !== undefined) ? a.art.article_images[0].uri: "assets/img/no-img.png"}}'

@@ -20,7 +20,7 @@ export class WishListService {
     } else {
       art.isOnWishList = this.wish.length;
       this.wish.push(art);
-      localStorage.setItem('cart', JSON.stringify(this.wish));
+      localStorage.setItem('wish', JSON.stringify(this.wish));
       this.messageService.sendMessage({
         key: '',
         text: 'Proizvod je dodat u listu želja.',
