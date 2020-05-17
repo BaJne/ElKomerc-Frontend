@@ -4,7 +4,7 @@
   max-width: 100%;
   padding: 12px;
   display: grid;
-  gap:2px;
+  gap:5px;
   grid-template-columns: repeat(auto-fill, minmax(250px, 320fr));
   /* justify-content: center; */
 }
@@ -44,7 +44,8 @@
   border: 1px solid #e3e3e3;
   max-width: 100%;
   min-width: 250px;
-
+  overflow: hidden;
+  border-radius: 8px;
 }
 .item #name{
   display: grid;
@@ -101,16 +102,73 @@
 .item button {
   border:0px;
   padding: 10px;
-  background-color: #337ab7;
-  color: white;
   font-size: 14px;
   font-family: 'Source Sans Pro';
   font-weight: 700;
 }
-.item button:hover {
-  background-color: #23527C;
+.buyBttn {
+  width: 100%;
+  position: relative;
+  color: white;
+  overflow: hidden;
+  background-color: #337ab7;
+  transition: all;
+  transition-duration: 200ms;
+  border-bottom-left-radius: 8px;
+}
+.buyBttn:hover {
+  background-color: #007ad9;
+}
+.wishBttn {
+  width: 50px;
+  transition: all;
+  transition-duration: 200ms;
+  border-bottom-right-radius: 8px;
+  background-color: rgb(245, 233, 194);
+  background-image: linear-gradient(to bottom,rgb(245, 215, 119) 0,rgb(250, 241, 211) 100%);
+}
+.wishBttn:hover {
+  background-color: rgb(245, 215, 119);
+  background-image: linear-gradient(to bottom,rgb(250, 221, 134) 0,rgb(245, 220, 140) 100%);
+}
+.wished {
+  text-shadow: 0px 0px 8px #ff0055;
+  color: #ff0055;
 }
 
+.buyBttn > div {
+  position: absolute;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgb(2, 81, 165, 0.8);
+  -webkit-transform: translateY(100%);
+  transform: translateY(100%);
+  -webkit-transition: all 150ms ease-in-out;
+  transition: all 150ms ease-in-out;
+}
+.buyBttn > div > button {
+  background-image: linear-gradient(to bottom,#5cb85c 0,#419641 100%);
+  background-color: #12BC00;
+}
+.buyBttn > div > button:hover {
+  background-image: linear-gradient(to bottom,#69d469 0,#47aa47 100%);
+}
+.buyBttn > div /deep/ .ui-inputtext {
+  border-radius: 0px 0px 0px 8px;
+  padding: 9px;
+  width: 140px;
+}
+.buyBttn > div /deep/ .ui-inputtext:enabled:focus:not(.ui-state-error){
+  box-shadow: 0 0 0 0em #8dcdff;
+}
+.buyBttn:hover > div {
+  -webkit-transform: translateY(0%);
+  transform: translateY(0%);
+}
 
 /* Star */
 .hoverStar,

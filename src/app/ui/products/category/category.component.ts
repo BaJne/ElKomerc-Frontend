@@ -6,7 +6,8 @@ import { Category, Feature } from './../../../models/category.model';
 import { ArticalService } from './../../../services/artical.service';
 import { Artical } from './../../../models/artical.model';
 
-import { Component, OnInit, OnDestroy, HostListener, ElementRef, ViewChild, Renderer2 } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ElementRef, ViewChild, Renderer2, ViewChildren } from '@angular/core';
+import { Paginator } from 'primeng/paginator/paginator';
 
 @Component({
   selector: 'app-category',
@@ -16,6 +17,13 @@ import { Component, OnInit, OnDestroy, HostListener, ElementRef, ViewChild, Rend
 export class CategoryComponent implements OnInit, OnDestroy {
   @ViewChild('leftRef', {static: true}) el: ElementRef;
   @ViewChild('content', {static: true}) con: ElementRef;
+  @ViewChild('top', {static: true}) topPag: Paginator;
+  @ViewChild('bottom', {static: true}) bottomPag: Paginator;
+
+  @ViewChild('header', {static: true}) header: ElementRef;
+  showBottomPaginator: boolean;
+  isSmallHeader: boolean;
+
   showPan: ElementRef;
   wasInside = false;
   @ViewChild('showPanel') set content(content: ElementRef) {
@@ -35,8 +43,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   categories: Category[];
   selectedProducer: Producer = null;
   selectedSubcategory = 1;
-  currentPage = 1;
-  maxPage: number;
+  artCount = 0;
 
   categorySubscription: Subscription;
 
@@ -60,6 +67,13 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    if (this.header.nativeElement.getBoundingClientRect().width <= 630) {
+      this.isSmallHeader = true;
+      this.renderer.addClass(this.header.nativeElement, 'header-min');
+    } else {
+      this.isSmallHeader = false;
+    }
+
     this.onResizeWindow();
     const h = 'calc(100vh - ' + (102) + 'px)';
     this.renderer.setStyle(this.el.nativeElement, 'height', h);
@@ -117,39 +131,45 @@ export class CategoryComponent implements OnInit, OnDestroy {
     }
   }
   // PAGING
-  next(isNext: boolean) {
-    if (
-      (this.currentPage === 1 && !isNext) ||
-      (this.currentPage === this.maxPage && isNext)
-    ) {
+  topPageChange(event, isUpdate: boolean) {
+    if (isUpdate) {
+      this.botPageChange(event, false);
+    } else {
+      const pc = this.topPag.getPageCount();
+      const p = event.page;
+      if (p >= 0 && p < pc) {
+        this.topPag._first = this.topPag.rows * p;
+        this.topPag.updatePageLinks();
+        this.topPag.updatePaginatorState();
+      }
       return;
     }
-    if (isNext) { this.nextPage(); } else { this.prevPage(); }
-
+    this.getArticals(this.selectedSubcategory, [], event.page + 1, this.selectedProducer);
+  }
+  botPageChange(event, isUpdate: boolean) {
+    if (isUpdate) {
+      this.topPageChange(event, false);
+    } else {
+      const pc = this.bottomPag.getPageCount();
+      const p = event.page;
+      if (p >= 0 && p < pc) {
+        this.bottomPag._first = this.bottomPag.rows * p;
+        this.bottomPag.updatePageLinks();
+        this.bottomPag.updatePaginatorState();
+      }
+      return;
+    }
+    this.getArticals(this.selectedSubcategory, [], event.page + 1, this.selectedProducer);
     setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 200);
   }
 
-  prevPage() {
-    if (this.currentPage === 1) { return; }
-    this.getArticals(this.selectedSubcategory, [], --this.currentPage, this.selectedProducer);
-  }
-
-  nextPage() {
-    if (this.currentPage === this.maxPage) { return; }
-    this.getArticals(this.selectedSubcategory, [], ++this.currentPage, this.selectedProducer);
-  }
-
+  // ARTICLES
   getArticals(id: number, params: string[], page: number, producer: Producer) {
     this.articalService
       .getArticals(this.selectedSubcategory, [], page, producer === null ? -1 : producer.id)
       .subscribe((data) => {
         const count = 'count'; const results = 'results';
-
-        this.currentPage = page;
-        this.maxPage = Math.floor(data[count] / 20);
-        if (data[count] % 20 !== 0 || data[count] === 0) {
-          this.maxPage++;
-        }
+        this.artCount = data[count];
         this.articals = data[results];
       });
   }
@@ -247,8 +267,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
         }
       }
   }
-
-  onResizeWindow() {// Dodati klase za menjanje pozicije datasheet
+  // Dodati klase za menjanje pozicije datasheet
+  onResizeWindow() {
     if ( window.innerWidth >= 670 && this.isWindowSmall) {
       this.isWindowSmall = false;
       this.renderer.setStyle(this.con.nativeElement, 'margin-left', '0px');
@@ -262,6 +282,23 @@ export class CategoryComponent implements OnInit, OnDestroy {
         this.onToggleLeftPanel();
       }
     }
+
+    if (
+      this.header.nativeElement.getBoundingClientRect().width <= 630 &&
+      !this.isSmallHeader
+    ) {
+      this.isSmallHeader = true;
+      this.renderer.addClass(this.header.nativeElement, 'header-min');
+    }
+    if (
+      this.header.nativeElement.getBoundingClientRect().width > 630 &&
+      this.isSmallHeader
+    ) {
+
+      this.isSmallHeader = false;
+      this.renderer.removeClass(this.header.nativeElement, 'header-min');
+    }
+
   }
   onToggleLeftPanel() {
     this.isLeftPanelHidden = !this.isLeftPanelHidden;

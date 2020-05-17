@@ -28,9 +28,18 @@
           (click)="onStarClick(star, i)"></i>
         </div>
       </div>
-      <button (click)="addToCart(artical)">
-        Stavite u korpu <i class="fas fa-shopping-cart"></i>
-      </button>
+      <div style="display: flex;">
+        <button class="buyBttn">
+          Stavite u korpu <i class="fas fa-shopping-cart"></i>
+          <div>
+            <p-spinner [(ngModel)]="numOfArt"></p-spinner>
+            <button (click)="addToCart(artical)"><i class="fas fa-check"></i></button>
+          </div>
+        </button>
+        <button class="wishBttn" (click)="addToWishList(artical)" >
+          <i class="fas fa-heart" [ngClass]="{'wished': (artical.isOnWishList !== undefined && artical.isOnWishList !== null)}"></i>
+        </button>
+      </div>
     </div>
 
   </div>

@@ -5,7 +5,8 @@ export interface Artical {
   id: number;
   article_code: string;
   article_name: string;
-  price: string;
+  price: number;
+  isOnWishList: number;
 
   producer_info?: Producer;
   uri?: string;

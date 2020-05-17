@@ -14,6 +14,10 @@ import {SpinnerModule} from 'primeng/spinner';
 import {SidebarModule} from 'primeng/sidebar';
 import {CarouselModule} from 'primeng/carousel';
 import {DropdownModule} from 'primeng/dropdown';
+import {PaginatorModule} from 'primeng/paginator';
+import {OverlayPanelModule} from 'primeng/overlaypanel';
+import {ScrollPanelModule} from 'primeng/scrollpanel';
+import {TableModule} from 'primeng/table';
 
 import { ProducerService } from './services/producer.service';
 import { AppRoutingModule } from './app-routing.module';
@@ -84,8 +88,12 @@ import { UserPasswordComponent } from './ui/user/user-password/user-password.com
   imports: [
     AutoCompleteModule,
     CarouselModule,
+    ScrollPanelModule,
     InputMaskModule,
+    TableModule,
     DropdownModule,
+    OverlayPanelModule,
+    PaginatorModule,
     SidebarModule,
     SpinnerModule,
     BrowserModule,

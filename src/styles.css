@@ -81,7 +81,8 @@ a {
   background-color: #dfdfdf;
 }
 .bttn-adding {
-  background-color: #57d692;
+  background-color: #6dcc6d;
+  color: #333;
 }
 .bttn-adding:hover {
   background-color: #44aa74;

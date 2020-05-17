@@ -160,6 +160,74 @@ a:hover {
   background-color: #23527C;
 }
 
+#shoppingChart /deep/ .ui-overlaypanel-content {
+  border-color: #23527C;
+  padding: 0px;
+  z-index: 3000;
+}
+#shoppingChart /deep/ .ui-overlaypanel {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+#shoppingChart /deep/ .ui-scrollpanel-content {
+  height: 100%;
+  width: 100%;
+  padding: 0px;
+}
+.scroll /deep/.ui-scrollpanel-content {
+  width: calc(100% + 18px) !important;
+}
+.cart{
+  width: 100%;
+  display: grid;
+  grid-template-columns:  50px auto 50px 120px 40px;
+  align-items: center;
+  background: linear-gradient(to bottom,#e3e3e3 0,white 50%,#e3e3e3 100%);
+  border-bottom: 2px solid #333;
+}
+.cart > div {
+  padding: 5px;
+}
+.cart > div:nth-child(1) {
+  width: 45px;
+  height: 45px;
+}
+.cart > div:nth-child(1) > img {
+  width: 100%;
+  height: 100%;
+}
+.cart > div:nth-child(2) {
+  font-size: 12px;
+}
+.cart > div:nth-child(5) > button {
+  padding: 5px 8px;
+  color: white;
+  background-color: #333;
+  border-radius: 5px;
+}
+.cart > div:nth-child(5) > button:hover {
+  background-color: #e3e3e3;
+  color: #333
+}
+.cart-summery {
+  padding: 8px;
+  background-color: #5496fa;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+.cart-summery > div:nth-child(1) {
+  color: white;
+  font-weight: 600;
+  margin: 0px 40px 8px 40px;
+  display: flex;
+  justify-content: space-between;
+}
+.cart-summery > div:nth-child(2){
+  display: flex;
+  gap: 5px;
+  justify-content: right;
+}
+
 @media screen and (max-width: 1000px) and (min-width: 532px) {
   #template {
     display: grid;

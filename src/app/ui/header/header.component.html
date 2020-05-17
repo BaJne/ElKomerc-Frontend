@@ -6,7 +6,7 @@
       &nbsp; 0658058009
       <a routerLink='/products/all'>
         <i class="fas fa-heart"></i>
-        Wish List(#num)
+        Lista želja({{wishService.wish.length}})
       </a>
       <a routerLink='/products/all'>
         <i class="fas fa-shopping-cart"></i>
@@ -77,9 +77,38 @@
         </form>
       </div>
 
-      <button id="shoppingChart">
+
+      <button id="shoppingChart" [ngClass]="{'scroll': artInCart.length > 5}"  (click)="op.toggle($event)">
+        <p-overlayPanel #op>
+          <ng-template pTemplate>
+            <p-scrollPanel [style]="{height: '250px'}">
+              <div class="cart" *ngFor="let a of artInCart" >
+                <div>
+                  <img src='{{(a.art.article_images !== undefined) ? a.art.article_images[0].uri: "assets/img/no-img.png"}}'
+                    alt="">
+                </div>
+                <div>{{a.art.article_name}}</div>
+                <div>x{{a.num}}</div>
+                <div>{{a.art.price * a.num | number}} din.</div>
+                <div>
+                  <button class="bttn"><i class="fas fa-times"></i></button>
+                </div>
+              </div>
+            </p-scrollPanel>
+            <div class="cart-summery">
+              <div>
+                <span>Ukupno</span>
+                <span>{{ articalService.toPay | number }} din.</span>
+              </div>
+              <div>
+                <button class="bttn btn-success">Nastavi sa kupovinom</button>
+                <button class="bttn bttn-secondary">Pregled korpe</button>
+              </div>
+            </div>
+          </ng-template>
+        </p-overlayPanel>
         <i class="fas fa-shopping-bag"></i>
-        {{articalService.cart.length}} stavki - ${{ articalService.toPay }}
+        [{{artInCart.length}}]&nbsp;&nbsp;{{ articalService.toPay | number }} din.
       </button>
     </div>
 

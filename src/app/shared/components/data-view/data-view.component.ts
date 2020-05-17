@@ -1,8 +1,9 @@
+import { WishListService } from './../../../services/wish-list.service';
 
 import { AuthService } from '../../../services/auth.service';
 import { ArticalService } from './../../../services/artical.service';
 import { Artical } from './../../../models/artical.model';
-import { Component, OnInit, Input, Renderer2 } from '@angular/core';
+import { Component, OnInit, Input, Renderer2, OnChanges } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -12,15 +13,16 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class DataViewComponent implements OnInit {
   @Input() value: Artical[];
+  numOfArt = 1;
 
   constructor(private articalService: ArticalService,
+              private wishSercive: WishListService,
               private render: Renderer2,
               private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
   }
-
   // Prikazivanje precice ka detaljima proizvoda
   onHoverIn(e: any, m: any) {
     this.render.removeClass(e, 'hidden');
@@ -63,8 +65,15 @@ export class DataViewComponent implements OnInit {
     this.router.navigate(['../product/', el.id], {relativeTo: this.route});
   }
 
-  addToCart(a: Artical) {
-    this.articalService.addToCart(a);
+  addToCart(art: Artical) {
+    console.log(this.numOfArt);
+    this.articalService.addToCart(art, this.numOfArt);
+    this.numOfArt = 1;
+  }
+
+  // Wish List
+  addToWishList(a: Artical) {
+    this.wishSercive.addArticleToWishList(a);
   }
 
 }
