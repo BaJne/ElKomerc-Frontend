@@ -8,12 +8,12 @@ import { MapType } from '@angular/compiler';
 export class WishListService {
   wish = new Map<number, Artical>();
   constructor(private messageService: MessageService) {
-    this.wish = new Map(JSON.parse(localStorage.myMap));
+
+    this.wish = new Map(localStorage.myMap);
     if (this.wish === null) {
       this.wish = new Map<number, Artical>();
     }
   }
-
   addArticleToWishList(art: Artical) {
     if (this.wish.has(art.id)) {
       this.wish.delete(art.id);
@@ -27,9 +27,13 @@ export class WishListService {
         type: messagetype.succes
       });
     }
-    localStorage.myMap = JSON.stringify(Array.from(this.wish.entries()));
-  }
 
+    if (this.wish.size === 0) {
+      localStorage.removeItem('myMap');
+    } else {
+      localStorage.myMap = JSON.stringify(Array.from(this.wish.entries()));
+    }
+  }
   reset() {
     this.wish = new Map<number, Artical>();
   }

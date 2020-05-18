@@ -62,12 +62,9 @@ export class ArticalService {
           profile_picture: art.profile_picture,
           artical_rate: art.artical_rate
         };
-
         if (this.wishList.wish.has(a.id)) {
           a.isOnWishList = true;
         }
-
-        console.log(a.isOnWishList);
         data.result.push(a);
       });
       return data;

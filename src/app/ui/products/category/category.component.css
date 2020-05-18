@@ -198,3 +198,24 @@
 .header-min .header-right /deep/ .ui-dropdown {
   width: 100%;
 }
+
+/*------ FEATURE -------*/
+.custom /deep/ .ui-scrollpanel-wrapper {
+  border-right: 9px solid #f4f4f4;
+}
+
+.custom /deep/ .ui-scrollpanel-content{
+  height: 100%;
+}
+.custom /deep/ .ui-scrollpanel-bar {
+  margin-top: 10px;
+  background-color: #1976d2;
+  opacity: 1;
+  transition: background-color .3s;
+}
+.custom /deep/ .ui-scrollpanel-bar:hover {
+  background-color: #135ba1;
+}
+.feature-sidebar {
+  padding-top: 15px;
+}

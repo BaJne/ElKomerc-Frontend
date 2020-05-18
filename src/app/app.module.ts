@@ -18,6 +18,8 @@ import {PaginatorModule} from 'primeng/paginator';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
 import {ScrollPanelModule} from 'primeng/scrollpanel';
 import {TableModule} from 'primeng/table';
+import {CheckboxModule} from 'primeng/checkbox';
+
 
 import { ProducerService } from './services/producer.service';
 import { AppRoutingModule } from './app-routing.module';
@@ -91,6 +93,7 @@ import { CardComponent } from './shared/components/card/card.component';
     AutoCompleteModule,
     CarouselModule,
     ScrollPanelModule,
+    CheckboxModule,
     InputMaskModule,
     TableModule,
     DropdownModule,

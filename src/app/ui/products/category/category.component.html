@@ -2,7 +2,7 @@
 
   <div class="leftPanel left-panel-relative" #leftRef >
     <div class="dash-board">
-      <input type="text" placeholder="Pretraži">
+      <input type="text" placeholder="Pretraži" (keyup)="onSearchFieldChange()" [(ngModel)]="searchField">
       <span class="dash-board-span">
         <i class="fas fa-clipboard-list"></i>
       </span>
@@ -37,11 +37,11 @@
         </div>
       </app-carousel>
 
-      <!-- parametri radi lakse pretrage  -->
+      <!-- HEADER ARTICALS -->
       <div class="header-search">
         <div #header class="header-container">
           <div
-            class="producer-group" (click)="onShowProducers()"
+            class="producer-group" (click)="this.showProducers = !this.showProducers;"
             [ngStyle]="{'background-color': (selectedProducer === null) ? '#337ab7': 'white'}"
           >
             <span>
@@ -65,9 +65,29 @@
       <!-- Proizvodi koji se pretrazuju -->
       <app-data-view [value]="articals"></app-data-view>
       <p-sidebar [(visible)]="display"  position="right">
-        Content
+        <button class="btn btn-primary" (click)="clearFeatureList()" >
+          <i class="fas fa-broom"></i>
+          Očisti filter
+        </button>
+        <div class="custom">
+          <p-scrollPanel  [style]="{height: '95vh'}">
+            <div class="feature-sidebar" *ngFor="let f of features">
+              <h4>
+                {{f.feature_name}}
+              </h4>
+              <div style="margin-left: 3px;" *ngFor="let value of f.values" >
+                <p-checkbox name="groupname"
+                  label="{{value}}"
+                  value="{{value}}"
+                  [(ngModel)]="selectedValues"
+                  (onChange)="onFeatureChange()"
+                ></p-checkbox>
+              </div>
+            </div>
+          </p-scrollPanel>
+        </div>
       </p-sidebar>
-      <button class="filter" (click)="display = true">
+      <button class="filter" (click)="display = true" *ngIf="features !== undefined && features.length > 0" >
         <i class="fas fa-filter" style="margin-right: 2px; padding-top: 6px;"></i>
       </button>
 

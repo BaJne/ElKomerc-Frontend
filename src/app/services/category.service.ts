@@ -1,9 +1,8 @@
 import { Globals } from './globals';
 import { Category, Feature } from './../models/category.model';
 import { HttpClient } from '@angular/common/http';
-import { OnDestroy, Injectable } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { map, tap, take } from 'rxjs/operators';
 
 
 @Injectable({providedIn: 'root'})
@@ -49,5 +48,15 @@ export class CategoryService {
     }
     this.loadedCategory = JSON.parse(localStorage.getItem('categories'));
     return this.loadedCategory;
+  }
+
+  getFeatures(id: number) {
+    return this.http.get(
+      this.globals.location +
+      '/api/product-category/sub-categories/' + id
+    )
+    .pipe(take(1), map(data => {
+      return data['features'];
+    }));
   }
 }

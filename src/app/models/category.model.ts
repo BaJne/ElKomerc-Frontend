@@ -10,4 +10,5 @@ export interface Feature {
   data_type: string;
   feature_name: string;
   id: number;
+  values: any[];
 }
