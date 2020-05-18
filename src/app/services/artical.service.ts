@@ -38,10 +38,13 @@ export class ArticalService {
   // Metoda za dohvatanje proizvoda
   getArticals(subCategoryID: number, features: string[], page: number, idProducer: number) {
     let queryParams = new HttpParams();
-    // queryParams = queryParams.append('value', v)
     queryParams = queryParams
       .append('sub_category_id', subCategoryID + '')
       .append('page', page + '');
+    features.forEach(value => {
+      queryParams = queryParams.append('value', value);
+    });
+
     if (idProducer !== -1) {
       queryParams = queryParams.append('producer', idProducer + '');
     }
@@ -71,7 +74,6 @@ export class ArticalService {
       return data;
     }));
   }
-
   // Metoda kojom se prosledjuje artikal radi ispisivanja njegovih detalja
   setArticalToDisplay(a: Artical) {
     this.idToDisplay = a.id;
@@ -89,6 +91,7 @@ export class ArticalService {
       });
     }, 2000);
   }
+
   getArtical(id: number) {
     this.idToDisplay = id;
     // localStorage.setItem('toDisplay', JSON.stringify(this.articalToDisplay.value));
