@@ -64,6 +64,10 @@
 
       <!-- Proizvodi koji se pretrazuju -->
       <app-data-view [value]="articals"></app-data-view>
+      <div style="padding: 0px 30px; text-align: center;" *ngIf="articals !== undefined && articals.length === 0" >
+        <h4>Rezultat pretrage ne sadrži nijedan proizvod</h4>
+      </div>
+
       <p-sidebar [(visible)]="display"  position="right">
         <button class="btn btn-primary" (click)="clearFeatureList()" >
           <i class="fas fa-broom"></i>
@@ -87,11 +91,12 @@
           </p-scrollPanel>
         </div>
       </p-sidebar>
+
       <button class="filter" (click)="display = true" *ngIf="features !== undefined && features.length > 0" >
         <i class="fas fa-filter" style="margin-right: 2px; padding-top: 6px;"></i>
       </button>
 
-      <div class="header-search" >
+      <div class="header-search">
         <div class="header-container">
           <p-paginator #bottom [rows]="20" [totalRecords]="artCount" (onPageChange)="botPageChange($event, true)"></p-paginator>
         </div>

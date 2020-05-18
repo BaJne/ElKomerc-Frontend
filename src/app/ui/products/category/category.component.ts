@@ -8,7 +8,6 @@ import { Artical } from './../../../models/artical.model';
 
 import { Component, OnInit, OnDestroy, HostListener, ElementRef, ViewChild, Renderer2, ViewChildren } from '@angular/core';
 import { Paginator } from 'primeng/paginator/paginator';
-import { Category } from '../../../models/category.model';
 
 @Component({
   selector: 'app-category',
@@ -48,6 +47,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   // Parametri za kategorije i podkategorije
   categories: Category[];
   selectedProducer: Producer = null;
+  searchFiledCategories: Category[] = null;
   searchField = '';
   selectedSubcategory = 1;
   artCount = 0;
@@ -106,6 +106,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   // Updejtovanje kategorija i prikaza
   selectGroup(index: number) {
     this.showProducers = !this.showProducers;
+    this.searchFiledCategories = null;
     if (index !== -1) {
       this.selectedProducer = this.producers[index];
     } else {
@@ -181,7 +182,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   // ARTICLES
   getArticals(id: number, params: string[], page: number, producer: Producer) {
     this.articalService
-      .getArticals(id, params, page, ((producer === null || producer === undefined) ? -1 : producer.id))
+      .getArticals((id === undefined) ? 0 : id, params, page, ((producer === null || producer === undefined) ? -1 : producer.id))
       .subscribe( data => {
         this.artCount = data.count;
         this.articals = data.result;
@@ -189,10 +190,22 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   onSearchFieldChange() {
-    console.log(this.searchField);
-
     const n: any[] = [];
-    this.categories.forEach(value => {
+    if (this.searchFiledCategories === null || this.searchFiledCategories === undefined) {
+      this.searchFiledCategories = [];
+      this.categories.forEach(value => {
+        const ct: Category = {
+          category_name: value.category_name,
+          id: value.id,
+          sub_categories: []
+        };
+        value.sub_categories.forEach(v => {
+          ct.sub_categories.push(v);
+        });
+        this.searchFiledCategories.push(ct);
+      });
+    }
+    this.searchFiledCategories.forEach(value => {
       const ct: Category = {
         category_name: value.category_name,
         id: value.id,
