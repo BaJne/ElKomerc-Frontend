@@ -3,5 +3,5 @@ export interface Producer {
   producer_name: string;
   uri: string;
   producer_icon: string;
-  sub_categories_id: number[];
+  sub_categories_id?: number[];
 }

@@ -60,9 +60,9 @@ export class DataViewComponent implements OnInit {
   }
   // -----------------------------------------------
 
-  onProductDetail(el: Artical) {
-    this.articalService.setArticalToDisplay(el);
-    this.router.navigate(['../product/', el.id], {relativeTo: this.route});
+  onProductDetail(a: Artical) {
+    this.articalService.setArticalToDisplay(a);
+    this.router.navigate(['../product/', a.id], {relativeTo: this.route});
   }
 
   addToCart(art: Artical) {

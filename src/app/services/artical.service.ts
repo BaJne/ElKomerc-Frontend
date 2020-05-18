@@ -1,5 +1,5 @@
 import { WishListService } from './wish-list.service';
-import { tap, map } from 'rxjs/operators';
+import { tap, map, take } from 'rxjs/operators';
 import { Globals } from './globals';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { messagetype } from 'src/app/models/message.model';
@@ -11,8 +11,9 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ArticalService {
-  articalToDisplay: Artical = null;
   loadedArticals: Artical[] = [];
+  articalToDisplay = new BehaviorSubject<Artical>(null);
+  idToDisplay: number;
   cart = new BehaviorSubject<{art: Artical, num: number}[]>([]);
   toPay = 0;
 
@@ -23,7 +24,7 @@ export class ArticalService {
     private http: HttpClient,
     private globals: Globals
   ) {
-    this.articalToDisplay = JSON.parse(localStorage.getItem('toDisplay'));
+    this.articalToDisplay.next(JSON.parse(localStorage.getItem('toDisplay')));
     this.toPay = +JSON.parse(localStorage.getItem('toPay'));
     if (JSON.parse(localStorage.getItem('cart')) === null) {
       this.cart.next([]);
@@ -73,8 +74,35 @@ export class ArticalService {
 
   // Metoda kojom se prosledjuje artikal radi ispisivanja njegovih detalja
   setArticalToDisplay(a: Artical) {
-    localStorage.setItem('toDisplay', JSON.stringify(a));
-    this.articalToDisplay = a;
+    this.idToDisplay = a.id;
+    this.articalToDisplay.next(a);
+    // localStorage.setItem('toDisplay', JSON.stringify(this.articalToDisplay.value));
+    setTimeout(() => {
+      this.http.get<Artical>(
+        this.globals.location +
+        '/api/product/articles/' + a.id
+      )
+      .pipe(take(1))
+      .subscribe(data => {
+        this.articalToDisplay.next(data);
+        localStorage.setItem('toDisplay', JSON.stringify(this.articalToDisplay.value));
+      });
+    }, 2000);
+  }
+  getArtical(id: number) {
+    this.idToDisplay = id;
+    // localStorage.setItem('toDisplay', JSON.stringify(this.articalToDisplay.value));
+    setTimeout(() => {
+      this.http.get<Artical>(
+        this.globals.location +
+        '/api/product/articles/' + id
+      )
+      .pipe(take(1))
+      .subscribe(data => {
+        this.articalToDisplay.next(data);
+        localStorage.setItem('toDisplay', JSON.stringify(this.articalToDisplay.value));
+      });
+    }, 2000);
   }
 
   addToCart(a: Artical, numOfArt: number) {

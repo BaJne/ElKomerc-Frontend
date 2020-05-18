@@ -18,25 +18,25 @@ export class ProductComponent implements OnInit, OnDestroy {
   constructor(private articalService: ArticalService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.routeSub = this.route.params.subscribe(params => {
-
-      if (
-        this.articalService.articalToDisplay !== null &&
-        this.articalService.articalToDisplay.id === +params.id
-      ) {
-        this.artical = this.articalService.articalToDisplay;
-        if (this.artical.article_images === undefined) {
-          this.images.push('assets/img/no-img.png');
-        } else {
-          this.artical.article_images.forEach(data => {
-            this.images.push(data.uri);
-          });
-        }
+    this.articalService.articalToDisplay.subscribe(data => {
+      this.artical = data;
+      this.images = [];
+      if (this.artical.article_images === undefined || this.artical.article_images.length === 0) {
+        this.images.push('assets/img/no-img.png');
       } else {
-        // Zahtev ka serveru
+        this.artical.article_images.forEach(img => {
+          this.images.push(img.uri);
+        });
       }
     });
 
+    this.routeSub = this.route.params.subscribe(params => {
+      if (
+        this.articalService.idToDisplay !== +params.id
+      ) {
+        this.articalService.getArtical(+params.id);
+      }
+    });
   }
 
   ngOnDestroy(): void {

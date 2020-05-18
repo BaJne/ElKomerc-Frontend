@@ -92,13 +92,14 @@
         </div>
       </p-sidebar>
 
-      <button class="filter" (click)="display = true" *ngIf="features !== undefined && features.length > 0" >
+      <button class="filter" (click)="display = true" *ngIf="features !== undefined && features.length > 0">
         <i class="fas fa-filter" style="margin-right: 2px; padding-top: 6px;"></i>
       </button>
 
-      <div class="header-search">
-        <div class="header-container">
-          <p-paginator #bottom [rows]="20" [totalRecords]="artCount" (onPageChange)="botPageChange($event, true)"></p-paginator>
+      <div class="header-search" style="transition: all;transition-duration: 300ms;"
+       [ngStyle]="{'opacity': ( articals!== undefined && artCount > 20 && showBottomPag)? '1':'0'}">
+        <div class="header-container" [ngStyle]="{'visibility': (showBottomPag)? 'visible':'hidden'}">
+          <p-paginator #bottom [rows]="20" [alwaysShow]="false" [totalRecords]="artCount" (onPageChange)="botPageChange($event, true)"></p-paginator>
         </div>
       </div>
     </div>

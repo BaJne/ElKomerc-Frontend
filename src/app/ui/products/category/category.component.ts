@@ -20,11 +20,12 @@ export class CategoryComponent implements OnInit, OnDestroy {
   @ViewChild('top', {static: true}) topPag: Paginator;
   @ViewChild('bottom', {static: true}) bottomPag: Paginator;
 
+
   @ViewChild('header', {static: true}) header: ElementRef;
-  showBottomPaginator: boolean;
   isSmallHeader: boolean;
 
   showPan: ElementRef;
+  showBottomPag = false;
   wasInside = false;
   @ViewChild('showPanel') set content(content: ElementRef) {
     if (content) { this.showPan = content; }
@@ -100,6 +101,11 @@ export class CategoryComponent implements OnInit, OnDestroy {
         this.producers = data;
       });
     }
+    this.categoryService.getFeatures(this.selectedSubcategory)
+    .subscribe((data: Feature[]) => {
+      this.features = data;
+      this.selectedValues = [];
+    });
     this.updateCategories();
     this.getArticals(this.selectedSubcategory, [], 1, this.selectedProducer);
   }
@@ -135,18 +141,27 @@ export class CategoryComponent implements OnInit, OnDestroy {
         this.features = data;
         this.selectedValues = [];
       });
+      this.resetPaginators();
       this.getArticals(this.selectedSubcategory, [], 1, this.selectedProducer);
     }
   }
   clearFeatureList() {
-    if (this.selectedValues === []) { return; }
+    if (this.selectedValues.length === 0) { return; }
     this.selectedValues = [];
     this.onFeatureChange();
   }
   onFeatureChange() {
     this.getArticals(this.selectedSubcategory, this.selectedValues, 1, this.selectedProducer);
   }
+
   // PAGING
+  resetPaginators() {
+    this.topPag._first = this.bottomPag._first = 0;
+    this.topPag.updatePageLinks();
+    this.topPag.updatePaginatorState();
+    this.bottomPag.updatePageLinks();
+    this.bottomPag.updatePaginatorState();
+  }
   topPageChange(event, isUpdate: boolean) {
     if (isUpdate) {
       this.botPageChange(event, false);
@@ -265,6 +280,11 @@ export class CategoryComponent implements OnInit, OnDestroy {
   // EVENT LISTENERS
   @HostListener('window:resize', ['$event'])
     onResize(event) {
+      if (window.pageYOffset > 0) {
+        this.showBottomPag = true;
+      } else {
+        this.showBottomPag = false;
+      }
       this.onResizeWindow();
       if (!this.isLeftPanelSticked) {
         const h = 'calc(100vh - ' + (this.con.nativeElement.getBoundingClientRect().top) + 'px)';
@@ -292,6 +312,11 @@ export class CategoryComponent implements OnInit, OnDestroy {
   @HostListener('window:scroll', ['$event'])
     scrollHandler(event) {
       const scrollY = window.pageYOffset;
+      if (scrollY === 0) {
+        this.showBottomPag = false;
+      } else {
+        this.showBottomPag = true;
+      }
       const treshold = this.con.nativeElement.getBoundingClientRect().top + scrollY;
 
       if (scrollY > treshold && !this.isLeftPanelSticked) {   // Left menu se fixira
