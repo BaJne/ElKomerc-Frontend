@@ -64,6 +64,12 @@
 
       <!-- Proizvodi koji se pretrazuju -->
       <app-data-view [value]="articals"></app-data-view>
+      <p-sidebar [(visible)]="display"  position="right">
+        Content
+      </p-sidebar>
+      <button class="filter" (click)="display = true">
+        <i class="fas fa-filter" style="margin-right: 2px; padding-top: 6px;"></i>
+      </button>
 
       <div class="header-search" >
         <div class="header-container">

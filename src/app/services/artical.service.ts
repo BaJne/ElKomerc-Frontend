@@ -1,5 +1,5 @@
 import { WishListService } from './wish-list.service';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { Globals } from './globals';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { messagetype } from 'src/app/models/message.model';
@@ -49,33 +49,28 @@ export class ArticalService {
       this.globals.location + '/api/product/articles/',
       {params: queryParams}
     )
-    .pipe(tap(responseData => {
-      const data: Artical[] = [];
+    .pipe(map(responseData => {
+      const data: {count: number, result: Artical[]} = {count: responseData['count'], result: []};
       responseData['results'].forEach(art => {
-        const a = {
+        const a: Artical = {
           id: art.id,
           article_code: art.article_code,
           article_name: art.article_name,
           price: art.price,
           uri: art.uri,
-          isOnWishList: null,
-          article_images: []
+          isOnWishList: false,
+          profile_picture: art.profile_picture,
+          artical_rate: art.artical_rate
         };
-        this.wishList.wish.forEach((value, index) => {
-          console.log(value);
 
-          if (value.id === a.id) {
-            a.isOnWishList = index;
-          }
-        });
-        if (art.profile_image !== null) {
-          a.article_images.push({
-            uri: art.profile_image
-          });
+        if (this.wishList.wish.has(a.id)) {
+          a.isOnWishList = true;
         }
-        data.push(a);
-      });
 
+        console.log(a.isOnWishList);
+        data.result.push(a);
+      });
+      return data;
     }));
   }
 

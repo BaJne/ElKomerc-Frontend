@@ -33,6 +33,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   // Filter sort
   filter: {label: string, value: number}[];
   selectedFilter: string = null;
+  display: boolean;
 
   // Proizvodjaci, Kategorije i Artikli
   producers: Producer[];
@@ -167,10 +168,10 @@ export class CategoryComponent implements OnInit, OnDestroy {
   getArticals(id: number, params: string[], page: number, producer: Producer) {
     this.articalService
       .getArticals(this.selectedSubcategory, [], page, producer === null ? -1 : producer.id)
-      .subscribe((data) => {
-        const count = 'count'; const results = 'results';
-        this.artCount = data[count];
-        this.articals = data[results];
+      .subscribe( data => {
+        console.log(data);
+        this.artCount = data.count;
+        this.articals = data.result;
       });
   }
 

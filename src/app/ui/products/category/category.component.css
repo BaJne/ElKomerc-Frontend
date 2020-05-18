@@ -48,6 +48,7 @@
 }
 .show-button {
   background-color: #337ab7;
+  background-image: linear-gradient(to bottom,#337ab7 0,#46a2f3 100%);
   padding: 15px 15px 15px 30px;
   cursor: pointer;
   border-radius: 46%;
@@ -58,9 +59,30 @@
   left: -25px;
   position: fixed;
   z-index: 102;
+  transition: all;
+  transition-duration: 300ms;
 }
-.show-button:hover {
+.filter{
+  background-color: #337ab7;
+  background-image: linear-gradient(to bottom,#337ab7 0,#46a2f3 100%);
+  padding: 15px 30px 15px 15px;
+  color: white;
+  cursor: pointer;
+  border-radius: 46%;
+  border: 3px solid white;
+  /* border-radius: 0px 5px 5px 0px; */
+  display: block;
+  top: 200px;
+  right: -25px;
+  position: fixed;
+  z-index: 102;
+  transition: all;
+  transition-duration: 300ms;
+}
+.show-button:hover,
+.filter:hover {
   background-color: #23527C;
+  background-image: linear-gradient(to bottom,#337ab7 0,#79bbf5 100%);
 }
 .show-button > i{
   color: white;

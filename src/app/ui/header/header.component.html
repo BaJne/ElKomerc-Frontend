@@ -6,7 +6,7 @@
       &nbsp; 0658058009
       <a routerLink='/products/all'>
         <i class="fas fa-heart"></i>
-        Lista želja({{wishService.wish.length}})
+        Lista želja({{wishService.wish.size}})
       </a>
       <a routerLink='/products/all'>
         <i class="fas fa-shopping-cart"></i>
@@ -81,7 +81,7 @@
       <button id="shoppingChart" [ngClass]="{'scroll': artInCart.length > 5}"  (click)="op.toggle($event)">
         <p-overlayPanel #op>
           <ng-template pTemplate>
-            <div style="padding: 10px;text-align: left; font-size: 12px;"
+            <div style="padding: 10px;text-align: left; font-size: 12px; min-width: 280px;"
                  *ngIf="artInCart === undefined || artInCart.length === 0">
                 Trenutno nemate nijedan proizvod u korpi.
             </div>

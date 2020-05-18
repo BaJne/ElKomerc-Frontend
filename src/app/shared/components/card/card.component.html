@@ -1,0 +1,20 @@
+<div class="card" [ngClass]="{'row': layout === 'row', 'col': layout !== 'row'}">
+  <div class="like" *ngIf="data.isLiked !== undefined">
+    <i class="fas fa-heart" [ngStyle]="{'color': data.isLiked ? 'red' : '#333'}"></i>
+  </div>
+  <div *ngIf="data.img !== undefined && data.img !== null" >
+    <img src="{{data.img}}" alt="slika">
+  </div>
+  <div class="title">
+    <h5>{{data.title}}</h5>
+  </div>
+  <div *ngIf="data.rate !== undefined"  class="rate">
+    <i *ngFor="let i of [1, 2, 3, 4, 5]"
+      class="fas fa-star"
+      [ngStyle]="{'color': data.rate > (i - 0.5) ? 'yellow': '#333'}"
+    ></i>
+  </div>
+  <div class="price">
+    <h4>{{data.price}} din.</h4>
+  </div>
+</div>

@@ -2,34 +2,35 @@ import { MessageService } from './message.service';
 import { messagetype } from 'src/app/models/message.model';
 import { Artical } from './../models/artical.model';
 import { Injectable } from '@angular/core';
+import { MapType } from '@angular/compiler';
 
 @Injectable({ providedIn: 'root' })
 export class WishListService {
-  wish: Artical[];
+  wish = new Map<number, Artical>();
   constructor(private messageService: MessageService) {
-    this.wish = JSON.parse(localStorage.getItem('wish'));
+    this.wish = new Map(JSON.parse(localStorage.myMap));
     if (this.wish === null) {
-      this.wish = [];
+      this.wish = new Map<number, Artical>();
     }
   }
 
   addArticleToWishList(art: Artical) {
-    if (art.isOnWishList !== undefined && art.isOnWishList !== undefined) {
-      this.wish.splice(art.isOnWishList, 1);
-      art.isOnWishList = undefined;
+    if (this.wish.has(art.id)) {
+      this.wish.delete(art.id);
+      art.isOnWishList = false;
     } else {
-      art.isOnWishList = this.wish.length;
-      this.wish.push(art);
-      localStorage.setItem('wish', JSON.stringify(this.wish));
+      art.isOnWishList = true;
+      this.wish.set(art.id, art);
       this.messageService.sendMessage({
         key: '',
         text: 'Proizvod je dodat u listu želja.',
         type: messagetype.succes
       });
     }
+    localStorage.myMap = JSON.stringify(Array.from(this.wish.entries()));
   }
 
   reset() {
-    this.wish = [];
+    this.wish = new Map<number, Artical>();
   }
 }

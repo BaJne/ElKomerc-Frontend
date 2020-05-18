@@ -1,1 +1,11 @@
-<p>user-wish-list works!</p>
+<div class="main-container">
+  <h3 style="padding-bottom:15px;">Lista želja</h3>
+  <div *ngIf="art.length === 0" >
+    Lista želja je prazna.
+  </div>
+  <div class="cards-layout" *ngIf="art.length > 0" >
+    <div *ngFor="let item of art" >
+      <app-card [data]="item"></app-card>
+    </div>
+  </div>
+</div>

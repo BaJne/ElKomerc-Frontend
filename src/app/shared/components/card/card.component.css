@@ -1,0 +1,38 @@
+.card{
+  background-color: white;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(155, 154, 154, 0.14), 0 2px 1px -1px rgba(187, 184, 184, 0.24);
+  position: relative;
+  cursor: pointer;
+}
+.card:hover{
+  -webkit-box-shadow: -1px 1px 13px 5px rgba(209,202,209,1);
+  -moz-box-shadow: -1px 1px 13px 5px rgba(209,202,209,1);
+  box-shadow: -1px 1px 13px 5px rgba(209,202,209,1);
+}
+.row {
+  width: 100%;
+}
+.col {
+  padding: 0px 10px 5px 10px;
+  max-width: 320px;
+  min-width: 230px;
+}
+.title {
+  padding: 8px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 900;
+}
+.like {
+  position: absolute;
+  z-index: 10;
+  top: 8px;
+  right: 15px;
+}
+.like > i {
+  font-size: 18px;
+}
+.price {
+  display: flex;
+  justify-content: right;
+  font-family: 'Roboto-midium';
+}

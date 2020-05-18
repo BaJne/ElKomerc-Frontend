@@ -6,10 +6,12 @@ export interface Artical {
   article_code: string;
   article_name: string;
   price: number;
-  isOnWishList: number;
+  isOnWishList: boolean;
+  profile_picture: string;
+  uri: string;
+  artical_rate: number;
 
   producer_info?: Producer;
-  uri?: string;
   category?: {
     category_id: number;
     category_name: string;
