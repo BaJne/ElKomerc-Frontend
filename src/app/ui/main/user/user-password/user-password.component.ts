@@ -1,9 +1,9 @@
-import { AuthService } from './../../../services/auth.service';
-import { PasswordValidator } from './../../authentication/sign-up/validators.validator';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { MessageService } from '../../../services/message.service';
-import { messagetype } from '../../../models/message.model';
+import { PasswordValidator } from '../../../authentication/sign-up/validators.validator';
+import { AuthService } from '../../../../services/auth.service';
+import { MessageService } from '../../../../services/message.service';
+import { messagetype } from '../../../../models/message.model';
 
 @Component({
   selector: 'app-user-password',

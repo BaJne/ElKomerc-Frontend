@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy, ViewChildren } from '@angular/core';
-import { AuthService } from '../../../services/auth.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { User } from '../../../models/user.model';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { User } from '../../../../models/user.model';
+import { AuthService } from '../../../../services/auth.service';
 
 
 @Component({

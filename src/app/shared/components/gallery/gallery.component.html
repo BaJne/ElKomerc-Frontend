@@ -1,7 +1,10 @@
 <div class="gallery">
   <div *ngIf="images === undefined || images.length === 0" >Nema slike za ovaj proizvod</div>
   <div>
-    <div class='box'>
+    <div class='box' style="position: relative;">
+      <div class="overlay" *ngIf="overley !== undefined && overley !== ''">
+        <img src="{{overley}}" alt="no img">
+      </div>
       <div class='content'>
         <img class="top-image" src="{{images[selected]}}" alt="slika">
       </div>

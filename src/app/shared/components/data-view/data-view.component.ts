@@ -66,7 +66,6 @@ export class DataViewComponent implements OnInit {
   }
 
   addToCart(art: Artical) {
-    console.log(this.numOfArt);
     this.articalService.addToCart(art, this.numOfArt);
     this.numOfArt = 1;
   }

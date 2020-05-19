@@ -6,11 +6,11 @@
       &nbsp; 0658058009
       <a routerLink='/products/all'>
         <i class="fas fa-heart"></i>
-        Lista želja({{wishService.wish.size}})
+        Lista želja({{wishArticals}})
       </a>
-      <a routerLink='/products/all'>
+      <a routerLink='/cart'>
         <i class="fas fa-shopping-cart"></i>
-        Shopping Cart
+        Korpa({{artInCart.length}})
       </a>
 
       <a [routerLink]= "['/login','sign-in']" *ngIf="!user" >
@@ -58,7 +58,7 @@
           <a [routerLink]= "['/home']" routerLinkActive="active-link">
             <li> Naslovna </li>
           </a>
-          <a [routerLink]= "['/products/all']" routerLinkActive="active-link">
+          <a [routerLink]= "['/products']" routerLinkActive="active-link">
             <li> Proizvodi </li>
           </a>
           <a [routerLink]= "['/production']" routerLinkActive="active-link">
@@ -86,33 +86,35 @@
                 Trenutno nemate nijedan proizvod u korpi.
             </div>
             <p-scrollPanel *ngIf="artInCart !== undefined && artInCart.length > 0"  [style]="{height: '250px'}">
-              <div class="cart" *ngFor="let a of artInCart" >
+              <div class="cart" *ngFor="let a of artInCart;let i = index" >
                 <div>
-                  <img src='{{(a.art.article_images !== undefined) ? a.art.article_images[0].uri: "assets/img/no-img.png"}}'
+                  <img src='{{(a.art.article_images !== undefined && a.art.article_images.length > 0) ? a.art.article_images[0].uri: "assets/img/no-img.png"}}'
                     alt="">
                 </div>
                 <div>{{a.art.article_name}}</div>
                 <div>x{{a.num}}</div>
                 <div>{{a.art.price * a.num | number}} din.</div>
                 <div>
-                  <button class="bttn"><i class="fas fa-times"></i></button>
+                  <button (click)="removeItem(i)"  class="bttn"><i class="fas fa-times"></i></button>
                 </div>
               </div>
             </p-scrollPanel>
             <div class="cart-summery">
               <div>
                 <span>Ukupno</span>
-                <span>{{ articalService.toPay | number }} din.</span>
+                <span>{{ amountToPay | number }} din.</span>
               </div>
-              <div>
-                <button class="bttn btn-success">Nastavi sa kupovinom</button>
-                <button class="bttn bttn-secondary">Pregled korpe</button>
+              <div *ngIf="artInCart.length > 0" >
+                <button (click)="navigate(true)"  class="bttn btn-success">
+                  Nastavi sa kupovinom
+                </button>
+                <button (click)="navigate(false)" class="bttn bttn-secondary">Pregled korpe</button>
               </div>
             </div>
           </ng-template>
         </p-overlayPanel>
         <i class="fas fa-shopping-bag"></i>
-        [{{artInCart.length}}]&nbsp;&nbsp;{{ articalService.toPay | number }} din.
+        [{{artInCart.length}}]&nbsp;&nbsp;{{ amountToPay | number }} din.
       </button>
     </div>
 

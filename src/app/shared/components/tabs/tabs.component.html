@@ -1,6 +1,7 @@
 <ul>
   <a *ngFor="let t of tabs" (click)="selectTab(t)">
     <li [ngClass]="{'active': t.active}">
+      <i *ngIf="t.img !== undefined"  class="{{t.img}}"></i>
       {{t.title}}
     </li>
   </a>

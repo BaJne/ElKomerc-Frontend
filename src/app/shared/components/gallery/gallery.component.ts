@@ -7,7 +7,9 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class GalleryComponent implements OnInit {
   @Input() images: string[];
+  @Input() overley: string;
   selected: number;
+
   constructor() { }
 
   ngOnInit(): void {

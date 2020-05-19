@@ -30,9 +30,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 
-import { ProductComponent } from './ui/products/product/product.component';
-import { CategoryComponent } from './ui/products/category/category.component';
-import { ProductsComponent } from './ui/products/products.component';
 import { HeaderComponent } from './ui/header/header.component';
 import { DataViewComponent } from './shared/components/data-view/data-view.component';
 import { AuthenticationComponent } from './ui/authentication/authentication.component';
@@ -45,21 +42,27 @@ import { DropDownComponent } from './shared/components/drop-down/drop-down.compo
 import { DataTableComponent } from './shared/components/data-table/data-table.component';
 import { ActivateComponent } from './ui/authentication/activate/activate.component';
 import { CarouselComponent } from './shared/components/carousel/carousel.component';
-import { HomeComponent } from './ui/home/home.component';
-import { ProductionComponent } from './ui/production/production.component';
-import { ContactComponent } from './ui/contact/contact.component';
-import { UserComponent } from './ui/user/user.component';
-import { UserDataComponent } from './ui/user/user-data/user-data.component';
-import { UserWishListComponent } from './ui/user/user-wish-list/user-wish-list.component';
-import { UserOrderHistoryComponent } from './ui/user/user-order-history/user-order-history.component';
-import { UserPasswordComponent } from './ui/user/user-password/user-password.component';
 import { CardComponent } from './shared/components/card/card.component';
+import { LoadAnimationComponent } from './shared/components/load-animation/load-animation.component';
+import { UserPasswordComponent } from './ui/main/user/user-password/user-password.component';
+import { UserOrderHistoryComponent } from './ui/main/user/user-order-history/user-order-history.component';
+import { UserWishListComponent } from './ui/main/user/user-wish-list/user-wish-list.component';
+import { UserDataComponent } from './ui/main/user/user-data/user-data.component';
+import { UserComponent } from './ui/main/user/user.component';
+import { ContactComponent } from './ui/main/contact/contact.component';
+import { ProductionComponent } from './ui/main/production/production.component';
+import { HomeComponent } from './ui/main/home/home.component';
+import { ProductComponent } from './ui/main/product/product.component';
+import { CategoryComponent } from './ui/main/category/category.component';
+import { MainComponent } from './ui/main/main.component';
+import { OrderComponent } from './ui/main/order/order.component';
+import { CartComponent } from './ui/main/cart/cart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    ProductsComponent,
+    MainComponent,
     CategoryComponent,
     ProductComponent,
     PanelComponent,
@@ -87,7 +90,10 @@ import { CardComponent } from './shared/components/card/card.component';
     UserWishListComponent,
     UserOrderHistoryComponent,
     UserPasswordComponent,
-    CardComponent
+    CardComponent,
+    LoadAnimationComponent,
+    OrderComponent,
+    CartComponent
   ],
   imports: [
     AutoCompleteModule,

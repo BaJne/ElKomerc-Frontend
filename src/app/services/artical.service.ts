@@ -13,8 +13,9 @@ import { BehaviorSubject } from 'rxjs';
 export class ArticalService {
   loadedArticals: Artical[] = [];
   articalToDisplay = new BehaviorSubject<Artical>(null);
-  idToDisplay: number;
+  isLoadingEmmiter = new BehaviorSubject<boolean>(null);
   cart = new BehaviorSubject<{art: Artical, num: number}[]>([]);
+  idToDisplay: number;
   toPay = 0;
 
   constructor(
@@ -32,7 +33,6 @@ export class ArticalService {
     } else {
       this.cart.next(JSON.parse(localStorage.getItem('cart')));
     }
-
   }
 
   // Metoda za dohvatanje proizvoda
@@ -78,34 +78,33 @@ export class ArticalService {
   setArticalToDisplay(a: Artical) {
     this.idToDisplay = a.id;
     this.articalToDisplay.next(a);
+    this.isLoadingEmmiter.next(true);
     // localStorage.setItem('toDisplay', JSON.stringify(this.articalToDisplay.value));
-    setTimeout(() => {
-      this.http.get<Artical>(
-        this.globals.location +
-        '/api/product/articles/' + a.id
-      )
-      .pipe(take(1))
-      .subscribe(data => {
-        this.articalToDisplay.next(data);
-        localStorage.setItem('toDisplay', JSON.stringify(this.articalToDisplay.value));
-      });
-    }, 2000);
+    this.http.get<Artical>(
+      this.globals.location +
+      '/api/product/articles/' + a.id
+    )
+    .pipe(take(1))
+    .subscribe(data => {
+      this.articalToDisplay.next(data);
+      this.isLoadingEmmiter.next(false);
+      localStorage.setItem('toDisplay', JSON.stringify(this.articalToDisplay.value));
+    });
   }
-
+  // Dohvati Artikal po ID
   getArtical(id: number) {
     this.idToDisplay = id;
-    // localStorage.setItem('toDisplay', JSON.stringify(this.articalToDisplay.value));
-    setTimeout(() => {
-      this.http.get<Artical>(
-        this.globals.location +
-        '/api/product/articles/' + id
-      )
-      .pipe(take(1))
-      .subscribe(data => {
-        this.articalToDisplay.next(data);
-        localStorage.setItem('toDisplay', JSON.stringify(this.articalToDisplay.value));
-      });
-    }, 2000);
+    this.isLoadingEmmiter.next(true);
+    this.http.get<Artical>(
+      this.globals.location +
+      '/api/product/articles/' + id
+    )
+    .pipe(take(1))
+    .subscribe(data => {
+      this.articalToDisplay.next(data);
+      this.isLoadingEmmiter.next(false);
+      localStorage.setItem('toDisplay', JSON.stringify(this.articalToDisplay.value));
+    });
   }
 
   addToCart(a: Artical, numOfArt: number) {
@@ -118,18 +117,47 @@ export class ArticalService {
         break;
       }
     }
-    if (!appeard) {
-      this.cart.value.push({art: a, num: numOfArt});
+    if (appeard) {
+
+      this.toPay += (+a.price * numOfArt);
+      localStorage.setItem('cart', JSON.stringify(this.cart.value));
+      localStorage.setItem('toPay', JSON.stringify(this.toPay));
+
+      this.messageService.sendMessage({
+        key: '',
+        text: 'Uspešno ste dodali proizvod.',
+        type: messagetype.succes
+      });
+      this.cart.next(this.cart.value);
+
+    } else {
+
+      this.http.get<Artical>(
+        this.globals.location +
+        '/api/product/articles/' + a.id
+      )
+      .pipe(take(1))
+      .subscribe(data => {
+        this.cart.value.push({art: data, num: numOfArt});
+        this.toPay += (+a.price * numOfArt);
+        localStorage.setItem('cart', JSON.stringify(this.cart.value));
+        localStorage.setItem('toPay', JSON.stringify(this.toPay));
+
+        this.messageService.sendMessage({
+          key: '',
+          text: 'Uspešno ste dodali proizvod.',
+          type: messagetype.succes
+        });
+        this.cart.next(this.cart.value);
+      });
+
     }
-    this.toPay += (+a.price * numOfArt);
+  }
+  removeFromChart(index: number) {
+    this.toPay -= this.cart.value[index].num * this.cart.value[index].art.price;
+    this.cart.value.splice(index, 1);
     localStorage.setItem('cart', JSON.stringify(this.cart.value));
     localStorage.setItem('toPay', JSON.stringify(this.toPay));
-
-    this.messageService.sendMessage({
-      key: '',
-      text: 'Uspešno ste dodali proizvod.',
-      type: messagetype.succes
-    });
     this.cart.next(this.cart.value);
   }
 }

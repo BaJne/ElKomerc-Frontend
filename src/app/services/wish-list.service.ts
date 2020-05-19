@@ -2,17 +2,19 @@ import { MessageService } from './message.service';
 import { messagetype } from 'src/app/models/message.model';
 import { Artical } from './../models/artical.model';
 import { Injectable } from '@angular/core';
-import { MapType } from '@angular/compiler';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class WishListService {
   wish = new Map<number, Artical>();
+  artNum = new BehaviorSubject<number>(null);
   constructor(private messageService: MessageService) {
-
-    this.wish = new Map(localStorage.myMap);
-    if (this.wish === null) {
+    if (localStorage.myMap !== undefined) {
+      this.wish = new Map(JSON.parse(localStorage.myMap));
+    } else {
       this.wish = new Map<number, Artical>();
     }
+    this.artNum.next(this.wish.size);
   }
   addArticleToWishList(art: Artical) {
     if (this.wish.has(art.id)) {
@@ -27,6 +29,7 @@ export class WishListService {
         type: messagetype.succes
       });
     }
+    this.artNum.next(this.wish.size);
 
     if (this.wish.size === 0) {
       localStorage.removeItem('myMap');

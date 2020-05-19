@@ -11,7 +11,11 @@ export interface Artical {
   uri: string;
   artical_rate: number;
 
-  producer_info?: Producer;
+  producer_info?: {
+    id: number;
+    producer_name: string;
+​​    profile_image: string;
+  };
   category?: {
     category_id: number;
     category_name: string;
@@ -35,6 +39,11 @@ export interface Artical {
     id: number;
     group_name: string;
   };
+  comments?: {
+    email: string;
+    comment: string;​​​
+    last_modified: Date;​​​
+  }[];
   description?: string;
   unit_of_measure?: string;
   currency?: string;

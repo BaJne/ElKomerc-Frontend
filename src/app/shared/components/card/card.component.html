@@ -2,7 +2,7 @@
   <div class="like" *ngIf="data.isLiked !== undefined">
     <i class="fas fa-heart" [ngStyle]="{'color': data.isLiked ? 'red' : '#333'}"></i>
   </div>
-  <div *ngIf="data.img !== undefined && data.img !== null" >
+  <div class="img" *ngIf="data.img !== undefined && data.img !== null" >
     <img src="{{data.img}}" alt="slika">
   </div>
   <div class="title">
