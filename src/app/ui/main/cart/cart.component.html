@@ -1,1 +1,54 @@
-<p>cart works!</p>
+<div class="main-container">
+  <h4 style="padding-left: 10px;font-size: 24px;">Korpa</h4>
+  <hr>
+  <div class="main">
+    <div class="items">
+      <div *ngFor="let item of cart;let i = index" class="p-grid p-col-12 item">
+        <div class="item-pic" >
+          <img src='{{(item.art.article_images !== undefined && item.art.article_images.length > 0) ? item.art.article_images[0].uri: "assets/img/no-img.png"}}'
+                    alt="">
+        </div>
+        <div class="p-col item-content">
+          <div>{{item.art.article_name}}</div>
+          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto atque dolorem dolorum et dicta adipisci sapiente ducimus voluptatibus vel itaque?{{item.art.description}}</div>
+        </div>
+        <div style="position: relative;" class="p-col-fixed item-price" >
+          <div>
+            <i class="fas fa-minus" (click)="dec(i)" ></i>
+            <span style="padding: 0px 10px">x{{item.num}}</span>
+            <i class="fas fa-plus" (click)="inc(i)"></i>
+          </div>
+          <div>{{item.num * item.art.price | number}} din.</div>
+          <i class="exit fas fa-times" (click)="remove(i)" ></i>
+        </div>
+      </div>
+    </div>
+    <div class="stck-wrapper">
+      <div class="stck">
+        <h4>Račun</h4>
+        <div class="p-grid p-justify-between">
+          <span class="p-col-fixed">Ukupno</span>
+          <span class="p-col-fixed">{{toPay - toPay*20/100 | number}} din.</span>
+        </div>
+        <div class="p-grid p-justify-between">
+          <span class="p-col-fixed">Porez</span>
+          <span class="p-col-fixed">{{toPay*20/100 | number}} din.</span>
+        </div>
+        <div class="p-grid p-justify-between">
+          <span class="p-col-fixed">Popust</span>
+          <span class="p-col-fixed">20%</span>
+        </div>
+        <br>
+        <div class="p-grid p-justify-between">
+          <span class="p-col-fixed sp">Sve ukupno</span>
+          <span class="p-col-fixed sp">{{toPay | number}} din.</span>
+        </div>
+        <hr>
+        <button class="btn bttn-primary">
+          Nastavi sa kupovinom &nbsp;
+          <i class="fas fa-cash-register"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

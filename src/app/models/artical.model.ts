@@ -8,13 +8,14 @@ export interface Artical {
   price: number;
   isOnWishList: boolean;
   profile_picture: string;
-  uri: string;
   artical_rate: number;
 
+  number_of_rates?: number;
+  uri?: string;
   producer_info?: {
-    id: number;
     producer_name: string;
 ​​    profile_image: string;
+    uri: string;
   };
   category?: {
     category_id: number;
@@ -23,7 +24,6 @@ export interface Artical {
     sub_category_name: string;
   };
   attributes?: {
-    attribute_id: number;
     attribute_name: string;
     value: string;
     is_selectable: boolean;
@@ -31,21 +31,16 @@ export interface Artical {
   article_images?: {
     uri: string;
     purpose?: string;
-    content_type?: string;
-    height?: number;
-    width?: number;
   }[];
-  discount_group?: {
-    id: number;
-    group_name: string;
-  };
   comments?: {
-    email: string;
+    comment_id: number;
+    user: string;
+    profile_image: string;
     comment: string;​​​
     last_modified: Date;​​​
   }[];
   description?: string;
   unit_of_measure?: string;
-  currency?: string;
+  user_discount?: number;
   is_available?: boolean;
 }

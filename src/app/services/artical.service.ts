@@ -160,4 +160,18 @@ export class ArticalService {
     localStorage.setItem('toPay', JSON.stringify(this.toPay));
     this.cart.next(this.cart.value);
   }
+  inc(i: number) {
+    this.cart.value[i].num++;
+    this.toPay += (+this.cart.value[i].art.price);
+    localStorage.setItem('cart', JSON.stringify(this.cart.value));
+    localStorage.setItem('toPay', JSON.stringify(this.toPay));
+    this.cart.next(this.cart.value);
+  }
+  dec(i: number) {
+    this.cart.value[i].num--;
+    this.toPay -= (+this.cart.value[i].art.price);
+    localStorage.setItem('cart', JSON.stringify(this.cart.value));
+    localStorage.setItem('toPay', JSON.stringify(this.toPay));
+    this.cart.next(this.cart.value);
+  }
 }

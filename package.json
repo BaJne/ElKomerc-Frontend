@@ -23,6 +23,7 @@
     "@fortawesome/fontawesome-free": "^5.11.2",
     "bootstrap": "^3.4.1",
     "jquery": "^3.5.1",
+    "primeflex": "^1.1.0",
     "primeicons": "^2.0.0",
     "primeng": "^9.0.6",
     "rxjs": "~6.5.5",
