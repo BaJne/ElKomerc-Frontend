@@ -18,23 +18,23 @@ export class SignUpComponent implements OnInit {
   isAccountCreated = false;       // Indikator za dalje korake ukoliko je nalog kreiran
 
   signUpForm = new FormGroup({
-    email: new FormControl('branislavgrom@gmail.com', [Validators.required, Validators.email]),
-    password: new FormControl('123123aA', [Validators.required, Validators.minLength(6), PasswordValidator.strong] ),
-    repeatPassword: new FormControl('123123aA', [Validators.required]),
-    address: new FormControl('Volgina 20 A', Validators.required),
-    city: new FormControl('Beograd', Validators.required),
-    post: new FormControl('11000', [Validators.required]),
-    phone: new FormControl('0658058009', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6), PasswordValidator.strong] ),
+    repeatPassword: new FormControl('', [Validators.required]),
+    address: new FormControl('', Validators.required),
+    city: new FormControl('', Validators.required),
+    post: new FormControl('', [Validators.required]),
+    phone: new FormControl('', [Validators.required]),
 
     person: new FormGroup({
-      name: new FormControl('Branislav', Validators.required),
-      lastName: new FormControl('null' , Validators.required),
-      birthDate: new FormControl(null)
+      name: new FormControl('', Validators.required),
+      lastName: new FormControl('' , Validators.required),
+      birthDate: new FormControl('')
     }),
     company: new FormGroup({
-      name: new FormControl('null', Validators.required),
-      fax: new FormControl('null'),
-      pib: new FormControl('1000000', Validators.required)
+      name: new FormControl('', Validators.required),
+      fax: new FormControl(''),
+      pib: new FormControl('', Validators.required)
     })
   }, PasswordValidator.match
   );

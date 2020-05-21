@@ -174,7 +174,7 @@
                       (completeMethod)="searchForCity($event)"
                       (onSelect)="onCitySelected($event)"
                       formControlName="city"
-
+                      id="town"
       ></p-autoComplete>
       <div *ngIf="!signUpForm.get('city').valid && signUpForm.get('city').touched ">
         <div class="error" *ngIf="signUpForm.get('city').errors['required']" >

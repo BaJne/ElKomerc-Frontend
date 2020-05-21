@@ -18,7 +18,18 @@ export class OrderComponent implements OnInit, OnDestroy {
   logSub: Subscription;
   cartSub: Subscription;
   items: MenuItem[];
-  activeIndex = 0;
+  activeIndex = 3;
+  error = false;
+
+  // First page
+  cities: string[];
+  postCodes: string[];
+  address = '';
+  city = '';
+  post = '';
+  // Last page
+  agree = false;
+
   constructor(
     private authService: AuthService,
     private articalService: ArticalService
@@ -27,8 +38,11 @@ export class OrderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.authService.loadUserDetails();
     this.logSub = this.authService.user.subscribe(u => {
-      if (u.details === null) { return; }
+      if (u === null || u.details === null) { return; }
       this.user = u;
+      this.address = this.user.details.address;
+      this.city = this.user.details.city;
+      this.post = this.user.details.zip_code;
     });
     this.cartSub = this.articalService.cart.subscribe(data => {
       this.cart = data;
@@ -39,13 +53,18 @@ export class OrderComponent implements OnInit, OnDestroy {
       {label: 'Način dostave'},
       {label: 'Način plaćanja'},
       {label: 'Pregled narudžbine'}
-  ];
+    ];
   }
   ngOnDestroy() {
     this.logSub.unsubscribe();
     this.cartSub.unsubscribe();
   }
   proceed() {
+    if (this.activeIndex === 0 && (this.post === '' || this.address === '' || this.city === '')) {
+      this.error = true;
+      return;
+    }
+    this.error = false;
     this.activeIndex++;
   }
   back() {
@@ -55,5 +74,18 @@ export class OrderComponent implements OnInit, OnDestroy {
     if (i < this.activeIndex) {
       this.activeIndex = i;
     }
+  }
+
+  // First page
+  onCitySelected(city: string) {
+    let index = 0;
+    while (this.cities[index] !== city) { index++; }
+    this.post = this.postCodes[index];
+  }
+  searchForCity(event) {
+    this.authService.getCityInfo(event.query).subscribe( data => {
+      this.cities = data.cities;
+      this.postCodes = data.zip_codes;
+    });
   }
 }

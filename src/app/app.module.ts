@@ -20,6 +20,7 @@ import {ScrollPanelModule} from 'primeng/scrollpanel';
 import {TableModule} from 'primeng/table';
 import {CheckboxModule} from 'primeng/checkbox';
 import {StepsModule} from 'primeng/steps';
+import {ToggleButtonModule} from 'primeng/togglebutton';
 
 
 import { ProducerService } from './services/producer.service';
@@ -58,6 +59,8 @@ import { CategoryComponent } from './ui/main/category/category.component';
 import { MainComponent } from './ui/main/main.component';
 import { OrderComponent } from './ui/main/order/order.component';
 import { CartComponent } from './ui/main/cart/cart.component';
+import { AdminComponent } from './ui/admin/admin.component';
+import { AdminDashboardComponent } from './ui/admin/admin-dashboard/admin-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -94,11 +97,14 @@ import { CartComponent } from './ui/main/cart/cart.component';
     CardComponent,
     LoadAnimationComponent,
     OrderComponent,
-    CartComponent
+    CartComponent,
+    AdminComponent,
+    AdminDashboardComponent
   ],
   imports: [
     AutoCompleteModule,
     StepsModule,
+    ToggleButtonModule,
     CarouselModule,
     ScrollPanelModule,
     CheckboxModule,

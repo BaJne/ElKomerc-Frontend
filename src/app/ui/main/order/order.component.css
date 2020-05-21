@@ -4,10 +4,130 @@
 }
 .main-container /deep/ .ui-steps .ui-steps-item{
   width: 25%;
+  font-family: 'Roboto';
+  font-size:12px;
 }
-
+h5 {
+  margin-bottom: 10px;
+  font-weight: 500;
+  font-size:16px;
+}
 .content{
   padding: 20px;
   background-color: white;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+}
+
+.auto-complete /deep/ .ui-widget{
+  width: 100%;
+}
+.auto-complete /deep/ .ui-inputtext{
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+.auto-complete /deep/ .ui-inputtext:enabled:hover:not(.ui-state-error) {
+  border-color: #ccc;
+}
+.auto-complete /deep/ .ui-inputtext:enabled:focus:not(.ui-state-error){
+  border-color: #66afe9;
+  outline: 0;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+}
+.err{
+  color: #f15b6a;
+  margin: 0 auto;
+}
+.btn-panel {
+  display:flex;
+  justify-content: space-between;
+  padding: 7px
+}
+.text-area{
+  width: 100%;
+  padding: 15px;
+  font-size: 12px;
+  font-family: 'Roboto';
+  text-align: justify;
+  max-width: 100%;
+  border: 1px solid #c8c8c8;
+}
+.scrollPanel /deep/ .ui-scrollpanel-content{
+  font-size: 12px;
+  font-family: 'Roboto';
+  padding: 15px 15px 15px 20px;
+  text-align: justify;
+}
+.scrollPanel /deep/ .ui-scrollpanel-wrapper{
+  background-color: #f4f4f4;
+  border: 1px solid #c8c8c8;
+  margin-bottom: 5px;
+}
+.scrollPanel /deep/ .ui-scrollpanel-bar{
+  background-color: #337ab7;
+}
+.scrollPanel /deep/ .ui-togglebutton.ui-state-active{
+  width: 100%;
+  background-color: #489f48;
+  border-color: #489f48;
+  font-size: 12px;
+  font-family: 'Roboto';
+}
+.scrollPanel /deep/ .ui-togglebutton{
+  font-size: 12px;
+  font-family: 'Roboto';
+  width: 100%;
+}
+/* TABLE */
+
+.cartTable {
+  margin-bottom: 10px;
+}
+.cartTable /deep/ .ui-table /deep/ .ui-table-wrapper{
+  font-family: 'Roboto';
+}
+.cartTable /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tbody > tr > td{
+  padding: 4px 5px  !important;
+  font-size: 10px;
+}
+.cartTable /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tbody > tr > td:last-child{
+  text-align: right;
+}
+.cartTable /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-thead > tr > th{
+  border:1px solid rgb(5, 75, 75);
+  background-color: teal;
+  color: white;
+  padding: 8px 0px;
+  font-size: 12px;
+  text-align: center;
+}
+.cartTable /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tfoot > tr > td{
+  padding: 8px 5px;
+  font-size: 11px;
+}
+.cartTable /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tfoot > tr > td:last-child{
+  text-align: right;
+}
+.cartTable /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tfoot > tr:last-child > td:last-child{
+  color: #489f48;
+}
+
+@media screen and (min-width: 740px) {
+  .main-container /deep/ .ui-steps .ui-steps-item{
+    font-size: 14px;
+  }
+  .cartTable /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tfoot > tr > td{
+    font-size: 12px;
+  }
+  .cartTable /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-thead > tr > th{
+    font-size: 13px;
+  }
+  .cartTable /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tbody > tr > td{
+    font-size: 12px;
+  }
 }

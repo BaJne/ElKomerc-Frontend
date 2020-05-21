@@ -26,9 +26,14 @@ export class SignInComponent implements OnInit {
     const e = form.value.email;
     const p = form.value.password;
 
+    // TODO Potrebno vratiti na stranicu sa koje je otisao
     this.authService.signin(e, p).subscribe((responseData) => {
       this.isLoading = false;
-      this.router.navigate(['/home']);
+      if (responseData.is_stuff) {
+        this.router.navigate(['/admin']);
+      } else {
+        this.router.navigate(['/home']);
+      }
     }, (errMessage) => {
       this.errorMessage = errMessage;
       this.isLoading = false;

@@ -19,12 +19,18 @@ import { ProductionComponent } from './ui/main/production/production.component';
 import { ContactComponent } from './ui/main/contact/contact.component';
 import { OrderComponent } from './ui/main/order/order.component';
 import { CartComponent } from './ui/main/cart/cart.component';
+import { AdminGuard } from './ui/admin/admin-guard.service';
+import { AdminComponent } from './ui/admin/admin.component';
+import { AdminDashboardComponent } from './ui/admin/admin-dashboard/admin-dashboard.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/products', pathMatch: 'full' },
   { path: 'login', redirectTo: '/login/sign-in', pathMatch: 'full' },
   { path: 'user', redirectTo: '/user/edit', pathMatch: 'full' },
 
+  { path: 'admin', canActivate: [AdminGuard], component: AdminComponent, children: [
+    { path: 'dashboard', component: AdminDashboardComponent},
+  ]},
   { path: 'login', component: AuthenticationComponent, children: [
     { path: 'sign-in', component: SignInComponent},
     { path: 'sign-up', component: SignUpComponent},

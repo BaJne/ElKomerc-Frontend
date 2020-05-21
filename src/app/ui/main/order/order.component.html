@@ -3,23 +3,203 @@
   <p-steps [activeIndex]="activeIndex" [model]="items" [readonly]="false" (activeIndexChange)="change($event)" ></p-steps>
   <div class="content" [ngSwitch]="activeIndex">
     <div class="ui-g" *ngSwitchCase="0">
-      <div class="ui-md-4 ui-sm-12" style="margin-bottom: 10px;">
-          <div style="margin:0px auto">
+      <div class="ui-md-4 ui-sm-12" style="padding: 10px;">
+          <h5>
+            Proverite podatke dostave
+          </h5>
+          <div style="font-size:14px;line-height: 2.4rem;margin-top:28px;letter-spacing: 1px;">
             {{user.email}} <br>
             {{user.details.first_name}} {{user.details.last_name}}<br>
             {{user.details.phone_number}}
           </div>
       </div>
-      <div class="ui-md-8 ui-sm-12">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit magnam fugit repellendus, quod optio distinctio quae cum minima aliquam voluptatem corporis quo, illum dicta quibusdam aut nemo! Sit, qui enim?
+      <div class="ui-g ui-md-8 ui-sm-12">
+        <div class="form-group ui-lg-12 ui-md-12 ui-sm-12">
+          <label for="address" >Adresa</label>
+          <input type="text" class="form-control" id="address" [(ngModel)]="address">
+        </div>
+        <div class="form-group ui-lg-8 ui-md-7 ui-sm-7">
+          <label for="town" >Grad</label>
+          <!-- <input type="text" class="form-control" id="town" [(ngModel)]="city"> -->
+          <p-autoComplete [suggestions]="cities"
+            (completeMethod)="searchForCity($event)"
+            (onSelect)="onCitySelected($event)"
+            class="auto-complete"
+            [(ngModel)]="city"
+            id="town"
+          ></p-autoComplete>
+        </div>
+        <div class="form-group ui-lg-4 ui-md-5 ui-sm-5">
+          <label for="post" >Poštanski broj</label>
+          <input type="text" class="form-control" id="post" [(ngModel)]="post">
+        </div>
+        <span class="err" *ngIf="error" >Morate popuniti sva polja</span>
       </div>
     </div>
-    <div *ngSwitchCase="1">2</div>
-    <div *ngSwitchCase="2">3</div>
-    <div *ngSwitchCase="3">4</div>
-    <div style="display:flex;justify-content: space-between;">
-      <button class="btn bttn-secondary" (click)="back()" >Nazad</button>
-      <button class="btn btn-primary" (click)="proceed()" >Dalje</button>
+    <div style="padding: 10px;" *ngSwitchCase="1">
+      <h5>
+        Troškovi kurirske službe
+      </h5>
+      <span style="font-weight: 600;margin-top: 8px;">
+        {{(toPay > 10000)? '0.0 din.' : '500.00 din.'}}
+      </span>
+    </div>
+    <div *ngSwitchCase="2">
+      Uplatnica
+    </div>
+    <div *ngSwitchCase="3">
+      <h5>Narudžbenica</h5>
+      <div class="cartTable">
+        <p-table [value]="cart">
+          <ng-template pTemplate="header">
+            <tr>
+              <th colspan="3">Naziva artikla</th>
+              <th colspan="2">MP Cena</th>
+              <th>Popust</th>
+              <th>Količina</th>
+              <th>Mera</th>
+              <th colspan="2">Ukupno</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-sale>
+            <tr>
+              <td colspan="3">{{sale.art.article_name}}</td>
+              <td colspan="2">{{sale.art.price}} din.</td>
+              <td>-{{(sale.art.user_discount===null)?0:sale.art.user_discount}}%</td>
+              <td>{{sale.num}}</td>
+              <td>{{sale.art.unit_of_measure}}</td>
+              <td colspan="2">
+                {{
+                  (+sale.art.price - (+sale.art.price *
+                  ((sale.art.user_discount === null) ? 0 : sale.art.user_discount)/100)) * sale.num | number}} din.
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="footer">
+            <tr>
+              <td colspan="8">Transport i dostava</td>
+              <td colspan="2">{{(toPay > 10000)?'0.00':'500.00'}} din.</td>
+            </tr>
+            <tr>
+              <td colspan="8">Sve ukupno</td>
+              <td colspan="2">{{toPay + ((toPay > 10000)?0:500)| number}} din.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+      <div class="ui-g terms">
+        <div class="ui-lg-6 ui-md-6 ui-sm-12">
+          <textarea class="text-area" name="" id="" cols="30" rows="10" placeholder="Napomene"></textarea>
+        </div>
+        <div class="scrollPanel ui-lg-6 ui-md-6 ui-sm-12">
+          <p-scrollPanel [style]="{height: '180px'}">
+            <p>Poštovani,<br> <br> Molimo Vas da pre korišćenja naših usluga, pažljivo pročitate sledeće uslove. Svaka poseta našem sajtu, kao i kupovina, znači da ste ove uslove pročitali i da se slažete sa njima u celosti.</p>
+            <p>Uslovima korišćenja definisana su pravila pri kupovini koja obezbeđuju kvalitet naše usluge i zadovoljstvo kupaca.</p>
+            <p><strong><br>Korišćenje sajta</strong></p>
+            <p>Dobrodošli na sajt WinWin.rs. WinWin Vam omogućava korišćenje usluga i sadržaja svog sajta koje je podložno niže navedenim Uslovima korišćenja. Uslovi korišćenja se primenjuju na sve sadržaje i usluge WinWin.rs. Korišćenjem bilo kog dela sajta, smatra se da su korisnici upoznati sa ovim uslovima, kao i da prihvataju korišćenje sadržaja ovog sajta isključivo za ličnu upotrebu i na sopstvenu odgovornost. Nedozvoljeno korišćenje sajta smatra se kršenjem pravila i podložno je tužbi.</p>
+            <p><strong><br>Opšti uslovi</strong></p>
+            <ol>
+              <li>Svi artikli prikazani na sajtu su deo naše ponude i ne podrazumeva da su dostupni u svakom trenutku. Raspoloživost robe možete proveriti pozivanjem Call Centra na 0700 330 330 (po ceni lokalnog poziva)</li>
+              <li>Cene artikala garantujemo samo za artikle koji se trenutno nalaze na našem lageru.</li>
+              <li>Nakon prijema narudžbe kupac će telefonskim putem biti obavešten ukoliko rok isporuke prelazi očekivani rok isporuke istaknut uz poručeni artikal na našem sajtu.</li>
+              <li>Prodavac se obavezuje da naručene proizvode isporuči ispravne i u predviđenom roku. Nastojimo da budemo što precizniji u opisu proizvoda, prikazu slika i samih cena, ali ne možemo garantovati da su sve informacije kompletne i bez grešaka.</li>
+              <li>U slučaju bilo kakve promene prodavac je dužan da obavesti kupca prilikom telefonske potvrde narudžbe.</li>
+              <li>Sve eventualne promene, sem promena vezanih za isporuku, se ne odnose na potvrđene narudžbe.</li>
+              <li>U slučaju neusklađenosti cena isporuke navedenih na ovom sajtu sa cenama kurirske službe, o promenama ćete biti obavešteni prilikom telefonske potvrde narudžbe.</li>
+              <li>Za DISKONT i OUTLET artikle porudžbine će se smatrati validnim tek nakon provere dostupnosti artikala (radi se o artiklima koji su najčešće poslednji komadi na lageru) i nakon usmenog / telefonskog obaveštenja korisniku od strane WinWin operatera da je roba dostupna.</li>
+              <li>Za sve porudžbine bele tehnike neophodna je prethodna uplata robe. Plaćanje pouzećem dostupno je samo na teritiroji Beograda, Novog Sada, Niša i Čačka u krugu od 15km od centra grada.</li>
+          <li>Artikli obeleženi stikerom Do isteka zaliha i poslednji komad su proizvodi koji su ostali na lageru u manjim količinama te se može desiti da su bili izloženi u maloprodaji, ili da nemaju kompletnu ambalažu. <br>Cene na ovim artiklima važe isključivo za količine raspoložive na lageru firme.</li>
+            </ol>
+            <p>
+              <em></em><strong><br>Plaćanje platnim katicama putem Interneta</strong>
+            </p>
+            <p>
+              Ukoliko posedujete Visa, MasterCard ili Maestro platnu karticu odobrenu od strane banke izdavaoca za online plaćanje, možete izabrati ovaj način plaćanja.
+            </p>
+            <p>
+              Prilikom plaćanja karticom putem Interneta unos podataka o kartici se vrši na zaštićenoj stranici banke. Niti jednog trenutka podaci o platnoj kartici nisu dostupni našem sistemu.
+            </p>
+            <p>
+              Nakon što potvrdite narudžbinu, bićete preusmereni na stranicu Komercijalne banke, na kojoj vršite unos podataka sa platne kartice i obavljate plaćanje.
+              Ukoliko je transakcija uspešna bićete vraćeni na WinWin sajt sa obaveštenjem da je plaćanje uspešno obavljeno, a na Vašu mail adresu će stići mail sa potvrdom narudžbine.
+              U slučaju da plaćanje nije uspelo bićete vraćeni na WinWin sajt sa informacijom o neuspelom plaćanju i moći ćete da ponovite plaćanje ili da izaberete drugi način plaćanja.
+            </p>
+            <p>
+              Iz sigurnosnih razloga, podaci o Vašoj platnoj kartici nisu vidljivi ni jednoj trećoj strani. Stranica banke je zaštićena, sigurna za ovaj način plaćanja i koristi Verified by Visa ili MasterCard Secure code zaštitu.<br>
+              Sva plaćanja će biti obavljena u dinarima (RSD). Ukoliko se plaća platnim karticama inostranih banaka izdavalaca, dinarski iznos transakcije će biti konvertovan u potrebnu valutu u skladu sa uslovima banke izdavaoca kartice.
+            </p>
+            <p>
+              <em></em><strong><br>Sklapanje mts ugovora</strong>
+            </p>
+            <p>
+              Potvrda kupovine uređaja i paketa će biti izvršena telefonskim putem od stane operatera u call centru. Reklamacije robe se vrše u skaldu sa procedurom za reklamacije definsanom na sajtu winwin.rs, dok se sklapanje ugovora i reklamacije izabranog paketa
+              vrše u skladu sa <a target="_blank" href="https://static.mts.rs/dokumenta/Opsti_uslovi_za_pruzanje_usluga_u_javnoj_mobilnoj_mrezi_01032017.pdf?d=False&amp;h=636238854017170000">Opštim uslovima propisanim od strane Telekom Srbije</a>. Prodaja mts paketa putem winwin-a definisana je na sledećem <a href="http://www.winwin.rs/mts" target="_blank">linku</a>.
+            </p>
+            <p>
+              <strong><br>Garancija kvaliteta</strong>
+            </p>
+            <p>WinWin garantuje za kvalitet svojih proizvoda. Svi proizvodi su originalne robne marke i odgovaraju specifikaciji navedenoj na sajtu.</p>
+            <p>Davalac garancije, u garantnom roku, o svom trošku obezbeđuje otklanjanje kvarova i nedostataka proizvoda koji proizilaze iz nepodudarnosti stvarnih sa propisanim odnosno deklarisanim karakteristikama kvaliteta proizvoda. U slučaju neizvršenja ove obaveze, davalac garancije će zameniti proizvod novim ili vratiti novac.&nbsp;Garantni rok počinje danom prodaje uređaja, koji se unosi u garantni list i overava pečatom i potpisom ovlašćenog prodavca.</p>
+            <p>Kupac gubi pravo na garanciju ako se kvar izazove nepridržavanjem datih uputstava za upotrebu i ako su na proizvodu vršene bilo kakve popravke od strane neovlašćenih lica.</p>
+            <p>
+              Da bi se izbegli nesporazumi, prilikom isporuke dužnost prodavca i kupca je da izvrše pregled proizvoda i da ukažu na eventualna mehanička oštećenja, u kom slučaju će proizvod biti zamenjen.<br> <br> <em>Svi aparati su pod garancijom i važe prava koja su navedena u garantnom listu.</em>
+            </p>
+            <p>
+              <em></em><strong><br>Reklamacije i povraćaj robe</strong>
+            </p>
+            <p>Reklamaciju možete ostvariti u sledećim slučajevima:</p>
+            <ol>
+                <li>Reklamacija prilikom instalacije ili prvog puštanja - Ukoliko se prilikom instalacije ili prvog puštanja u rad konstatuje da je isporučeni prozvod oštećen, nekompletan, da ne odgovara specifikaciji ili je neispravan, kupac ima pravo na reklamaciju. Davalac garancije će popraviti pokvareni uređaj, zameniti proizvod novim ili vratiti novac u najkraćem mogućem roku.&nbsp;<br>U slučaju vraćanja robe i povraćaja sredstava kupcu koji je prethodno platio nekom od platnih kartica, delimično ili u celosti, WinWin je u obavezi da povraćaj vrši isključivo preko VISA, EC/MC i Maestro metoda plaćanja, što znači da će banka na zahtev prodavca obaviti povraćaj na račun korisnika kartice.</li>
+                <li>Reklamacija u garantom roku - Davalac garancije, u garantnom roku, o svom trošku obezbeđuje otklanjanje kvarova i nedostataka proizvoda koji proizilaze iz nepodudarnosti stvarnih sa propisanim odnosno deklarisanim karakteristikama kvaliteta proizvoda. U slučaju neizvršenja ove obaveze, davalac garancije će popraviti pokvareni uređaj, zameniti proizvod novim ili vratiti novac.<br>U tom slučaju, proizvod šaljete u servis isključivo na adresu ovlašćenog servisa koja je upisana na garantnom listu. U slučaju slanja proizvoda u neovlašćeni servis proizvod gubi garanciju.</li>
+                <li>Otkazivanje porudžbine - U slučaju otkaza porudžbine WinWin snosi troškove transporta</li>
+            </ol>
+            <p>
+              Rok za povraćaj novca i utvrđivanje verodostojnosti onoga što je kupac naveo prilikom vraćanja robe je 21 dan od prijema robe na servis. Nakon toga, ovlašćeni servis za taj proizvod donosi odluku da li će se kupcu dati nov proizvod ili će se izvršiti povraćaj novca. Za uvažene reklamacije WinWin u potpunosti snosi troškove transporta.<br> <br> Da biste ostvarili pravo na reklamaciju potrebno je da:
+            </p>
+            <ul>
+              <li>reklamirani proizvod donesete u maloprodajni objekat u kojem je preuzet ili u servis naznačen na garantnom listu u originalnoj ambalaži</li>
+              <li>da podnesete na uvid dokaz o kupovini - original garantnog lista ili fiskalni račun</li>
+              <li>da date opis neispravnosti</li>
+              <li>nakon toga, sve informacije o statusu proizvoda koji je na servisu kupac isključivo dobija od ovlašćenog servisa gde je ostavio proizvod.</li>
+            </ul>
+            <p><em>WinWin CallCentar 0700 330 330</em></p>
+            <p><em></em><strong><br>Privatnost podataka</strong></p>
+            <p>
+              Da bismo uspešno obradili Vašu narudžbu potrebni su nam Vaše ime i prezime, adresa, e-mail i telefon. Uz pomoć tih podataka bićemo u mogućnosti da Vam isporučimo željenu robu, kao i da Vas obavestimo o trenutnom statusu narudžbe.
+            </p>
+            <p>
+              <br> U ime WinWin obavezujemo se da ćemo čuvati privatnost svih naših kupaca. Prikupljamo samo neophodne, osnovne podatke o kupcima/korisnicima i podatke neophodne za poslovanje i informisanje korisnika u skladu sa dobrim poslovnim običajima i u cilju pružanja kvalitetne usluge. Dajemo kupcima mogućnost izbora uključujući mogućnost odluke da li žele ili ne da se izbrišu sa mailing lista koje koriste za marketinške kampanje. Svi podaci o kupcima/korisnicima se strogo čuvaju i dostupni su samo zaposlenima kojima su podaci nužni za obavljanje posla. Svi zaposleni WinWin odgovorni su za poštovanje načela zaštite privatnosti.<br> <br> Pored navedenih prikupljamo, analiziramo i obrađujemo podatke o proizvodima koje naši posetioci traže i kupuju, kao i o stranicama koje posećuju. Te podatke koristimo da bismo poboljšali ponudu i izgled naših stranica, i omogućili Vam jednostavnije korišćenje, sigurniju i udobniju kupovinu.<br> Obavezujemo se da prikupljene podatke ne koristimo ni u koje druge svrhe.
+            </p>
+            <p><strong><br>Saglasnost i promene uslova</strong></p>
+            <p>
+              Korišćenje naših servisa podrazumeva saglasnost korisnika sa svim navedenim na ovoj strani.&nbsp;WinWin se obavezuje da će se pridržavati svega navedenog, a sve promene uslova postaju važeće tek nakon objavljivanja na ovoj strani.
+            </p>
+            <p><br> Hvala na ukazanom poverenju.</p>
+          </p-scrollPanel>
+          <p-toggleButton
+            onLabel="Slažem se sa uslovima korišćenja na El-Komerc sajtu."
+            offLabel="Prihvatite uslove korišćenja"
+            onIcon="fas fa-check" offIcon="pi pi-times"
+            iconPos="left"
+            [(ngModel)]="agree"></p-toggleButton>
+        </div>
+      </div>
+    </div>
+    <div class="btn-panel">
+      <span *ngIf="activeIndex===0" style="width: 1px;" ></span>
+      <button style="display: flex;align-items: center;"
+        *ngIf="activeIndex>0"
+        class="btn bttn-secondary"
+        (click)="back()" >
+          <i style="font-size: 10px;" class="fa fa-arrow-left"></i>
+          &nbsp; Nazad
+      </button>
+      <button style="display: flex;align-items: center;"
+         class="btn btn-primary"
+        (click)="proceed()" >
+          {{(activeIndex<3)?'Nastavi':'Poruči'}} &nbsp;
+          <i style="font-size: 10px;" class="fa fa-arrow-right"></i>
+      </button>
     </div>
   </div>
 </div>
