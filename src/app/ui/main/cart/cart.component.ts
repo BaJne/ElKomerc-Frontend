@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ArticalService } from '../../../services/artical.service';
 import { Artical } from '../../../models/artical.model';
@@ -13,7 +14,8 @@ export class CartComponent implements OnInit, OnDestroy {
   toPay = 0;
   cartSub: Subscription;
   constructor(
-    private articalService: ArticalService
+    private articalService: ArticalService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -33,5 +35,8 @@ export class CartComponent implements OnInit, OnDestroy {
   }
   dec(i: number) {
     this.articalService.dec(i);
+  }
+  orderRecipe() {
+    this.router.navigate(['/order']);
   }
 }

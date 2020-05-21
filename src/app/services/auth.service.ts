@@ -107,7 +107,7 @@ export class AuthService {
         type: messagetype.warn
       });
       this.logout();
-      if (this.router.url.startsWith('/user')) {
+      if (this.router.url.startsWith('/user') || this.router.url.startsWith('/order')) {
         this.router.navigate(['/home']);
       }
     }, expirationDuration);
@@ -119,7 +119,23 @@ export class AuthService {
       localId: string,
       isAdministrator: boolean,
       _token: string,
-      _tokenExpirationDate: string
+      _tokenExpirationDate: string,
+      details: {
+        profile_image: string;
+        address: string;
+        city: string;
+        zip_code: string;
+        phone_number: string;
+        account_type: string;
+        // User
+        first_name?: string;
+        last_name?: string;
+        date_of_birth?: Date;
+        // Company
+        company_name?: string;
+        pib?: string;
+        fax?: string;
+      }
     }
       = JSON.parse(localStorage.getItem('userData'));
     if (userData === null) {
@@ -138,6 +154,7 @@ export class AuthService {
       }
       this.tokenExpirationTimer = null;
       this.autoLogout(new Date(userData._tokenExpirationDate));
+      loadedUser.details = userData.details;
       this.user.next(loadedUser);
     }
   }
@@ -150,7 +167,7 @@ export class AuthService {
       clearTimeout(this.tokenExpirationTimer);
     }
     this.tokenExpirationTimer = null;
-    if (this.router.url.startsWith('/user')) {
+    if (this.router.url.startsWith('/user') || this.router.url.startsWith('/order')) {
       this.router.navigate(['/home']);
     }
   }

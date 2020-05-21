@@ -1,1 +1,26 @@
-<p>order works!</p>
+<app-load-animation *ngIf="user===null  || user.details === null" ></app-load-animation>
+<div class="main-container" *ngIf="user!==null && user.details !== null">
+  <p-steps [activeIndex]="activeIndex" [model]="items" [readonly]="false" (activeIndexChange)="change($event)" ></p-steps>
+  <div class="content" [ngSwitch]="activeIndex">
+    <div class="ui-g" *ngSwitchCase="0">
+      <div class="ui-md-4 ui-sm-12" style="margin-bottom: 10px;">
+          <div style="margin:0px auto">
+            {{user.email}} <br>
+            {{user.details.first_name}} {{user.details.last_name}}<br>
+            {{user.details.phone_number}}
+          </div>
+      </div>
+      <div class="ui-md-8 ui-sm-12">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit magnam fugit repellendus, quod optio distinctio quae cum minima aliquam voluptatem corporis quo, illum dicta quibusdam aut nemo! Sit, qui enim?
+      </div>
+    </div>
+    <div *ngSwitchCase="1">2</div>
+    <div *ngSwitchCase="2">3</div>
+    <div *ngSwitchCase="3">4</div>
+    <div style="display:flex;justify-content: space-between;">
+      <button class="btn bttn-secondary" (click)="back()" >Nazad</button>
+      <button class="btn btn-primary" (click)="proceed()" >Dalje</button>
+    </div>
+  </div>
+</div>
+

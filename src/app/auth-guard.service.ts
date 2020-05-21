@@ -11,7 +11,7 @@ export class AuthGuard implements CanActivate {
   : Observable<boolean> | Promise<boolean> | boolean {
     return this.authService.user.pipe(map(user => {
       if (!user) {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/login']);
       }
       return !!user;
     }));

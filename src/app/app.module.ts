@@ -19,6 +19,7 @@ import {OverlayPanelModule} from 'primeng/overlaypanel';
 import {ScrollPanelModule} from 'primeng/scrollpanel';
 import {TableModule} from 'primeng/table';
 import {CheckboxModule} from 'primeng/checkbox';
+import {StepsModule} from 'primeng/steps';
 
 
 import { ProducerService } from './services/producer.service';
@@ -97,6 +98,7 @@ import { CartComponent } from './ui/main/cart/cart.component';
   ],
   imports: [
     AutoCompleteModule,
+    StepsModule,
     CarouselModule,
     ScrollPanelModule,
     CheckboxModule,

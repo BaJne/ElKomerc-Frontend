@@ -38,7 +38,7 @@ const routes: Routes = [
     { path: 'production', component: ProductionComponent },
     { path: 'contact', component: ContactComponent },
     { path: 'cart', component: CartComponent },
-    { path: 'order', component: OrderComponent },
+    { path: 'order', canActivate: [AuthGuard], component: OrderComponent },
     { path: 'user', canActivate: [AuthGuard], component: UserComponent, children: [
       { path: 'edit', component: UserDataComponent},
       { path: 'password-change', component: UserPasswordComponent},
