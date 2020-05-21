@@ -1,3 +1,4 @@
+import { AdminOrdersComponent } from './ui/admin/admin-orders/admin-orders.component';
 import { AuthGuard } from './auth-guard.service';
 import { ActivateComponent } from './ui/authentication/activate/activate.component';
 import { SignInComponent } from './ui/authentication/sign-in/sign-in.component';
@@ -28,8 +29,9 @@ const routes: Routes = [
   { path: 'login', redirectTo: '/login/sign-in', pathMatch: 'full' },
   { path: 'user', redirectTo: '/user/edit', pathMatch: 'full' },
 
-  { path: 'admin', canActivate: [AdminGuard], component: AdminComponent, children: [
+  { path: 'admin', component: AdminComponent, children: [
     { path: 'dashboard', component: AdminDashboardComponent},
+    { path: 'orders', component: AdminOrdersComponent}
   ]},
   { path: 'login', component: AuthenticationComponent, children: [
     { path: 'sign-in', component: SignInComponent},

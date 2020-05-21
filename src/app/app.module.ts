@@ -21,7 +21,7 @@ import {TableModule} from 'primeng/table';
 import {CheckboxModule} from 'primeng/checkbox';
 import {StepsModule} from 'primeng/steps';
 import {ToggleButtonModule} from 'primeng/togglebutton';
-
+import {PanelMenuModule} from 'primeng/panelmenu';
 
 import { ProducerService } from './services/producer.service';
 import { AppRoutingModule } from './app-routing.module';
@@ -61,6 +61,8 @@ import { OrderComponent } from './ui/main/order/order.component';
 import { CartComponent } from './ui/main/cart/cart.component';
 import { AdminComponent } from './ui/admin/admin.component';
 import { AdminDashboardComponent } from './ui/admin/admin-dashboard/admin-dashboard.component';
+import { AdminOrdersComponent } from './ui/admin/admin-orders/admin-orders.component';
+import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -99,13 +101,16 @@ import { AdminDashboardComponent } from './ui/admin/admin-dashboard/admin-dashbo
     OrderComponent,
     CartComponent,
     AdminComponent,
-    AdminDashboardComponent
+    AdminDashboardComponent,
+    SidebarComponent,
+    AdminOrdersComponent
   ],
   imports: [
     AutoCompleteModule,
     StepsModule,
     ToggleButtonModule,
     CarouselModule,
+    PanelMenuModule,
     ScrollPanelModule,
     CheckboxModule,
     InputMaskModule,

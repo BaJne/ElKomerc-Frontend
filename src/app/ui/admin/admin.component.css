@@ -1,0 +1,55 @@
+.main{
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.side-menu{
+  background: url('../../../assets/img/side-bar.jpg') no-repeat center center/cover;
+  height: 100vh;
+  position: fixed;
+}
+.main > div:first-child{
+  display: none;
+}
+.side-menu > div{
+  width: 100%;
+  height: 100%;
+  background-color: #242d374d;
+}
+.side-menu-logo{
+  width: 100%;
+  font-family: 'Roboto-midium', 'Roboto', Verdana;
+  height: 64px;
+  font-size: 24px;
+  color: white;
+  text-align: center;
+  padding: 15px 0px;
+  background-color: #242d3765;
+}
+
+.header{
+  position: fixed;
+  height: 64px;
+  width: 100%;
+  background-color: #242d37;
+  box-shadow: 5px 3px 8px 5px rgba(0, 0, 0, 0.363)
+}
+.content .body{
+  background-color: #f5f5f5;
+  margin-top: 64px;
+  padding: 15px 10px;
+}
+
+@media screen and (min-width: 700px) {
+  .main{
+    display: grid;
+    grid-template-columns: 240px auto;
+  }
+  .main > div:first-child{
+    display: block;
+    width: 240px;
+  }
+  .side-menu{
+
+    width: 240px;
+  }
+}

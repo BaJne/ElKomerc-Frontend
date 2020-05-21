@@ -1,0 +1,51 @@
+.wrapper {
+  width: 100%;
+  padding: 10px;
+}
+.wrapper /deep/ .ui-panelmenu /deep/ .ui-panelmenu-header {
+  margin-top: 5px;
+}
+.wrapper /deep/ .ui-panelmenu /deep/ .ui-panelmenu-header > a {
+  background-color: rgba(253, 253, 253, 0);
+  width: 100%;
+  color: white;
+  border: 0px;
+  font-size:14px;
+}
+.wrapper /deep/ .ui-panelmenu /deep/ .ui-panelmenu-header.ui-state-active {
+  background-color: #ffb78d;
+  color: #333;
+  border-radius: 3px 3px 0px 0px;
+}
+.wrapper /deep/ .ui-panelmenu /deep/ .ui-panelmenu-header.ui-state-active > a,
+.wrapper /deep/ .ui-panelmenu /deep/ .ui-panelmenu-header.ui-state-active > a .ui-panelmenu-icon,
+.wrapper /deep/ .ui-panelmenu /deep/ .ui-panelmenu-header.ui-state-active > a:hover .ui-panelmenu-icon{
+  color: #333;
+}
+.wrapper /deep/ .ui-panelmenu /deep/ .ui-panelmenu-header > a:hover {
+  border: 0px;
+}
+.wrapper /deep/ .ui-panelmenu /deep/ .ui-panelmenu-header > a:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+}
+.wrapper /deep/ .ui-panelmenu /deep/ .ui-panelmenu-header.ui-state-active > a:hover {
+  background-color: #ffb78d;
+  color: #333;
+}
+.wrapper /deep/ .ui-panelmenu /deep/ .ui-panelmenu-header > a:hover .ui-panelmenu-icon{
+  color: white;
+}
+.wrapper /deep/ .ui-panelmenu /deep/ .ui-panelmenu-header > a:focus{
+  box-shadow: 0 0 0 0.0em #ffb78d;
+}
+
+.wrapper /deep/ .ui-panelmenu /deep/  .ui-panelmenu-icon{
+  float: right;
+  color: white;
+  font-size: 12px;
+  width: 20px;
+  height: 20px;
+  margin-top: 5px;
+}
+/* box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(60, 72, 88, 0.3), 0 7px 10px -5px rgba(60, 72, 88, 0.1); */
