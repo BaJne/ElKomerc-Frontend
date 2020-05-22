@@ -11,6 +11,10 @@
   color: white;
   border: 0px;
   font-size:14px;
+  position: relative;
+  overflow: hidden;
+  transition: all;
+  transition-duration: 300ms;
 }
 .wrapper /deep/ .ui-panelmenu /deep/ .ui-panelmenu-header.ui-state-active {
   background-color: #ffb78d;
@@ -33,6 +37,9 @@
   background-color: #ffb78d;
   color: #333;
 }
+.wrapper /deep/ .ui-panelmenu /deep/ .ui-panelmenu-header > a .ui-menuitem-icon {
+  padding-right: 8px;
+}
 .wrapper /deep/ .ui-panelmenu /deep/ .ui-panelmenu-header > a:hover .ui-panelmenu-icon{
   color: white;
 }
@@ -47,5 +54,46 @@
   width: 20px;
   height: 20px;
   margin-top: 5px;
+}
+
+.wrapper /deep/ .ui-panelmenu-content {
+  background-color: #242d3765;
+  color: white;
+  border-radius: 0px 0px 3px 3px;
+  padding: 3px 0px;
+  border: 0px;
+}
+.wrapper /deep/ .ui-panelmenu-content .ui-menuitem {
+  border-radius: 0px;
+}
+.wrapper /deep/ .ui-panelmenu-content .ui-menuitem .ui-menuitem-link{
+  color: white;
+  position: relative;
+  overflow: hidden;
+  transition: all;
+  transition-duration: 300ms;
+}
+.wrapper /deep/ .ui-submenu-list /deep/ .ui-menuitem-link:hover > span{
+  color: white !important;
+}
+.wrapper /deep/ .ui-panelmenu-content .ui-menuitem .ui-menuitem-link:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 0px !important;
+}
+.wrapper /deep/ .ui-panelmenu-content .ui-menuitem .ui-menuitem-link.ui-menuitem-link-active > span,
+.wrapper /deep/ .ui-panelmenu-content .ui-menuitem .ui-menuitem-link.ui-menuitem-link-active:hover > span{
+  color: #ffb78d !important;
+}
+.wrapper /deep/ .ui-submenu-list{
+  margin: 0px;
+}
+.wrapper /deep/ .ui-submenu-list /deep/ a.ng-tns-c101-3{
+  padding-left: 21px;
+}
+.wrapper /deep/ .ui-submenu-list /deep/ a.ng-tns-c101-4{
+  padding-left: 31px;
+}
+.wrapper /deep/ .ui-submenu-list /deep/ a.ng-tns-c101-5{
+  padding-left: 41px;
 }
 /* box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(60, 72, 88, 0.3), 0 7px 10px -5px rgba(60, 72, 88, 0.1); */

@@ -53,3 +53,25 @@
     width: 240px;
   }
 }
+ .main /deep/ .ripple {
+  position: absolute;
+  display: block;
+  background: rgb(255, 255, 255);
+  transform: translate(-50%,-50%);
+  pointer-events: none;
+  border-radius: 50%;
+  animation: animate 400ms linear infinite;
+}
+
+@keyframes animate{
+  0% {
+    width: 0px;
+    height: 0px;
+    opacity: 0;
+  }
+  100% {
+    width: 500px;
+    height: 500px;
+    opacity: 0.5;
+  }
+}
