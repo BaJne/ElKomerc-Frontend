@@ -1,8 +1,11 @@
 <div class="main-container">
-  <h4 style="padding-left: 10px;font-size: 24px;">Korpa</h4>
+  <h3 style="padding-left: 10px;font-size: 24px;">Korpa</h3>
   <hr>
   <div class="main">
     <div class="items">
+      <div *ngIf="cart.length === 0" >
+        <p>Nemate nijedan proizvod u korpi. Dodajte proizvod da biste nastavili sa kupovinom.</p>
+      </div>
       <div *ngFor="let item of cart;let i = index" class="p-grid p-col-12 item">
         <div class="item-pic" >
           <img src='{{(item.art.article_images !== undefined && item.art.article_images.length > 0) ? item.art.article_images[0].uri: "assets/img/no-img.png"}}'

@@ -1,0 +1,85 @@
+.main-container {
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+}
+.item-head > div:nth-child(2) {
+  text-align: center;
+}
+.item-head > div:nth-child(3) {
+  text-align: left;
+}
+.item-head > div:nth-child(4) {
+  text-align: left;
+}
+
+.content /deep/ .ui-accordion-toggle-icon {
+  display: none;
+}
+.content /deep/ .ui-accordion-header /deep/ a {
+  text-decoration: none;
+}
+.content /deep/ .ui-accordion-header /deep/ a:focus {
+  box-shadow: 0 0 0 0px blue;
+}
+
+.content {
+  margin-bottom: 10px;
+}
+.content /deep/ .ui-table /deep/ .ui-table-wrapper{
+  font-family: 'Roboto';
+}
+.content /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tbody > tr > td{
+  padding: 4px 5px  !important;
+  font-size: 10px;
+}
+.content /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tbody > tr > td:last-child{
+  text-align: right;
+}
+.content /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-thead > tr > th{
+  border:1px solid #005b9f;
+  background-color: #007ad9;
+  color: white;
+  padding: 8px 0px;
+  font-size: 12px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.content /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tfoot > tr > td{
+  padding: 8px 5px;
+  font-size: 11px;
+}
+.content /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tfoot > tr > td:last-child{
+  text-align: right;
+}
+.content /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tfoot > tr:last-child > td:last-child{
+  color: #489f48;
+}
+
+@media screen and (min-width: 740px) {
+  .content /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tfoot > tr > td{
+    font-size: 12px;
+  }
+  .content /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-thead > tr > th{
+    font-size: 13px;
+  }
+  .content /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tbody > tr > td{
+    font-size: 12px;
+  }
+}
+/* .content /deep/ .ng-tns-c103-4:hover,
+.content /deep/ .ng-tns-c103-4:focus {
+  text-decoration: none;
+} */
+@media screen and (min-width: 626px) {
+  .item-head > div:nth-child(2) {
+    text-align: center;
+  }
+  .item-head > div:nth-child(3) {
+    text-align: center;
+  }
+  .item-head > div:nth-child(4) {
+    text-align: right;
+  }
+}

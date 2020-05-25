@@ -65,13 +65,12 @@
             <tr>
               <td colspan="3">{{sale.art.article_name}}</td>
               <td colspan="2">{{sale.art.price}} din.</td>
-              <td>-{{(sale.art.user_discount===null)?0:sale.art.user_discount}}%</td>
+              <td>-{{sale.art.user_discount}}%</td>
               <td>{{sale.num}}</td>
               <td>{{sale.art.unit_of_measure}}</td>
               <td colspan="2">
                 {{
-                  (+sale.art.price - (+sale.art.price *
-                  ((sale.art.user_discount === null) ? 0 : sale.art.user_discount)/100)) * sale.num | number}} din.
+                  (sale.art.price - (sale.art.price * sale.art.user_discount/100)) * sale.num | number}} din.
               </td>
             </tr>
           </ng-template>
@@ -89,7 +88,7 @@
       </div>
       <div class="ui-g terms">
         <div class="ui-lg-6 ui-md-6 ui-sm-12">
-          <textarea class="text-area" name="" id="" cols="30" rows="10" placeholder="Napomene"></textarea>
+          <textarea class="text-area" name="" id="" cols="30" rows="10" placeholder="Napomene" [(ngModel)]="note"></textarea>
         </div>
         <div class="scrollPanel ui-lg-6 ui-md-6 ui-sm-12">
           <p-scrollPanel [style]="{height: '180px'}">
@@ -196,6 +195,7 @@
       </button>
       <button style="display: flex;align-items: center;"
          class="btn btn-primary"
+         [disabled]="activeIndex === 3 && !agree"
         (click)="proceed()" >
           {{(activeIndex<3)?'Nastavi':'Poruči'}} &nbsp;
           <i style="font-size: 10px;" class="fa fa-arrow-right"></i>

@@ -47,8 +47,8 @@ export class AdminComponent implements OnInit, AfterViewInit {
     const buttons = document.querySelectorAll('a');
     buttons.forEach(btn => {
       btn.addEventListener('mousedown', (e) => {
-        let x = e.clientX - e.target.offsetLeft;
-        const y = e.clientY - e.target.offsetTop;
+        const x = e.clientX - e.target['offsetLeft'];
+        const y = e.clientY - e.target['offsetTop'];
         const ripples = document.createElement('span');
         ripples.className = 'ripple';
         ripples.style.left = x + 'px';

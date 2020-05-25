@@ -1,5 +1,3 @@
-import { Feature } from './category.model';
-import { Producer } from './producer.model';
 
 export interface Artical {
   id: number;

@@ -183,8 +183,6 @@ export class AuthService {
       {headers: header}
     ).pipe(take(1))
     .subscribe(responseData => {
-      console.log(responseData);
-
       userValue.details = {
         profile_image: responseData.profile_image,
         address: responseData.address,
@@ -216,7 +214,6 @@ export class AuthService {
     ).subscribe(responseData => {
       // Proveriti koje sve greske ovde mogu da se jave
       // Azurirati usera
-      console.log(responseData);
       this.user.value.details = {
         profile_image: responseData.profile_image,
         address: responseData.address,

@@ -1,6 +1,6 @@
 .main-container{
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 1fr;
   height: calc(100% - 1px);
   max-width: 1300px;
   margin: 20px auto;
@@ -24,4 +24,12 @@
 }
 .user-sidebar > a:hover > li{
   color: rgb(175, 173, 173);
+}
+@media screen and (min-width: 740px) {
+  .main-container {
+    grid-template-columns: auto 1fr;
+  }
+  #side-bar{
+    margin: 100px;
+  }
 }

@@ -5,6 +5,9 @@ import { User } from './../../../models/user.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {MenuItem} from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
+import { OrderService } from '../../../services/order.service';
+import { PaymentItem } from '../../../models/order.model';
 
 @Component({
   selector: 'app-order',
@@ -28,11 +31,14 @@ export class OrderComponent implements OnInit, OnDestroy {
   city = '';
   post = '';
   // Last page
+  note = '';
   agree = false;
 
   constructor(
     private authService: AuthService,
-    private articalService: ArticalService
+    private articalService: ArticalService,
+    private orderService: OrderService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -65,6 +71,34 @@ export class OrderComponent implements OnInit, OnDestroy {
       return;
     }
     this.error = false;
+    if (this.activeIndex === 3) {
+      if (!this.agree) {
+        return;
+      }
+      const paymentItems: PaymentItem[] = [];
+      this.cart.forEach(value => {
+        const p: PaymentItem = {
+          article_id: value.art.id,
+          number_of_pieces: value.num,
+          item_attributes: []
+        };
+        paymentItems.push(p);
+      });
+      this.orderService.makeOrder(
+        this.user.token,
+        {
+          address: this.address,
+          city: this.city,
+          zip_code: this.post,
+          method_of_payment: 'PS',
+          note: this.note,
+          payment_items: paymentItems
+        }
+      );
+      this.router.navigate(['/user/orders']);
+      return;
+    }
+
     this.activeIndex++;
   }
   back() {

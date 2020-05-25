@@ -37,6 +37,7 @@ export class CartComponent implements OnInit, OnDestroy {
     this.articalService.dec(i);
   }
   orderRecipe() {
+    if (this.cart.length === 0) { return; }
     this.router.navigate(['/order']);
   }
 }

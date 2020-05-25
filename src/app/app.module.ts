@@ -22,6 +22,8 @@ import {CheckboxModule} from 'primeng/checkbox';
 import {StepsModule} from 'primeng/steps';
 import {ToggleButtonModule} from 'primeng/togglebutton';
 import {PanelMenuModule} from 'primeng/panelmenu';
+import {AccordionModule} from 'primeng/accordion';
+import {TooltipModule} from 'primeng/tooltip';
 
 import { ProducerService } from './services/producer.service';
 import { AppRoutingModule } from './app-routing.module';
@@ -108,8 +110,10 @@ import { SidebarComponent } from './shared/components/sidebar/sidebar.component'
   imports: [
     AutoCompleteModule,
     StepsModule,
+    TooltipModule,
     ToggleButtonModule,
     CarouselModule,
+    AccordionModule,
     PanelMenuModule,
     ScrollPanelModule,
     CheckboxModule,

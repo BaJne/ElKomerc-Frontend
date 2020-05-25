@@ -8,11 +8,11 @@ import { messagetype } from 'src/app/models/message.model';
 import { MessageService } from './message.service';
 import { Artical } from './../models/artical.model';
 import { ProducerService } from './producer.service';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class ArticalService {
+export class ArticalService implements OnDestroy {
   userSubscription: Subscription;
   user: User = null;
 
@@ -33,6 +33,7 @@ export class ArticalService {
   ) {
     this.userSubscription = this.authService.user.subscribe(u => {
       // TODO Update cart with new discounts
+
       this.user = u;
     });
     this.articalToDisplay.next(JSON.parse(localStorage.getItem('toDisplay')));
@@ -44,7 +45,9 @@ export class ArticalService {
       this.cart.next(JSON.parse(localStorage.getItem('cart')));
     }
   }
-
+  ngOnDestroy() {
+    this.userSubscription.unsubscribe();
+  }
   // Metoda za dohvatanje proizvoda
   getArticals(subCategoryID: number, features: string[], page: number, idProducer: number) {
     let queryParams = new HttpParams();
