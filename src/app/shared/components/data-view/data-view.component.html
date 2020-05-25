@@ -16,8 +16,13 @@
           {{ artical.article_name }}
         </span>
       </div>
+      <div id="old-price">
+        <span *ngIf="artical.user_discount > 0" >
+           <del>{{ artical.price }} din.</del>
+        </span>
+      </div>
       <div id="price">
-        <span>Cena: {{ artical.price }} RSD</span>
+        <span>{{ artical.price - (artical.price * artical.user_discount / 100) | number}} din.</span>
 
         <div #star>
           <i *ngFor="let i of [1, 2, 3, 4, 5]"

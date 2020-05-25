@@ -15,11 +15,13 @@ export class DataViewComponent implements OnInit {
   @Input() value: Artical[];
   numOfArt = 1;
 
-  constructor(private articalService: ArticalService,
-              private wishSercive: WishListService,
-              private render: Renderer2,
-              private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(
+    private articalService: ArticalService,
+    private wishSercive: WishListService,
+    private render: Renderer2,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
   }

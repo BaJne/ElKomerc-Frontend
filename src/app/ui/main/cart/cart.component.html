@@ -18,7 +18,10 @@
             <span style="padding: 0px 10px">x{{item.num}}</span>
             <i class="fas fa-plus" (click)="inc(i)"></i>
           </div>
-          <div>{{item.num * item.art.price | number}} din.</div>
+          <div>
+            {{(item.art.price - (item.art.user_discount * item.art.price/100))  * item.num | number}}
+            din.
+          </div>
           <i class="exit fas fa-times" (click)="remove(i)" ></i>
         </div>
       </div>

@@ -45,7 +45,6 @@ export class AdminComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit() {
     const buttons = document.querySelectorAll('a');
-    console.log(buttons);
     buttons.forEach(btn => {
       btn.addEventListener('mousedown', (e) => {
         let x = e.clientX - e.target.offsetLeft;

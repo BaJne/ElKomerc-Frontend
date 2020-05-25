@@ -93,7 +93,7 @@
                 </div>
                 <div>{{a.art.article_name}}</div>
                 <div>x{{a.num}}</div>
-                <div>{{a.art.price * a.num | number}} din.</div>
+                <div>{{(a.art.price - (a.art.user_discount * a.art.price/100))  * a.num | number}} din.</div>
                 <div>
                   <button (click)="removeItem(i)"  class="bttn"><i class="fas fa-times"></i></button>
                 </div>

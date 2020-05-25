@@ -19,7 +19,7 @@
 .wrapper /deep/ .ui-panelmenu /deep/ .ui-panelmenu-header.ui-state-active {
   background-color: #ffb78d;
   color: #333;
-  border-radius: 3px 3px 0px 0px;
+  border-radius: 6px 6px 0px 0px;
 }
 .wrapper /deep/ .ui-panelmenu /deep/ .ui-panelmenu-header.ui-state-active > a,
 .wrapper /deep/ .ui-panelmenu /deep/ .ui-panelmenu-header.ui-state-active > a .ui-panelmenu-icon,

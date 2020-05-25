@@ -1,3 +1,5 @@
+import { User } from './../../../models/user.model';
+import { AuthService } from './../../../services/auth.service';
 import { ProducerService } from './../../../services/producer.service';
 import { Producer } from './../../../models/producer.model';
 import { Subscription } from 'rxjs';
@@ -20,6 +22,9 @@ export class CategoryComponent implements OnInit, OnDestroy {
   @ViewChild('top', {static: true}) topPag: Paginator;
   @ViewChild('bottom', {static: true}) bottomPag: Paginator;
 
+  // User
+  userSubscription: Subscription;
+  user: User = null;
 
   @ViewChild('header', {static: true}) header: ElementRef;
   isSmallHeader: boolean;
@@ -65,6 +70,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     private categoryService: CategoryService,
     private producerService: ProducerService,
     private articalService: ArticalService,
+    private authService: AuthService,
     private renderer: Renderer2
   ) {
     this.filter = [
@@ -75,6 +81,14 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.userSubscription = this.authService.user.subscribe(u => {
+      if (this.user !== null && u === null && !!this.articals) {
+        this.articals.forEach((value) => {
+          value.user_discount = 0;
+        });
+      }
+      this.user = u;
+    });
     if (this.header.nativeElement.getBoundingClientRect().width <= 630) {
       this.isSmallHeader = true;
       this.renderer.addClass(this.header.nativeElement, 'header-min');
@@ -275,6 +289,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     if (this.categorySubscription !== undefined) {
       this.categorySubscription.unsubscribe();
     }
+    this.userSubscription.unsubscribe();
   }
 
   // EVENT LISTENERS

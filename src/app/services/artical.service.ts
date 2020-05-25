@@ -1,16 +1,21 @@
+import { User } from './../models/user.model';
+import { AuthService } from './auth.service';
 import { WishListService } from './wish-list.service';
 import { tap, map, take } from 'rxjs/operators';
 import { Globals } from './globals';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { messagetype } from 'src/app/models/message.model';
 import { MessageService } from './message.service';
 import { Artical } from './../models/artical.model';
 import { ProducerService } from './producer.service';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ArticalService {
+  userSubscription: Subscription;
+  user: User = null;
+
   loadedArticals: Artical[] = [];
   articalToDisplay = new BehaviorSubject<Artical>(null);
   isLoadingEmmiter = new BehaviorSubject<boolean>(null);
@@ -20,11 +25,16 @@ export class ArticalService {
 
   constructor(
     private producerService: ProducerService,
+    private authService: AuthService,
     private wishList: WishListService,
     private messageService: MessageService,
     private http: HttpClient,
     private globals: Globals
   ) {
+    this.userSubscription = this.authService.user.subscribe(u => {
+      // TODO Update cart with new discounts
+      this.user = u;
+    });
     this.articalToDisplay.next(JSON.parse(localStorage.getItem('toDisplay')));
     this.toPay = +JSON.parse(localStorage.getItem('toPay'));
     if (JSON.parse(localStorage.getItem('cart')) === null) {
@@ -44,14 +54,16 @@ export class ArticalService {
     features.forEach(value => {
       queryParams = queryParams.append('value', value);
     });
-
     if (idProducer !== -1) {
       queryParams = queryParams.append('producer', idProducer + '');
     }
-
+    let header = new HttpHeaders();
+    if (this.user !== null) {
+      header = header.append('Authorization', 'JWT ' + this.user.token);
+    }
     return this.http.get(
       this.globals.location + '/api/product/articles/',
-      {params: queryParams}
+      {params: queryParams, headers: header}
     )
     .pipe(map(responseData => {
       const data: {count: number, result: Artical[]} = {count: responseData['count'], result: []};
@@ -63,6 +75,7 @@ export class ArticalService {
           price: art.price,
           uri: art.uri,
           isOnWishList: false,
+          user_discount: art.user_discount,
           profile_picture: art.profile_picture,
           artical_rate: art.artical_rate
         };
@@ -74,37 +87,61 @@ export class ArticalService {
       return data;
     }));
   }
-  // Metoda kojom se prosledjuje artikal radi ispisivanja njegovih detalja
-  setArticalToDisplay(a: Artical) {
-    this.idToDisplay = a.id;
-    this.articalToDisplay.next(a);
-    this.isLoadingEmmiter.next(true);
-    // localStorage.setItem('toDisplay', JSON.stringify(this.articalToDisplay.value));
-    this.http.get<Artical>(
-      this.globals.location +
-      '/api/product/articles/' + a.id
-    )
-    .pipe(take(1))
-    .subscribe(data => {
+
+  updateArtical(s: Observable<Artical>) {
+    s.subscribe(data => {
       this.articalToDisplay.next(data);
       this.isLoadingEmmiter.next(false);
       localStorage.setItem('toDisplay', JSON.stringify(this.articalToDisplay.value));
     });
   }
+  // Metoda kojom se prosledjuje artikal radi ispisivanja njegovih detalja
+  setArticalToDisplay(a: Artical) {
+    this.idToDisplay = a.id;
+    this.articalToDisplay.next(a);
+    this.isLoadingEmmiter.next(true);
+    let header = new HttpHeaders();
+    if (this.user !== null) {
+      header = header.append('Authorization', 'JWT ' + this.user.token);
+    }
+    this.updateArtical(
+      this.http.get<Artical>(
+        a.uri,
+        {headers: header}
+      ).pipe(take(1))
+    );
+  }
   // Dohvati Artikal po ID
   getArtical(id: number) {
     this.idToDisplay = id;
     this.isLoadingEmmiter.next(true);
-    this.http.get<Artical>(
-      this.globals.location +
-      '/api/product/articles/' + id
-    )
-    .pipe(take(1))
-    .subscribe(data => {
-      this.articalToDisplay.next(data);
-      this.isLoadingEmmiter.next(false);
-      localStorage.setItem('toDisplay', JSON.stringify(this.articalToDisplay.value));
-    });
+
+    let header = new HttpHeaders();
+    if (this.user !== null) {
+      header = header.append('Authorization', 'JWT ' + this.user.token);
+    }
+    this.updateArtical(
+      this.http.get<Artical>(
+        this.globals.location +
+        '/api/product/articles/' + id,
+        { headers: header }
+      )
+      .pipe(take(1))
+    );
+  }
+
+  updateCart(amount: number, shwMsg: boolean) {
+    this.toPay += amount;
+    localStorage.setItem('cart', JSON.stringify(this.cart.value));
+    localStorage.setItem('toPay', JSON.stringify(this.toPay));
+    if (shwMsg) {
+      this.messageService.sendMessage({
+        key: '',
+        text: 'Uspešno ste dodali proizvod.',
+        type: messagetype.succes
+      });
+    }
+    this.cart.next(this.cart.value);
   }
 
   addToCart(a: Artical, numOfArt: number) {
@@ -113,65 +150,51 @@ export class ArticalService {
     for (let index = 0; index < this.cart.value.length; index++) {
       if (this.cart.value[index].art.id === a.id) {
         appeard = true;
+        const art = this.cart.value[index].art;
         this.cart.value[index].num += numOfArt;
+        this.updateCart(
+          (art.price - (art.price * art.user_discount / 100)) * numOfArt,
+          true
+        );
         break;
       }
     }
-    if (appeard) {
-
-      this.toPay += (+a.price * numOfArt);
-      localStorage.setItem('cart', JSON.stringify(this.cart.value));
-      localStorage.setItem('toPay', JSON.stringify(this.toPay));
-
-      this.messageService.sendMessage({
-        key: '',
-        text: 'Uspešno ste dodali proizvod.',
-        type: messagetype.succes
-      });
-      this.cart.next(this.cart.value);
-
-    } else {
+    if (!appeard) {
+      // TODO ako je ruta product nije potreban http
+      let header = new HttpHeaders();
+      if (this.user !== null) {
+        header = header.append('Authorization', 'JWT ' + this.user.token);
+      }
 
       this.http.get<Artical>(
         this.globals.location +
-        '/api/product/articles/' + a.id
+        '/api/product/articles/' + a.id,
+        {headers: header}
       )
       .pipe(take(1))
       .subscribe(data => {
         this.cart.value.push({art: data, num: numOfArt});
-        this.toPay += (+a.price * numOfArt);
-        localStorage.setItem('cart', JSON.stringify(this.cart.value));
-        localStorage.setItem('toPay', JSON.stringify(this.toPay));
-
-        this.messageService.sendMessage({
-          key: '',
-          text: 'Uspešno ste dodali proizvod.',
-          type: messagetype.succes
-        });
-        this.cart.next(this.cart.value);
+        this.updateCart((data.price - (data.price * data.user_discount / 100)) * numOfArt, true);
       });
-
     }
   }
+
   removeFromChart(index: number) {
-    this.toPay -= this.cart.value[index].num * this.cart.value[index].art.price;
+    const item = this.cart.value[index];
     this.cart.value.splice(index, 1);
-    localStorage.setItem('cart', JSON.stringify(this.cart.value));
-    localStorage.setItem('toPay', JSON.stringify(this.toPay));
-    this.cart.next(this.cart.value);
+    this.updateCart(
+      -(item.num * (item.art.price - item.art.price * item.art.user_discount / 100)), false
+    );
   }
   inc(i: number) {
-    this.cart.value[i].num++;
-    this.toPay += (+this.cart.value[i].art.price);
-    localStorage.setItem('cart', JSON.stringify(this.cart.value));
-    localStorage.setItem('toPay', JSON.stringify(this.toPay));
-    this.cart.next(this.cart.value);
+    const item = this.cart.value[i];
+    item.num++;
+    this.updateCart(item.art.price - item.art.price * item.art.user_discount / 100, false);
   }
   dec(i: number) {
-    this.cart.value[i].num--;
-    this.toPay -= (+this.cart.value[i].art.price);
-    localStorage.setItem('cart', JSON.stringify(this.cart.value));
-    localStorage.setItem('toPay', JSON.stringify(this.toPay));
-    this.cart.next(this.cart.value);
+    const item = this.cart.value[i];
+    if (item.num === 1) { return; }
+    item.num--;
+    this.updateCart(-(item.art.price - item.art.price * item.art.user_discount / 100), false);
   }
 }
