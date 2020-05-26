@@ -60,7 +60,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
   removeItem(index: number) {
-    this.articalService.removeFromChart(index);
+    this.articalService.removeFromCart(index);
   }
   logout() {
     this.authService.logout();

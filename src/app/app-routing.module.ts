@@ -28,6 +28,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/products', pathMatch: 'full' },
   { path: 'login', redirectTo: '/login/sign-in', pathMatch: 'full' },
   { path: 'user', redirectTo: '/user/edit', pathMatch: 'full' },
+  { path: 'admin', redirectTo: '/admin/dashboard', pathMatch: 'full' },
 
   { path: 'admin', component: AdminComponent, children: [
     { path: 'dashboard', component: AdminDashboardComponent},

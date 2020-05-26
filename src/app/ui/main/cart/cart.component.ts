@@ -28,7 +28,7 @@ export class CartComponent implements OnInit, OnDestroy {
     this.cartSub.unsubscribe();
   }
   remove(i: number) {
-    this.articalService.removeFromChart(i);
+    this.articalService.removeFromCart(i);
   }
   inc(i: number) {
     this.articalService.inc(i);

@@ -23,6 +23,7 @@ export class UserOrderHistoryComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isAutenticated = this.authService.user.subscribe(u => {
       this.user = u;
+      if (u === null) { return; }
       this.orderService.getOrders(u.token).subscribe(data => {
         this.orders = data;
       });

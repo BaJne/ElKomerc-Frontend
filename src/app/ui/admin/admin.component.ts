@@ -14,31 +14,15 @@ export class AdminComponent implements OnInit, AfterViewInit {
     this.items = [
       {
         label: 'DashBoard',
-        icon: 'fab fa-flipboard',
-        items: [
-          {label: 'New', routerLink: 'dashboard', icon: 'pi pi-fw pi-plus'},
-          {label: 'Download', icon: 'pi pi-fw pi-download'}
-        ]
+        routerLink: 'dashboard',
+        icon: 'fab fa-flipboard'
       },
       {
         label: 'Narudžbenice',
         icon: 'fas fa-list-alt',
         items: [
           {label: 'New', icon: 'pi pi-fw pi-plus'},
-          {label: 'Download', icon: 'pi pi-fw pi-download', items: [
-            {label: 'New', routerLink: 'orders', icon: 'pi pi-fw pi-plus'},
-            {
-              label: 'Download',
-              icon: 'pi pi-fw pi-download',
-              items: [
-                {label: 'New', icon: 'pi pi-fw pi-plus'},
-                {label: 'Download', icon: 'pi pi-fw pi-download', items: [
-                  {label: 'New', routerLink: 'orders', icon: 'pi pi-fw pi-plus'},
-                  {label: 'Download', icon: 'pi pi-fw pi-download'}
-                ]}
-              ]
-            }
-          ]}
+          {label: 'Download', icon: 'pi pi-fw pi-download'}
         ]
       }
     ];

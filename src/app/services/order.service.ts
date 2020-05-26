@@ -1,3 +1,4 @@
+import { ArticalService } from './artical.service';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Order, OrderPreview } from '../models/order.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -9,6 +10,7 @@ import { take, map } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class OrderService {
   constructor(
+    private article: ArticalService,
     private http: HttpClient,
     private messageService: MessageService,
     private globals: Globals
@@ -30,9 +32,10 @@ export class OrderService {
     ).subscribe(data => {
       this.messageService.sendMessage({
         key: '',
-        text: 'Narudžbina je uspešmo kreirana.',
+        text: 'Narudžbina je uspešno kreirana.',
         type: messagetype.succes
       });
+      this.article.clearCart();
     },
     error => {
       this.messageService.sendMessage({
@@ -53,6 +56,7 @@ export class OrderService {
     take(1),
     map(data => {
       let orders: OrderPreview[] = [];
+      console.log(data);
       orders = data['results'];
       return orders;
     }));

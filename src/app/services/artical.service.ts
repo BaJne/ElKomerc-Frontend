@@ -182,7 +182,7 @@ export class ArticalService implements OnDestroy {
     }
   }
 
-  removeFromChart(index: number) {
+  removeFromCart(index: number) {
     const item = this.cart.value[index];
     this.cart.value.splice(index, 1);
     this.updateCart(
@@ -199,5 +199,11 @@ export class ArticalService implements OnDestroy {
     if (item.num === 1) { return; }
     item.num--;
     this.updateCart(-(item.art.price - item.art.price * item.art.user_discount / 100), false);
+  }
+  clearCart() {
+    this.toPay = 0;
+    this.cart.next([]);
+    localStorage.setItem('cart', JSON.stringify(this.cart.value));
+    localStorage.setItem('toPay', JSON.stringify(this.toPay));
   }
 }

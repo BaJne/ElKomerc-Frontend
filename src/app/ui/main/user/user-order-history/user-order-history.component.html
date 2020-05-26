@@ -44,7 +44,7 @@
                 <td>-{{att.user_discount}}%</td>
                 <td>{{att.number_of_pieces | number}}</td>
                 <td>{{att.unit_of_measure}}</td>
-                <td colspan="2">{{att.price | number}} din.
+                <td colspan="2">{{att.price * att.number_of_pieces| number}} din.
                 </td>
               </tr>
             </ng-template>
@@ -58,6 +58,16 @@
                 <td colspan="2">
                   {{item.total_cost + ((item.total_cost > 10000)?0:500)| number}} din.
                 </td>
+              </tr>
+              <tr>
+                <td colspan="5" rowspan="3">Adresa za dostavu</td>
+                <td colspan="5">{{item.address}}</td>
+              </tr>
+              <tr>
+                <td colspan="5">{{item.city}}</td>
+              </tr>
+              <tr>
+                <td colspan="5">{{item.zip_code}}</td>
               </tr>
             </ng-template>
           </p-table>

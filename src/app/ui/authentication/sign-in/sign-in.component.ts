@@ -30,7 +30,7 @@ export class SignInComponent implements OnInit {
     this.authService.signin(e, p).subscribe((responseData) => {
       this.isLoading = false;
       if (responseData.is_stuff) {
-        this.router.navigate(['/admin']);
+        this.router.navigate(['/admin/dashboard']);
       } else {
         this.router.navigate(['/home']);
       }
