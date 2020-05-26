@@ -1,5 +1,6 @@
 import { MenuItem } from 'primeng/api';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 
 @Component({
   selector: 'app-admin',
@@ -15,15 +16,18 @@ export class AdminComponent implements OnInit, AfterViewInit {
       {
         label: 'DashBoard',
         routerLink: 'dashboard',
+        routerLinkActiveOptions: 'dashboard',
         icon: 'fab fa-flipboard'
       },
       {
         label: 'Narudžbenice',
         icon: 'fas fa-list-alt',
-        items: [
-          {label: 'New', icon: 'pi pi-fw pi-plus'},
-          {label: 'Download', icon: 'pi pi-fw pi-download'}
-        ]
+        routerLink: 'orders',
+        // ,
+        // items: [
+        //   {label: 'New', icon: 'pi pi-fw pi-plus'},
+        //   {label: 'Download', icon: 'pi pi-fw pi-download'}
+        // ]
       }
     ];
   }

@@ -24,6 +24,8 @@ import {ToggleButtonModule} from 'primeng/togglebutton';
 import {PanelMenuModule} from 'primeng/panelmenu';
 import {AccordionModule} from 'primeng/accordion';
 import {TooltipModule} from 'primeng/tooltip';
+import {PanelModule} from 'primeng/panel';
+import {ChartModule} from 'primeng/chart';
 
 import { ProducerService } from './services/producer.service';
 import { AppRoutingModule } from './app-routing.module';
@@ -115,6 +117,7 @@ import { SidebarComponent } from './shared/components/sidebar/sidebar.component'
     CarouselModule,
     AccordionModule,
     PanelMenuModule,
+    PanelModule,
     ScrollPanelModule,
     CheckboxModule,
     InputMaskModule,
@@ -129,7 +132,8 @@ import { SidebarComponent } from './shared/components/sidebar/sidebar.component'
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ChartModule
   ],
   providers: [
     ProducerService

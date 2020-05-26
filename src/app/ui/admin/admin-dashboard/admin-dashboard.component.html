@@ -54,6 +54,20 @@
     </div>
 
   </div>
-
+  <div class="statistic ui-sm-12 ui-md-12 ui-lg-12">
+    <p-panel>
+      <p-header>
+        <h5>Pregled statistike</h5>
+      </p-header>
+      <div class="ui-g">
+        <div class="ui-lg-8 ui-md-8 ui-sm-12">
+          <p-chart type="line" showDelay="12" [data]="sales"></p-chart>
+        </div>
+        <div class="ui-lg-4 ui-md-4 ui-sm-12" style="">
+          <p-chart type="pie" [data]="orderStatistic"></p-chart>
+        </div>
+      </div>
+    </p-panel>
+  </div>
 
 </div>
