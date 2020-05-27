@@ -10,11 +10,14 @@ import { Artical } from './../../../models/artical.model';
 
 import { Component, OnInit, OnDestroy, HostListener, ElementRef, ViewChild, Renderer2, ViewChildren } from '@angular/core';
 import { Paginator } from 'primeng/paginator/paginator';
+import { TransitionService } from '../../../services/transition.service';
+import { AccorditionService } from '../../../shared/components/accordition/accordition.service';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.css'],
+  providers:  [ AccorditionService ]
 })
 export class CategoryComponent implements OnInit, OnDestroy {
   @ViewChild('leftRef', {static: true}) el: ElementRef;
@@ -53,9 +56,12 @@ export class CategoryComponent implements OnInit, OnDestroy {
   // Parametri za kategorije i podkategorije
   categories: Category[];
   selectedProducer: Producer = null;
+  indexProducer = -1;
   searchFiledCategories: Category[] = null;
   searchField = '';
   selectedSubcategory = 1;
+  openedTab = 0;
+  selectedCategory = 0;
   artCount = 0;
 
   categorySubscription: Subscription;
@@ -69,8 +75,10 @@ export class CategoryComponent implements OnInit, OnDestroy {
   constructor(
     private categoryService: CategoryService,
     private producerService: ProducerService,
+    private transService: TransitionService,
     private articalService: ArticalService,
     private authService: AuthService,
+    private ac: AccorditionService,
     private renderer: Renderer2
   ) {
     this.filter = [
@@ -102,6 +110,26 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
     this.allCategories = this.categoryService.getCategories();
     this.producers = this.producerService.getProducers();
+    // Početni podaci
+    const startDetails = this.transService.getPageDetails('products');
+
+    if (startDetails !== undefined) {
+      this.selectedSubcategory = startDetails.selectedSubcategory;
+      this.indexProducer = startDetails.selectedProducer;
+      if (this.indexProducer !== -1) {
+        this.selectedProducer = this.producers[this.indexProducer];
+      }
+      this.topPag._first = 20 * startDetails.page;
+      this.topPag.updatePageLinks();
+      this.topPag.updatePaginatorState();
+      this.bottomPag._first = 20 * startDetails.page;
+      this.bottomPag.updatePageLinks();
+      this.bottomPag.updatePaginatorState();
+      this.openedTab = startDetails.cat;
+      this.selectedCategory = startDetails.cat;
+      this.ac.setOpenedPage(startDetails.cat);
+    }
+
     if (this.allCategories === null) {
       this.categorySubscription = this.categoryService
         .requestCategories()
@@ -115,13 +143,20 @@ export class CategoryComponent implements OnInit, OnDestroy {
         this.producers = data;
       });
     }
+
     this.categoryService.getFeatures(this.selectedSubcategory)
     .subscribe((data: Feature[]) => {
       this.features = data;
       this.selectedValues = [];
     });
     this.updateCategories();
-    this.getArticals(this.selectedSubcategory, [], 1, this.selectedProducer);
+
+    this.getArticals(
+      this.selectedSubcategory,
+      [],
+      (startDetails !== undefined) ? startDetails.page + 1 : 1,
+      this.selectedProducer
+    );
   }
   // Updejtovanje kategorija i prikaza
   selectGroup(index: number) {
@@ -132,6 +167,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
     } else {
       this.selectedProducer = null;
     }
+    this.indexProducer = index;
+    this.saveContext();
     this.updateCategories();
 
     this.getArticals(
@@ -141,9 +178,17 @@ export class CategoryComponent implements OnInit, OnDestroy {
       this.selectedProducer
     );
   }
-
+  saveContext() {
+    this.transService.setPageDetails('products', {
+      selectedSubcategory: this.selectedSubcategory,
+      selectedProducer: this.indexProducer,
+      cat: this.selectedCategory,
+      page: this.topPag.getPage()
+    });
+  }
   // Test
-  onCategorySwitch(s: any) {
+  onCategorySwitch(id: number) {
+    this.openedTab = id;
   }
   onSubCategorySelect(id: any) {
     this.isWindowSmall = false;
@@ -158,6 +203,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
       this.resetPaginators();
       this.getArticals(this.selectedSubcategory, [], 1, this.selectedProducer);
     }
+    this.selectedCategory = this.openedTab;
+    this.saveContext();
   }
   clearFeatureList() {
     if (this.selectedValues.length === 0) { return; }
@@ -189,6 +236,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
       }
       return;
     }
+    this.saveContext();
     this.getArticals(this.selectedSubcategory, [], event.page + 1, this.selectedProducer);
   }
   botPageChange(event, isUpdate: boolean) {
@@ -204,6 +252,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
       }
       return;
     }
+    this.saveContext();
     this.getArticals(this.selectedSubcategory, [], event.page + 1, this.selectedProducer);
     setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 200);
   }

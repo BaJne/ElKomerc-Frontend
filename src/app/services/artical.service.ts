@@ -203,7 +203,7 @@ export class ArticalService implements OnDestroy {
   clearCart() {
     this.toPay = 0;
     this.cart.next([]);
-    localStorage.setItem('cart', JSON.stringify(this.cart.value));
-    localStorage.setItem('toPay', JSON.stringify(this.toPay));
+    localStorage.removeItem('cart');
+    localStorage.removeItem('toPay');
   }
 }

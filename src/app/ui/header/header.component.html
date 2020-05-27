@@ -13,7 +13,8 @@
         Korpa({{artInCart.length}})
       </a>
 
-      <a [routerLink]= "['/login','sign-in']" *ngIf="!user" >
+      <a [routerLink]= "['/login','sign-in']"
+        (click)="setReturnPage()"  *ngIf="!user" >
         <i class="fas fa-sign-in-alt"></i>
         Prijavi se
       </a>

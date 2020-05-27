@@ -21,7 +21,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   logSub: Subscription;
   cartSub: Subscription;
   items: MenuItem[];
-  activeIndex = 3;
+  activeIndex = 0;
   error = false;
 
   // First page
@@ -50,8 +50,11 @@ export class OrderComponent implements OnInit, OnDestroy {
       this.city = this.user.details.city;
       this.post = this.user.details.zip_code;
     });
-    this.cartSub = this.articalService.cart.subscribe(data => {
-      this.cart = data;
+    this.cartSub = this.articalService.cart.subscribe(c => {
+      if(c.length === 0) {
+        this.router.navigate(['/home']);
+      }
+      this.cart = c;
       this.toPay = this.articalService.toPay;
     });
     this.items = [
@@ -60,17 +63,27 @@ export class OrderComponent implements OnInit, OnDestroy {
       {label: 'Način plaćanja'},
       {label: 'Pregled narudžbine'}
     ];
+    const data = JSON.parse(localStorage.getItem('orderProggress'));
+    if (data !== null) {
+      this.address = data.address;
+      this.city = data.city;
+      this.post = data.post;
+      this.note = data.note;
+      this.activeIndex = data.activeIndex;
+      this.agree = data.agree;
+    }
+
   }
   ngOnDestroy() {
     this.logSub.unsubscribe();
     this.cartSub.unsubscribe();
+    localStorage.removeItem('orderProggress');
   }
   proceed() {
     if (this.activeIndex === 0 && (this.post === '' || this.address === '' || this.city === '')) {
       this.error = true;
       return;
     }
-    this.error = false;
     if (this.activeIndex === 3) {
       if (!this.agree) {
         return;
@@ -95,11 +108,20 @@ export class OrderComponent implements OnInit, OnDestroy {
           payment_items: paymentItems
         }
       );
+      this.articalService.clearCart();
       this.router.navigate(['/user/orders']);
       return;
     }
-
+    this.error = false;
     this.activeIndex++;
+    localStorage.setItem('orderProggress', JSON.stringify({
+      address: this.address,
+      city: this.city,
+      post : this.post,
+      note : this.note,
+      activeIndex: this.activeIndex,
+      agree : this.agree
+    }));
   }
   back() {
     this.activeIndex--;

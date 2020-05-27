@@ -7,20 +7,25 @@ import { Component, OnInit, Input, ElementRef } from '@angular/core';
   styleUrls: ['./accordition-tab.component.css']
 })
 export class AccorditionTabComponent implements OnInit {
-  private static idd = 0;
   id: number;
   appearance: string;
-  isToggled: boolean;
+  isToggled = false;
+  opened: number;
 
   @Input() header: string;
   @Input() togglable = true;
 
-  constructor(private a: AccorditionService) {}
+  constructor(private a: AccorditionService) {
+    this.opened = a.opened;
+  }
 
   ngOnInit() {
-    this.isToggled = false;
     this.appearance = this.a.appearance;
-    this.id = AccorditionTabComponent.idd++;
+    this.id = this.a.idd++;
+
+    if (this.opened === this.id) {
+      this.isToggled = true;
+    }
 
     if (this.togglable) {
       this.a.toggled.subscribe((e: number) => {
@@ -33,7 +38,8 @@ export class AccorditionTabComponent implements OnInit {
 
   onToggle() {
     if (!this.isToggled) {
-      this.a.signal(this.id, this.header);
+      console.log(this.id);
+      this.a.signal(this.id, this.id);
     }
     if (this.togglable) {
       this.isToggled = !this.isToggled;

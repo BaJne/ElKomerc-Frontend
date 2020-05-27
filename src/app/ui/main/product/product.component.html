@@ -1,92 +1,103 @@
 <app-load-animation *ngIf="isLoading" ></app-load-animation>
+
 <div class="product-wrapper" style="position: relative;" *ngIf="artical !== null" >
-  <button class="bttn bttn-primary" style="font-size: 11px;"
-    (click)="backToProducts()" >
-    <i class="fas fa-reply"></i>
-    Nastavi sa pretragom
-  </button>
 
-  <div class="product-title">
-    <h3>
-      {{artical.article_name}}
-    </h3>
-    <hr style="margin: 0px 0px 5px 0px;">
-  </div>
-  <div *ngIf="artical" class="product-container">
 
-    <div class="product-images">
+  <div *ngIf="artical" class="ui-g">
+    <div class="product-images ui-sm-12 ui-md-5 ui-lg-5">
       <app-gallery [overley]="(artical.producer_info !== undefined)?artical.producer_info.profile_image:''" [images]="images"></app-gallery>
     </div>
-    <div class="product-status">
-      <span class="positive" *ngIf="artical.is_available" >
-        <i class="fas fa-check-circle"></i>
+    <div class="ui-sm-12 ui-md-7 ui-lg-7 left-side">
+      <a class="backLink" (click)="backToProducts()">
+        <i class="fas fa-reply"></i>
+        Nastavi sa pretragom
+      </a>
+      <div class="product-title">
+        <h3>
+          {{artical.article_name}}
+        </h3>
+        <hr>
+      </div>
+      <div class="product-status ">
+        <span class="positive" *ngIf="artical.is_available" >
+          <i class="fas fa-check-circle"></i>
           Na stanju
-      </span>
-      <span class="negative" *ngIf="!artical.is_available" >
-        <i class="fas fa-times-circle"></i>
+        </span>
+        <span class="negative" *ngIf="!artical.is_available" >
+          <i class="fas fa-times-circle"></i>
           Nema na stanju
-      </span>
-      <span class="positive">
-        <i class="fas fa-clock"></i>
+        </span>
+        <span class="positive">
+          <i class="fas fa-clock"></i>
           Rok isporuke 3 dana
-      </span>
-      <span class="positive">
-        <i class="fas fa-truck"></i>
-        Besplatna isporuka
-      </span>
-    </div>
+        </span>
+        <span class="positive">
+          <i class="fas fa-truck"></i>
+          Besplatna isporuka
+        </span>
+      </div>
+      <div class="price">
+        <span class="mp-span"> MP:
+          {{artical.price | number}}
+           din.
+        </span>
+        <span class="price-span">
+          {{(artical.price - (artical.user_discount*artical.price/100)) | number}}
+           din.
+        </span>
+        <span class="dis-span">Ušteda:
+          {{(artical.user_discount*artical.price/100) | number}} din.
+        </span>
 
-    <div class="price">
-      <span class="mp-span"> MP 111.11 din. </span>
-      <span class="price-span">{{artical.price}} din.</span>
-      <span class="dis-span">Ušteda: 30.21 din.</span>
-
-      <div class="product-order">
-        <p-spinner [(ngModel)]="itemCount" [min]="1"></p-spinner>
-        <button id="Order" class="bttn bttn-primary" (click)="addToCart()" >
-          <i class="fas fa-shopping-cart"></i>
-          Stavi u korpu
-        </button>
+        <div class="product-order">
+          <p-spinner [(ngModel)]="itemCount" [min]="1"></p-spinner>
+          <button id="Order" class="bttn bttn-primary" (click)="addToCart()" >
+            <i class="fas fa-shopping-cart"></i>
+            Stavi u korpu
+          </button>
+        </div>
+      </div>
+      <div class="product-spec-min">
+        <app-tabs>
+          <app-tab [img]="'fas fa-cogs'" [title]="'Specifikacija'">
+            <p-table [value]="artical.attributes">
+              <ng-template pTemplate="header">
+                  <tr>
+                      <th>Karakteristika</th>
+                      <th>Vrednost</th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-att>
+                  <tr>
+                      <td>{{att.attribute_name}}</td>
+                      <td>{{att.value}}</td>
+                  </tr>
+              </ng-template>
+          </p-table>
+          </app-tab>
+          <app-tab [img]="'fas fa-comments'"
+            [title]="'Komentari(' +
+            (artical.comments!== undefined ? artical.comments.length : '0') + ')'"
+          >
+            <div *ngIf="artical.comments === undefined || artical.comments.length === 0">
+              Trenutno nema nijednog komentara o proizvodu.
+            </div>
+            <div *ngIf="artical.comments !== undefined && artical.comments.length > 0" >
+              <div class="comment" *ngFor="let com of artical.comments" >
+                <div class="user-details">
+                  <div>
+                    <img src="/assets/img/user.png">
+                  </div>
+                  <span style="font-size:12px">{{com.user}}</span>
+                  <span style="font-size:10px">{{com.last_modified | date}}</span>
+                </div>
+                <p>{{com.comment}}</p>
+              </div>
+            </div>
+          </app-tab>
+        </app-tabs>
       </div>
     </div>
-
-    <div class="product-spec-min">
-      <app-tabs>
-        <app-tab [img]="'fas fa-cogs'" [title]="'Specifikacija'">
-          <p-table [value]="artical.attributes">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>Karakteristika</th>
-                    <th>Vrednost</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-att>
-                <tr>
-                    <td>{{att.attribute_name}}</td>
-                    <td>{{att.value}}</td>
-                </tr>
-            </ng-template>
-        </p-table>
-        </app-tab>
-        <app-tab [img]="'fas fa-comments'" [title]="'Komentari(' + (artical.comments!== undefined ? artical.comments.length : '0') + ')'" >
-          <div *ngIf="artical.comments === undefined || artical.comments.length === 0">
-            Trenutno nema nijednog komentara o proizvodu.
-          </div>
-          <div *ngIf="artical.comments !== undefined && artical.comments.length > 0" >
-            <div class="comment" *ngFor="let com of artical.comments" >
-              <div class="user-details">
-                <div>
-                  <img src="/assets/img/user.png">
-                </div>
-                <span style="font-size:12px">{{com.user}}</span>
-                <span style="font-size:10px">{{com.last_modified | date}}</span>
-              </div>
-              <p>{{com.comment}}</p>
-            </div>
-          </div>
-        </app-tab>
-      </app-tabs>
-    </div>
   </div>
-  <p *ngIf="!artical" > Proizvod nije pronadjen!</p>
 </div>
+<p *ngIf="!artical" > Proizvod nije pronadjen!</p>

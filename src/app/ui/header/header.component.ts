@@ -5,7 +5,8 @@ import { AuthService } from './../../services/auth.service';
 import { User } from './../../models/user.model';
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { TransitionService } from '../../services/transition.service';
 
 @Component({
   selector: 'app-header',
@@ -25,6 +26,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private wishService: WishListService,
     private articalService: ArticalService,
+    private transit: TransitionService,
     private router: Router
   ) {}
 
@@ -52,8 +54,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.wishItemsSub.unsubscribe();
     console.log('Unisten header');
   }
+  setReturnPage() {
+    this.transit.setLogInReturnPage(this.router.url);
+  }
   navigate(b: boolean) {
     if (b) {
+      if (this.user === null) {
+        this.transit.setLogInReturnPage('/order');
+      }
       this.router.navigate(['/order']);
     } else {
       this.router.navigate(['/cart']);

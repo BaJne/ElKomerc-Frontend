@@ -179,6 +179,7 @@ a:hover {
 }
 .scroll /deep/.ui-scrollpanel-content {
   width: calc(100% + 18px) !important;
+  overflow-x: hidden;
 }
 .cart{
   width: 100%;
