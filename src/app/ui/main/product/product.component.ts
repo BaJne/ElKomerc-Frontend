@@ -3,6 +3,9 @@ import { Artical } from './../../../models/artical.model';
 import { ArticalService } from './../../../services/artical.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { User } from '../../../models/user.model';
+import { AuthService } from '../../../services/auth.service';
+import { TransitionService } from '../../../services/transition.service';
 
 @Component({
   selector: 'app-product',
@@ -10,6 +13,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit, OnDestroy {
+  userSub: Subscription;
+  user: User = null;
+
   artical: Artical = null;
   images: string[] = [];
   isLoading = true;
@@ -17,19 +23,28 @@ export class ProductComponent implements OnInit, OnDestroy {
   routeSub: Subscription;
   isLoadingSub: Subscription;
   displaySub: Subscription;
+  addingComment = false;
 
   constructor(
     private articalService: ArticalService,
+    private authService: AuthService,
+    private transit: TransitionService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    this.userSub = this.authService.user.subscribe(u => {
+      this.user = u;
+    });
+
     this.isLoadingSub = this.articalService.isLoadingEmmiter.subscribe(value => {
       this.isLoading = value;
     });
-    this.displaySub = this.articalService
-    .articalToDisplay.subscribe(data => {
+
+    this.displaySub = this.articalService.articalToDisplay
+    .subscribe(data => {
+      if(data === null) { return; }
       this.isLoading = false;
       this.artical = data;
       this.images = [];
@@ -45,6 +60,7 @@ export class ProductComponent implements OnInit, OnDestroy {
         });
       }
     });
+
     this.routeSub = this.route.params.subscribe(params => {
       if (
         this.articalService.idToDisplay !== +params.id
@@ -58,7 +74,9 @@ export class ProductComponent implements OnInit, OnDestroy {
     this.routeSub.unsubscribe();
     this.displaySub.unsubscribe();
     this.isLoadingSub.unsubscribe();
+    this.userSub.unsubscribe();
   }
+
   backToProducts() {
     this.router.navigate(['/products']);
   }
@@ -67,4 +85,16 @@ export class ProductComponent implements OnInit, OnDestroy {
     this.itemCount = 1;
   }
 
+  createNewComment() {
+    if (this.user === null) {
+      this.transit.setLogInReturnPage(this.router.url);
+      this.router.navigate(['/login/sign-in']);
+      return;
+    }
+    this.addingComment = !this.addingComment;
+  }
+  saveComment() {
+    // Ovde se poziva api za cuvanje komentara koji ce se kasnije odobriti od administratora
+    this.addingComment = !this.addingComment;
+  }
 }

@@ -10,7 +10,7 @@ export interface Artical {
 
   isOnWishList: boolean;
 
-  artical_rate: number;
+  article_rate: number;
   number_of_rates?: number;
 
   uri?: string;

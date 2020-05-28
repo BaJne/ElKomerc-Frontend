@@ -2,7 +2,6 @@
 
 <div class="product-wrapper" style="position: relative;" *ngIf="artical !== null" >
 
-
   <div *ngIf="artical" class="ui-g">
     <div class="product-images ui-sm-12 ui-md-5 ui-lg-5">
       <app-gallery [overley]="(artical.producer_info !== undefined)?artical.producer_info.profile_image:''" [images]="images"></app-gallery>
@@ -45,9 +44,21 @@
           {{(artical.price - (artical.user_discount*artical.price/100)) | number}}
            din.
         </span>
-        <span class="dis-span">Ušteda:
-          {{(artical.user_discount*artical.price/100) | number}} din.
-        </span>
+        <div style="display: flex;justify-content: space-between;">
+          <span class="dis-span">Ušteda:
+            {{(artical.user_discount*artical.price/100) | number}} din.
+          </span>
+          <span id="review">
+            <i *ngFor="let i of [1, 2, 3, 4, 5]"
+              id="star_{{i}}"
+              [ngClass]="{'addedStar': (i <= (artical.article_rate+.5)) }"
+              class="fas fa-star"
+            ></i>
+            <span class="review-star-num">
+              ({{artical.number_of_rates}})
+            </span>
+          </span>
+        </div>
 
         <div class="product-order">
           <p-spinner [(ngModel)]="itemCount" [min]="1"></p-spinner>
@@ -79,11 +90,29 @@
             [title]="'Komentari(' +
             (artical.comments!== undefined ? artical.comments.length : '0') + ')'"
           >
-            <a class="backLink" style="color:#44aa74;font-size: 12px">
+            <a class="backLink" *ngIf="!addingComment"
+               style="font-size: 12px"
+              (click)="createNewComment()" >
               <i class="fas fa-plus"></i>
               Dodajte komentar
             </a>
-            <div *ngIf="artical.comments === undefined || artical.comments.length === 0">
+            <div *ngIf="addingComment"  class="addNewComment">
+              <textarea placeholder="Ostavite komentar"></textarea>
+              <a (click)="saveComment()"
+                class="backLink"
+                style="color:#44aa74;font-size: 12px">
+                <i class="fas fa-check-circle"></i>
+                Potvrdi
+              </a>
+              <a (click)="addingComment = !addingComment"
+                class="backLink"
+                style="color: rgb(206, 36, 36);font-size: 12px">
+                <i class="fas fa-times"></i>
+                Poništi
+              </a>
+            </div>
+            <div style="margin-top: 8px; font-size: 13px;"
+              *ngIf="artical.comments === undefined || artical.comments.length === 0">
               Trenutno nema nijednog komentara o proizvodu.
             </div>
             <div *ngIf="artical.comments !== undefined && artical.comments.length > 0" >
@@ -130,5 +159,6 @@
       </div>
     </div>
   </div>
+
 </div>
 <p *ngIf="!artical" > Proizvod nije pronadjen!</p>

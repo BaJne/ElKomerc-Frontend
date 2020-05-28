@@ -36,9 +36,12 @@ export class ArticalService implements OnDestroy {
       // TODO Update toDisplay article price
       this.user = u;
     });
-    this.articalToDisplay.next(JSON.parse(localStorage.getItem('toDisplay')));
-    this.idToDisplay = this.articalToDisplay.value.id;
-    this.toPay = +JSON.parse(localStorage.getItem('toPay'));
+    const art = JSON.parse(localStorage.getItem('toDisplay'));
+    if (art !== null) {
+      this.articalToDisplay.next(art);
+      this.idToDisplay = this.articalToDisplay.value.id;
+      this.toPay = +JSON.parse(localStorage.getItem('toPay'));
+    }
     if (JSON.parse(localStorage.getItem('cart')) === null) {
       this.cart.next([]);
       this.toPay = 0;
@@ -81,7 +84,7 @@ export class ArticalService implements OnDestroy {
           isOnWishList: false,
           user_discount: art.user_discount,
           profile_picture: art.profile_picture,
-          artical_rate: art.artical_rate
+          article_rate: art.article_rate
         };
         if (this.wishList.wish.has(a.id)) {
           a.isOnWishList = true;
