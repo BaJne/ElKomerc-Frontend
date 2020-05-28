@@ -34,7 +34,7 @@ export interface Artical {
     profile_image: string;
     comment: string;​​​
     last_modified: Date;​​​
-    response: {
+    responses: {
       comment_id: number;
       user: string;
       profile_image: string;

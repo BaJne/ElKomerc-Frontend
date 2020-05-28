@@ -57,20 +57,20 @@
           </button>
         </div>
       </div>
-      <div class="product-spec-min">
+      <div class="product-spec-min table">
         <app-tabs>
           <app-tab [img]="'fas fa-cogs'" [title]="'Specifikacija'">
             <p-table [value]="artical.attributes">
               <ng-template pTemplate="header">
                   <tr>
-                      <th>Karakteristika</th>
-                      <th>Vrednost</th>
+                      <th colspan="2">Karakteristika</th>
+                      <th colspan="3">Vrednost</th>
                   </tr>
               </ng-template>
               <ng-template pTemplate="body" let-att>
                   <tr>
-                      <td>{{att.attribute_name}}</td>
-                      <td>{{att.value}}</td>
+                      <td colspan="2">{{att.attribute_name}}</td>
+                      <td colspan="3">{{att.value}}</td>
                   </tr>
               </ng-template>
           </p-table>
@@ -79,6 +79,10 @@
             [title]="'Komentari(' +
             (artical.comments!== undefined ? artical.comments.length : '0') + ')'"
           >
+            <a class="backLink" style="color:#44aa74;font-size: 12px">
+              <i class="fas fa-plus"></i>
+              Dodajte komentar
+            </a>
             <div *ngIf="artical.comments === undefined || artical.comments.length === 0">
               Trenutno nema nijednog komentara o proizvodu.
             </div>
@@ -86,12 +90,39 @@
               <div class="comment" *ngFor="let com of artical.comments" >
                 <div class="user-details">
                   <div>
-                    <img src="/assets/img/user.png">
+                    <img src="{{com.profile_image === null ? '/assets/img/user.png' : com.profile_image}}">
                   </div>
                   <span style="font-size:12px">{{com.user}}</span>
                   <span style="font-size:10px">{{com.last_modified | date}}</span>
                 </div>
-                <p>{{com.comment}}</p>
+                <div>
+                  <p class="comment-content">{{com.comment}}</p>
+                  <div class="p-grid p-justify-end" style="padding: 10px 10px 0px 0px">
+                    <a class="backLink" style="color: #44aa74">
+                      <i class="fas fa-thumbs-up"></i>
+                      (2)
+                    </a>
+                    <a class="backLink" style="color: rgb(206, 36, 36)">
+                      <i class="fas fa-thumbs-down"></i>
+                      (0)
+                    </a>
+                    <a class="backLink">
+                      <i class="fas fa-reply"></i>
+                      Odgovori
+                    </a>
+                  </div>
+                  <div class="comment reply" *ngFor="let reply of com.responses" >
+                    <div class="user-details">
+                      <div>
+                        <img src="{{reply.profile_image === null ? '/assets/img/user.png' : reply.profile_image}}">
+                      </div>
+                      <span style="font-size:12px">{{reply.user}}</span>
+                      <span style="font-size:10px">{{reply.last_modified | date}}</span>
+                    </div>
+                    <p class="comment-content">{{com.comment}}</p>
+                  </div>
+
+                </div>
               </div>
             </div>
           </app-tab>

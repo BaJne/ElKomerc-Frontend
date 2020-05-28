@@ -33,10 +33,11 @@ export class ArticalService implements OnDestroy {
   ) {
     this.userSubscription = this.authService.user.subscribe(u => {
       // TODO Update cart with new discounts
-
+      // TODO Update toDisplay article price
       this.user = u;
     });
     this.articalToDisplay.next(JSON.parse(localStorage.getItem('toDisplay')));
+    this.idToDisplay = this.articalToDisplay.value.id;
     this.toPay = +JSON.parse(localStorage.getItem('toPay'));
     if (JSON.parse(localStorage.getItem('cart')) === null) {
       this.cart.next([]);

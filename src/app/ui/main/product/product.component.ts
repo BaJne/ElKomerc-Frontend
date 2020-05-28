@@ -18,7 +18,11 @@ export class ProductComponent implements OnInit, OnDestroy {
   isLoadingSub: Subscription;
   displaySub: Subscription;
 
-  constructor(private articalService: ArticalService, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private articalService: ArticalService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
     this.isLoadingSub = this.articalService.isLoadingEmmiter.subscribe(value => {
