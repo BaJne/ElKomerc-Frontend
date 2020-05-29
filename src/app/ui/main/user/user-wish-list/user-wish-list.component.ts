@@ -22,7 +22,7 @@ export class UserWishListComponent implements OnInit {
         title: value.article_name,
         price: value.price,
         img: value.profile_picture,
-        rate: value.artical_rate,
+        rate: value.article_rate,
         isLiked: true
       };
       this.art.push(a);

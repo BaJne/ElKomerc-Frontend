@@ -94,7 +94,7 @@
                 </div>
                 <div>{{a.art.article_name}}</div>
                 <div>x{{a.num}}</div>
-                <div>{{(a.art.price - (a.art.user_discount * a.art.price/100))  * a.num | number}} din.</div>
+                <div>{{(a.art.price - (a.art.user_discount * a.art.price/100))  * a.num | number : '1.2-2'}} din.</div>
                 <div>
                   <button (click)="removeItem(i)"  class="bttn"><i class="fas fa-times"></i></button>
                 </div>
@@ -103,7 +103,7 @@
             <div class="cart-summery">
               <div>
                 <span>Ukupno</span>
-                <span>{{ amountToPay | number }} din.</span>
+                <span>{{ amountToPay | number : '1.2-2' }} din.</span>
               </div>
               <div *ngIf="artInCart.length > 0" >
                 <button (click)="navigate(true)"  class="bttn btn-success">
@@ -115,7 +115,7 @@
           </ng-template>
         </p-overlayPanel>
         <i class="fas fa-shopping-bag"></i>
-        [{{artInCart.length}}]&nbsp;&nbsp;{{ amountToPay | number }} din.
+        [{{artInCart.length}}]&nbsp;&nbsp;{{ amountToPay | number : '1.2-2' }} din.
       </button>
     </div>
 

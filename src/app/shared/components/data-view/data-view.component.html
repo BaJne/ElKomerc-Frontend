@@ -22,7 +22,7 @@
         </span>
       </div>
       <div id="price">
-        <span>{{ artical.price - (artical.price * artical.user_discount / 100) | number}} din.</span>
+        <span>{{ artical.price - (artical.price * artical.user_discount / 100) | number : '1.2-2'}} din.</span>
 
         <div #star>
           <i *ngFor="let i of [1, 2, 3, 4, 5]"

@@ -22,7 +22,7 @@
             <i class="fas fa-plus" (click)="inc(i)"></i>
           </div>
           <div>
-            {{(item.art.price - (item.art.user_discount * item.art.price/100))  * item.num | number}}
+            {{(item.art.price - (item.art.user_discount * item.art.price/100))  * item.num | number : '1.2-2'}}
             din.
           </div>
           <i class="exit fas fa-times" (click)="remove(i)" ></i>
@@ -34,11 +34,11 @@
         <h4>Račun</h4>
         <div class="p-grid p-justify-between">
           <span class="p-col-fixed">Ukupno</span>
-          <span class="p-col-fixed">{{toPay - toPay*20/100 | number}} din.</span>
+          <span class="p-col-fixed">{{toPay - toPay*20/100 | number : '1.2-2'}} din.</span>
         </div>
         <div class="p-grid p-justify-between">
           <span class="p-col-fixed">Porez</span>
-          <span class="p-col-fixed">{{toPay*20/100 | number}} din.</span>
+          <span class="p-col-fixed">{{toPay*20/100 | number : '1.2-2'}} din.</span>
         </div>
         <div class="p-grid p-justify-between">
           <span class="p-col-fixed">Popust</span>
@@ -47,7 +47,7 @@
         <br>
         <div class="p-grid p-justify-between">
           <span class="p-col-fixed sp">Sve ukupno</span>
-          <span class="p-col-fixed sp">{{toPay | number}} din.</span>
+          <span class="p-col-fixed sp">{{toPay | number : '1.2-2'}} din.</span>
         </div>
         <hr>
         <button class="btn bttn-primary" (click)="orderRecipe()" >

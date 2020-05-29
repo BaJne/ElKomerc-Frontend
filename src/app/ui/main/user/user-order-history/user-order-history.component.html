@@ -22,6 +22,24 @@
               </div>
             </div>
           </p-header>
+          <div class="p-grid" style="padding: 0px 10px;">
+            <div class="p-col-8 p-align-bottom">
+              Adresa za dostavu
+            </div>
+            <div class="p-col-4">
+                <div class="p-grid" style="text-align: right;">
+                    <div class="p-col-6">
+                      {{item.address}}
+                    </div>
+                    <div class="p-col-6">
+                      {{item.zip_code}}
+                    </div>
+                    <div class="p-col-12">
+                      {{item.city}}
+                    </div>
+                </div>
+            </div>
+          </div>
           <p-table [value]="item.items">
             <ng-template pTemplate="header">
               <tr>
@@ -42,9 +60,9 @@
                 <td colspan="3">{{att.article_name}}</td>
                 <td colspan="2">{{att.article_price}} din.</td>
                 <td>-{{att.user_discount}}%</td>
-                <td>{{att.number_of_pieces | number}}</td>
+                <td>{{att.number_of_pieces | number : '1.2-2'}}</td>
                 <td>{{att.unit_of_measure}}</td>
-                <td colspan="2">{{att.price * att.number_of_pieces| number}} din.
+                <td colspan="2">{{att.price * att.number_of_pieces| number : '1.2-2'}} din.
                 </td>
               </tr>
             </ng-template>
@@ -56,18 +74,8 @@
               <tr>
                 <td colspan="8">Sve ukupno</td>
                 <td colspan="2">
-                  {{item.total_cost + ((item.total_cost > 10000)?0:500)| number}} din.
+                  {{item.total_cost + ((item.total_cost > 10000)?0:500)| number : '1.2-2'}} din.
                 </td>
-              </tr>
-              <tr>
-                <td colspan="5" rowspan="3">Adresa za dostavu</td>
-                <td colspan="5">{{item.address}}</td>
-              </tr>
-              <tr>
-                <td colspan="5">{{item.city}}</td>
-              </tr>
-              <tr>
-                <td colspan="5">{{item.zip_code}}</td>
               </tr>
             </ng-template>
           </p-table>
