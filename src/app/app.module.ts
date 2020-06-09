@@ -26,6 +26,7 @@ import {AccordionModule} from 'primeng/accordion';
 import {TooltipModule} from 'primeng/tooltip';
 import {PanelModule} from 'primeng/panel';
 import {ChartModule} from 'primeng/chart';
+import {GMapModule} from 'primeng/gmap';
 
 import { ProducerService } from './services/producer.service';
 import { AppRoutingModule } from './app-routing.module';
@@ -67,6 +68,7 @@ import { AdminComponent } from './ui/admin/admin.component';
 import { AdminDashboardComponent } from './ui/admin/admin-dashboard/admin-dashboard.component';
 import { AdminOrdersComponent } from './ui/admin/admin-orders/admin-orders.component';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
+import { FooterComponent } from './ui/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -107,7 +109,8 @@ import { SidebarComponent } from './shared/components/sidebar/sidebar.component'
     AdminComponent,
     AdminDashboardComponent,
     SidebarComponent,
-    AdminOrdersComponent
+    AdminOrdersComponent,
+    FooterComponent
   ],
   imports: [
     AutoCompleteModule,
@@ -133,7 +136,8 @@ import { SidebarComponent } from './shared/components/sidebar/sidebar.component'
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    ChartModule
+    ChartModule,
+    GMapModule
   ],
   providers: [
     ProducerService

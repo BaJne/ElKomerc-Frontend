@@ -1,0 +1,149 @@
+
+.my-inputgroup{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.mail-addon{
+  display: none;
+  border: 1px solid #b5b5b5;
+  background-color: #f0f0f0;
+  color: #b5b5b5;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.bf-foot{
+  width: 100%;
+  height: 20px;
+  background-color: #337ab7;
+}
+.foot {
+  padding: 30px 20px;
+  background-color: #23527c;
+  color: white;
+  font-family: 'Roboto', Helvetica;
+  font-size: 15;
+}
+.wrapper{
+  max-width: 1300px;
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+.mcol /deep/ h4 {
+  font-family: 'Roboto-midium';
+  font-size: 16px;
+  margin-bottom: 24px;
+}
+.mcol-2,
+.mcol-3{
+  min-width: 250px;
+}
+.mcol-2 > div{
+  width: 180px;
+}
+.side-menu-logo{
+  font-size: 24px;
+  font-family: 'Roboto-midium';
+  margin-bottom: 20px;
+}
+.foot /deep/ a{
+  text-decoration: none;
+  cursor: pointer;
+  color: #7eacd4;
+  transition: all;
+  transition-duration: 300ms;
+}
+.link-list > li{
+  padding: 4px 0px;
+}
+.link-list > li > a:hover{
+  margin-left: 4px;
+}
+.foot /deep/ a:hover{
+  color: white;
+}
+.foot /deep/ ul{
+  list-style: none;
+}
+.with-icon{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 8px;
+}
+.with-icon > div > p{
+  margin-bottom: 0px;
+}
+label{
+  font-family: 'Roboto';
+  font-weight: 600;
+}
+#mail{
+  border-radius: 0px;
+  padding: 8px 8px;
+  height: 38px;
+  border-left: 0px;
+  border-color: #a6a6a6;
+}
+
+.btn-newsettler{
+  color: #333;
+  font-weight: 500;
+  padding: 4px 12px 5px 12px;
+  border: 0px;
+  transition: all;
+  transition-duration: 300ms;
+}
+.btn-newsettler:hover{
+  background-color: #23527c;
+  color: white;
+}
+.af-foot{
+  width: 100%;
+  padding: 10px 12px;
+  background-color: #337ab7;
+  color: white;
+  font-family: Helvetica, sans-serif;
+  font-size: 12px;
+}
+
+@media screen and (min-width: 400px) {
+  .btn-newsettler{
+    margin-left: 8px;
+  }
+  .mail-addon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .my-inputgroup{
+    display: grid;
+    grid-template-columns: 38px auto 100px;
+    gap: 0px;
+    /* position: static; */
+  }
+}
+@media screen and (min-width: 530px) {
+  .mcol-1{
+    grid-column: 1/span 2 !important;
+  }
+  .wrapper{
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media screen and (min-width: 900px){
+  .mcol-1{
+    grid-column: 1/span 1 !important;
+  }
+  .mcol-3 > div,
+  .mcol-2 > div{
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .wrapper{
+    grid-template-columns: 6fr 3fr 3fr;
+  }
+}

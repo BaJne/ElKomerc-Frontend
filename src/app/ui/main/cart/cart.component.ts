@@ -1,3 +1,4 @@
+import { TransitionService } from './../../../services/transition.service';
 import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ArticalService } from '../../../services/artical.service';
@@ -15,6 +16,7 @@ export class CartComponent implements OnInit, OnDestroy {
   cartSub: Subscription;
   constructor(
     private articalService: ArticalService,
+    private transit: TransitionService,
     private router: Router
   ) { }
 
@@ -38,6 +40,9 @@ export class CartComponent implements OnInit, OnDestroy {
   }
   orderRecipe() {
     if (this.cart.length === 0) { return; }
+    if (this.articalService.user === null) {
+      this.transit.setLogInReturnPage('/order');
+    }
     this.router.navigate(['/order']);
   }
 }
