@@ -1,0 +1,27 @@
+<!-- <ng-container  *ngTemplateOutlet="body"></ng-container> -->
+<div class="shelf">
+
+  <p-carousel [value]="shelf.products" [numVisible]="5" [responsiveOptions]="responsiveOptions">
+    <p-header>
+      <h3 class="title">{{shelf.title}}</h3>
+    </p-header>
+    <ng-template let-product pTemplate="item">
+      <div class="item" style="flex: 1;" (click)="showProductDetails(product.id)" >
+        <div id="picture">
+          <img [src]="(product.profile_picture !== null) ? getSafeUrl(product.profile_picture) : 'assets/img/no-img.png'" alt="">
+        </div>
+
+        <div id="name">
+          <span>
+            {{ product.article_name }}
+          </span>
+        </div>
+
+        <div id="price">
+          <span>{{ product.price | number : '1.2-2'}} din.</span>
+        </div>
+
+      </div>
+    </ng-template>
+  </p-carousel>
+</div>

@@ -1,0 +1,109 @@
+.container > h3{
+  margin: 20px 0px 28px 0px;
+  font-family: 'Roboto';
+}
+
+.labelLink {
+  display: flex;
+  flex-direction: column;
+}
+.labelLink input{
+  font-size: 14px;
+}
+label{
+  margin-top: 10px;
+  padding-bottom: 0px;
+  margin-bottom: 2px;
+  color: var(--link);
+  font-size: 14px;
+  font-family: 'Roboto-light';
+}
+
+.bttn-link:disabled{
+  background-color: var(--link-dark);
+  cursor: not-allowed;
+}
+
+.formGroup {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.required-label::after {
+  content: '*';
+  font-size: 11px;
+  top: -5px;
+  left: 3px;
+  position: relative;
+  color:#ff9191;
+}
+
+#product_name.ng-touched.ng-invalid{
+  border-color: #f44336;
+}
+
+#product_name,
+#description,
+#way_of_use{
+  font-size: 14px !important;
+  color: #495057;
+  background: #ffffff;
+  padding: 0.5rem 0.5rem;
+  border: 1px solid #ced4da;
+  appearance: none;
+  border-radius: 3px;
+}
+.labelLink /deep/ .p-inputnumber{
+  width: 100%;
+}
+.labelLink /deep/ .p-inputtext{
+  font-size: 14px;
+}
+.labelLink /deep/ .p-inputtext:enabled:focus{
+  box-shadow: 0 0 0 0 white;
+}
+
+#product_name:enabled:focus,
+#description:enabled:focus,
+#way_of_use:enabled:focus{
+  border-color: #2196f3
+}
+
+.error{
+  font-size: 14px;
+  color: #f44336;
+}
+
+.my-slider {
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+
+.my-slider > div:first-child{
+  margin-right: 5px;
+  height: 0px;
+  flex: 1;
+  background-color: red;
+}
+.my-slider > div:last-child{
+  width: 60px;
+  text-align: center;
+  font-family: "Roboto-light";
+  font-size: 18px;
+}
+
+.my-slider /deep/ .p-slider.p-slider-horizontal {
+  height: 4px;
+}
+.my-slider /deep/ .p-slider .p-slider-range {
+  background-color:#ffb78d;
+}
+.my-slider /deep/ .p-slider:not(.p-disabled) .p-slider-handle:hover {
+  background: #ffb78d;
+  border-color: #ffb78d;
+}
+.my-slider /deep/ .p-slider .p-slider-handle {
+  border-color: #e66c25;
+}

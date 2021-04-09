@@ -13,12 +13,16 @@
   display: flex;
   flex-direction: column;
 }
+.labelLink label{
+  margin-bottom: 2px;
+  font-size: 13px;
+}
 button[type='submit'] {
   margin-bottom: 0px !important;
 }
 .btn-registrationType {
   border: 2px solid white;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
   padding: 5px;
   background-color: transparent;
@@ -34,7 +38,7 @@ button[type='submit'] {
 }
 .required-label::after {
   content: '*';
-  font-size: 11px;
+  font-size: 12px;
   top: -5px;
   left: 3px;
   position: relative;
@@ -47,10 +51,18 @@ button[type='submit'] {
 .successful-log i {
   color: #11a29f;
 }
-.pAutoComplete /deep/ .ui-corner-all{
+
+.my-p-input /deep/ .p-inputmask,
+.pAutocomplete /deep/ .p-autocomplete-input,
+.pAutocomplete /deep/ .p-autocomplete{
+  width: 100%;
+}
+
+.pAutocomplete /deep/ .p-autocomplete-input,
+.no-border-radius /deep/ .p-inputmask{
   border-radius: 0px !important;
 }
-.pAutoComplete /deep/ .ui-widget{
+.pAutocomplete /deep/ .p-autocomplete-input,
+.my-p-input /deep/ .p-inputmask{
   font-family: 'Roboto';
-  width: 100%;
 }

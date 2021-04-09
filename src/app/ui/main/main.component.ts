@@ -10,46 +10,34 @@ import { filter } from 'rxjs/operators';
 })
 export class MainComponent implements OnInit, OnDestroy {
   showFooter: boolean;
-  routeSub: Subscription;
-  constructor(
-    private router: Router
-  ) {
+  displayFooterSubscription: Subscription;
+
+  constructor(private router: Router) {
     if (this.router.url === '/products') {
       this.showFooter = false;
-    } else {
+    }
+    else {
       this.showFooter = true;
     }
   }
 
   ngOnInit() {
-    this.routeSub = this.router.events
+    this.displayFooterSubscription = this.router.events
     .pipe(
       filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: NavigationEnd) => {
-      if (
-        this.router.url === '/products' &&
-        this.showFooter
-      ) {
+    )
+    .subscribe((event: NavigationEnd) => {
+      if (this.router.url === '/products' && this.showFooter ) {
         this.showFooter = false;
-      } else if (
-        this.router.url !== '/products' &&
-        !this.showFooter
-      ) {
+      }
+      else if ( this.router.url !== '/products' && !this.showFooter ) {
         this.showFooter = true;
       }
-
     });
-    // this.routeSub = this.router.events.subscribe((event) => {
-    //   if (event instanceof NavigationStart) {
-    //     if (this.router.url === '/product') {
-
-    //     }
-    //     console.log(this.router.url);
-    //   }
-    // });
   }
+
   ngOnDestroy(): void {
-    this.routeSub.unsubscribe();
+    this.displayFooterSubscription.unsubscribe();
   }
 
 }

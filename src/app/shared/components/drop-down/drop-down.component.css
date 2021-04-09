@@ -23,17 +23,20 @@
   position: absolute;
   top:100%;
   transform: translateX(-5px);
-  z-index: 1;
+  z-index: 100;
   background-color: #333;
   padding: 5px 0px 0px 0px;
   width: 100%;
   min-width: 120px;
   height: min-content;
 }
-:host /deep/ .drop-down-box li {
+/* :host /deep/ .drop-down-box li {
   padding: 5px;
-}
+} */
 :host /deep/ .drop-down-box li a {
+  display: inline-block;
+  padding: 5px 8px;
+  width: 100%;
   color: white !important;
 }
 :host /deep/ ul li a:hover{

@@ -1,1 +1,69 @@
-<p>admin-orders works!</p>
+<div class="products-header">
+  <div>
+    <div class="group">
+      Neobrađene
+      <span>{{1}}</span>
+    </div>
+
+    <div class="group">
+      Ostvarene
+      <span>{{0}}</span>
+    </div>
+  </div>
+
+  <button class="bt secondary p-mr-5" >
+    <i class="fas fa-hammer"></i>
+    Interval
+  </button>
+</div>
+<div class="m-container">
+  <p-tabMenu [model]="items" [activeItem]="items[0]"></p-tabMenu>
+  <p-table [value]="orders">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="article_code">
+          ID Narudžbine
+          <p-sortIcon field="article_code"></p-sortIcon>
+        </th>
+        <th pSortableColumn="article_name">
+          Kupac
+          <p-sortIcon field="article_name"></p-sortIcon>
+          <p-columnFilter type="text" field="article_name" display="menu"></p-columnFilter>
+        </th>
+        <th pSortableColumn="price">
+          Datum porudžbine
+          <p-sortIcon field="price"></p-sortIcon>
+        </th>
+        <th pSortableColumn="att.sub_category">
+          Vrednost narudžbine
+          <p-sortIcon field="att.sub_category"></p-sortIcon>
+        </th>
+        <th pSortableColumn="att.producer_info.producer_name">
+          Status
+          <p-sortIcon field="att.producer_info.producer_name"></p-sortIcon>
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-att let-rowIndex="rowIndex">
+      <tr [pSelectableRow]="att" [pSelectableRowIndex]="rowIndex">
+        <td>{{att.id}}</td>
+        <td>{{att?.email}}</td>
+        <td>{{att.time_created | date}}</td>
+        <td>{{att.total_cost}}  din.</td>
+        <td>{{att.status}}</td>
+        <td></td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <tr>
+        <td colspan="6">
+          <p-paginator #top [rows]="20">
+            <!-- [totalRecords]="count"
+            (onPageChange)="changePage($event)"   -->
+          </p-paginator>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

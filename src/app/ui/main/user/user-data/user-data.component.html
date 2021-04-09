@@ -23,7 +23,7 @@
     </div>
 
     <!-- EMAIL -->
-    <div class="form-group ui-g ui-md-12 ui-sm-12">
+    <div class="form-group">
       <label for="email" >Email</label>
       <input type="email" class="form-control" readonly
       id="email"
@@ -32,8 +32,9 @@
     </div>
 
     <!-- PERSON DITAILS : Ime, Preyime -->
-    <div *ngIf="user.details.account_type ==='USR'" formGroupName="person" class="ui-g">
-      <div class="form-group ui-md-6 ui-sm-12">
+    <div *ngIf="user.details.account_type ==='USR'" formGroupName="person" class="row">
+
+      <div class="form-group col-md-6 col-sm-12">
         <label for="name" >Ime</label>
         <input type="text" class="form-control" id="name" formControlName="name">
         <div *ngIf="!signUpForm.get('person.name').valid && signUpForm.get('person.name').touched ">
@@ -42,7 +43,8 @@
           </div>
         </div>
       </div>
-      <div class="form-group ui-md-6 ui-sm-12">
+
+      <div class="form-group col-md-6 col-sm-12">
         <label for="last-name">Prezime</label>
         <input type="text" class="form-control" id="last-name" formControlName="lastName">
         <div *ngIf="!signUpForm.get('person.lastName').valid && signUpForm.get('person.lastName').touched ">
@@ -51,12 +53,13 @@
           </div>
         </div>
       </div>
+
     </div>
 
     <!-- Naziv KOMPANIJE-->
     <div *ngIf="user.details.account_type !=='USR'"
           formGroupName="company"
-          class="form-group ui-g ui-md-12 ui-sm-12"
+          class="form-group"
     >
       <label for="company-name">Naziv</label>
       <input type="text" class="form-control" id="company-name" formControlName="name">
@@ -68,8 +71,8 @@
     </div>
 
     <!-- Telefon -->
-    <div class="ui-g">
-      <div class="form-group ui-md-6 ui-sm-12">
+    <div class="row">
+      <div class="form-group col-md-6 col-sm-12">
           <label for="phone">Telefon</label>
           <p-inputMask id="phone" class="auto-complete"
           formControlName="phone"
@@ -83,7 +86,7 @@
 
       <div *ngIf="user.details.account_type ==='USR'"
         formGroupName="person"
-        class="form-group ui-md-6 ui-sm-12"
+        class="form-group col-md-6 col-sm-12"
       >
         <label for="date" class="col-form-label">Datum rođenja</label>
         <input type="date" id="date" formControlName="birthDate" class="form-control" style="line-height: normal;">
@@ -91,7 +94,7 @@
 
       <div *ngIf="user.details.account_type !=='USR'"
         formGroupName="company"
-        class="form-group ui-md-3 ui-sm-12"
+        class="form-group col-md-3 col-sm-12"
       >
         <label for="fax-num">Broj faksa</label>
         <p-inputMask id="fax-num" class="auto-complete"
@@ -103,7 +106,7 @@
 
       <div *ngIf="user.details.account_type !=='USR'"
         formGroupName="company"
-        class="form-group ui-md-3 ui-sm-12"
+        class="form-group col-md-3 col-sm-12"
       >
         <label for="pib" >Pib</label>
         <p-inputMask id="pib" formControlName="pib" mask="999999999" placeholder="10000001 do 999999999" class="auto-complete"></p-inputMask>
@@ -116,8 +119,8 @@
     </div>
 
 
-    <div class="ui-g">
-      <div class="form-group ui-lg-6 ui-md-12 ui-sm-12">
+    <div class="row">
+      <div class="form-group col-lg-6 col-md-12 col-sm-12">
         <label for="address">Adresa</label>
         <input type="text" class="form-control" id="address" formControlName="address">
         <div *ngIf="!signUpForm.get('address').valid && signUpForm.get('address').touched ">
@@ -127,9 +130,11 @@
         </div>
       </div>
       <!-- Grad -->
-      <div class="form-group ui-lg-4 ui-md-6 ui-sm-12">
+      <div class="form-group col-lg-4 col-md-6 col-sm-12">
         <label for="town">Grad</label>
-        <p-autoComplete [suggestions]="cities"
+        <p-autoComplete
+          inputId="town"
+          [suggestions]="cities"
           (completeMethod)="searchForCity($event)"
           (onSelect)="onCitySelected($event)"
           class="auto-complete"
@@ -141,11 +146,13 @@
           </div>
         </div>
       </div>
-      <div class="form-group ui-lg-2 ui-md-6 ui-sm-12">
+      <div class="form-group col-lg-2 col-md-6 col-sm-12">
         <label for="zip">Post kod</label>
-        <p-inputMask id="zip" class="auto-complete"
-        formControlName="post"
-        mask="9999?9999"
+        <p-inputMask
+          inputId="zip"
+          class="auto-complete"
+          formControlName="post"
+          mask="9999?9999"
         ></p-inputMask>
         <div *ngIf="!signUpForm.get('post').valid && signUpForm.get('post').touched ">
           <div class="error" *ngIf="signUpForm.get('post').errors['required']" >
@@ -158,7 +165,7 @@
     <!-- Broj Faksa -->
 
     <!-- Prepraviti disabled -->
-      <div class="ui-g ui-md-12 ui-sm-12" style="padding-top: 15px;">
+      <div class="" style="padding-top: 15px;">
         <button class="btn bttn-primary" [disabled]="!signUpForm.valid" style="color: white;min-width: 100%;" type="submit">
           Sačuvaj izmene
         </button>

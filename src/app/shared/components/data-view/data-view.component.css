@@ -165,14 +165,23 @@
 .buyBttn > div > button:hover {
   background-image: linear-gradient(to bottom,#69d469 0,#47aa47 100%);
 }
-.buyBttn > div /deep/ .ui-inputtext {
+.buyBttn > div /deep/ .p-inputtext {
   border-radius: 0px 0px 0px 8px;
   padding: 9px;
-  width: 140px;
+  width: 90px;
+  font-size: 14px;
+  height: 40px;
 }
-.buyBttn > div /deep/ .ui-inputtext:enabled:focus:not(.ui-state-error){
+.buyBttn > div /deep/ .p-inputnumber-button-group .p-inputnumber-button .p-button-icon{
+  font-size: 14px;
+}
+.buyBttn > div /deep/ .p-inputnumber-button-group .p-inputnumber-button{
+  width: 40px;
+}
+.buyBttn > div /deep/ .p-inputtext:enabled:focus:not(.p-state-error){
   box-shadow: 0 0 0 0em #8dcdff;
 }
+
 .buyBttn:hover > div {
   -webkit-transform: translateY(0%);
   transform: translateY(0%);

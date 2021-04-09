@@ -1,0 +1,83 @@
+<div class="m-container">
+  <div *ngIf="!selectable" class="p-d-flex p-ai-center p-jc-between p-mb-4">
+    <h4 class="h p-mb-2">Proizvodi</h4>
+    <div>
+      <!-- dodati action dugmad -->
+    </div>
+  </div>
+  <div *ngIf="selectable" class="p-d-flex p-ai-center p-jc-between p-mb-4">
+    <h5 class="h p-mb-2">Izaberite proizvode</h5>
+    <div>
+      <button class="bt primary" (click)="saveSelected()">
+        <i class="fas fa-check"></i>
+        Potvrdi
+      </button>
+      <button class="bt secondary p-ml-2" (click)="discardSelected()">
+        <i class="fas fa-hand-paper"></i>
+        Poništi
+      </button>
+    </div>
+  </div>
+  <p-table [value]="articles" selectionMode="{{selectable ? 'multiple' : ''}}" [(selection)]="selectedProducts" (onRowSelect)="onRowSelect($event)">
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 40px;">
+          Slika
+        </th>
+        <th pSortableColumn="article_code">
+          Sifra
+          <p-sortIcon field="article_code"></p-sortIcon>
+        </th>
+        <th pSortableColumn="article_name" colspan="3">
+          Naziva artikla
+          <p-sortIcon field="article_name"></p-sortIcon>
+          <p-columnFilter type="text" field="article_name" display="menu"></p-columnFilter>
+        </th>
+        <th pSortableColumn="att.producer_info.producer_name">
+          Proizvođač
+          <p-sortIcon field="att.producer_info.producer_name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="att.sub_category" colspan="2">
+          Kategorija
+          <p-sortIcon field="att.sub_category"></p-sortIcon>
+        </th>
+        <th pSortableColumn="price">
+          MP Cena
+          <p-sortIcon field="price"></p-sortIcon>
+        </th>
+        <th>
+          Na stanju
+          <p-sortIcon field="price"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-att let-rowIndex="rowIndex">
+      <tr [pSelectableRow]="att" [pSelectableRowIndex]="rowIndex">
+        <td>
+          <div style="width: 30px;">
+            <img style="max-width: 100%; max-height: 60px;" *ngIf="att.profile_picture !== null"
+              src="{{att.profile_picture}}"
+              alt="">
+          </div>
+        </td>
+        <td>{{att.article_code}}</td>
+        <td colspan="3">{{att.article_name}}</td>
+        <td>{{att.producer_info.producer_name}}</td>
+        <td colspan="2">{{att.sub_category}}</td>
+        <td>{{att.price}} din.</td>
+        <td></td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <tr>
+        <td colspan="10">
+          <p-paginator #top [rows]="20"
+            [totalRecords]="count"
+            (onPageChange)="changePage($event)"
+            >
+        </p-paginator>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

@@ -13,30 +13,30 @@
   text-align: left;
 }
 
-.content /deep/ .ui-accordion-toggle-icon {
+.content /deep/ .p-accordion-toggle-icon {
   display: none;
 }
-.content /deep/ .ui-accordion-header /deep/ a {
+.content /deep/ .p-accordion-header /deep/ a {
   text-decoration: none;
 }
-.content /deep/ .ui-accordion-header /deep/ a:focus {
+.content /deep/ .p-accordion-header /deep/ a:focus {
   box-shadow: 0 0 0 0px blue;
 }
 
 .content {
   margin-bottom: 10px;
 }
-.content /deep/ .ui-table /deep/ .ui-table-wrapper{
+.content /deep/ .p-datatable /deep/ .p-datatable-wrapper{
   font-family: 'Roboto';
 }
-.content /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tbody > tr > td{
+.content /deep/ .p-datatable /deep/ .p-datatable-wrapper /deep/ .p-datatable-tbody > tr > td{
   padding: 4px 5px  !important;
   font-size: 10px;
 }
-.content /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tbody > tr > td:last-child{
+.content /deep/ .p-datatable /deep/ .p-datatable-wrapper /deep/ .p-datatable-tbody > tr > td:last-child{
   text-align: right;
 }
-.content /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-thead > tr > th{
+.content /deep/ .p-datatable /deep/ .p-datatable-wrapper /deep/ .p-datatable-thead > tr > th{
   border:1px solid #005b9f;
   background-color: #007ad9;
   color: white;
@@ -46,25 +46,25 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.content /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tfoot > tr > td{
+.content /deep/ .p-datatable /deep/ .p-datatable-wrapper /deep/ .p-datatable-tfoot > tr > td{
   padding: 8px 5px;
-  font-size: 11px;
+  font-size: 12px;
 }
-.content /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tfoot > tr > td:last-child{
+.content /deep/ .p-datatable /deep/ .p-datatable-wrapper /deep/ .p-datatable-tfoot > tr > td:last-child{
   text-align: right;
 }
-.content /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tfoot > tr:last-child > td:last-child{
+.content /deep/ .p-datatable /deep/ .p-datatable-wrapper /deep/ .p-datatable-tfoot > tr:last-child > td:last-child{
   color: #489f48;
 }
 
 @media screen and (min-width: 740px) {
-  .content /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tfoot > tr > td{
+  .content /deep/ .p-datatable /deep/ .p-datatable-wrapper /deep/ .p-datatable-tfoot > tr > td{
     font-size: 12px;
   }
-  .content /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-thead > tr > th{
+  .content /deep/ .p-datatable /deep/ .p-datatable-wrapper /deep/ .p-datatable-thead > tr > th{
     font-size: 13px;
   }
-  .content /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tbody > tr > td{
+  .content /deep/ .p-datatable /deep/ .p-datatable-wrapper /deep/ .p-datatable-tbody > tr > td{
     font-size: 12px;
   }
 }

@@ -8,3 +8,8 @@ input.ng-invalid.ng-touched {
   justify-content: space-between;
   padding-right: 20px;
 }
+
+label{
+  margin-bottom: 2px;
+  font-size: 13px;
+}

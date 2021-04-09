@@ -125,19 +125,19 @@
 {
   border-color: #007BFF;
 }
-:host /deep/ .ui-inputtext:enabled:hover:not(.ui-state-error){
+:host /deep/ .p-inputtext:enabled:hover:not(.ui-state-error){
   border-color: white;
 }
-:host /deep/ .ui-inputtext:enabled:active:not(.ui-state-error){
+:host /deep/ .p-inputtext:enabled:active:not(.ui-state-error){
   border-color: #007BFF;
 }
 
-:host /deep/ .ui-inputtext:enabled:focus:not(.ui-state-error) {
+:host /deep/ .p-inputtext:enabled:focus:not(.ui-state-error) {
   outline: 0 none;
   outline-offset: 0;
   box-shadow: 0 0 0 0.0rem #007ad9;
   border-color: #007BFF;
 }
-:host /deep/ p-inputmask .ng-dirty.ng-invalid > .ui-inputtext {
+:host /deep/ p-inputmask .ng-dirty.ng-invalid > .p-inputtext {
   border: 0px !important;
 }

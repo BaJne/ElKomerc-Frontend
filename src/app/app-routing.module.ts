@@ -23,6 +23,10 @@ import { CartComponent } from './ui/main/cart/cart.component';
 import { AdminGuard } from './ui/admin/admin-guard.service';
 import { AdminComponent } from './ui/admin/admin.component';
 import { AdminDashboardComponent } from './ui/admin/admin-dashboard/admin-dashboard.component';
+import { ShelfComponent } from './shared/components/shelf/shelf.component';
+import { ShelfEditComponent } from './ui/admin/shelf-edit/shelf-edit.component';
+import { ShelfOverviewComponent } from './ui/admin/shelf-overview/shelf-overview.component';
+import { AdminProductsComponent } from './ui/admin/admin-products/admin-products.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/products', pathMatch: 'full' },
@@ -32,7 +36,10 @@ const routes: Routes = [
 
   { path: 'admin', component: AdminComponent, children: [
     { path: 'dashboard', component: AdminDashboardComponent},
-    { path: 'orders', component: AdminOrdersComponent}
+    { path: 'orders', component: AdminOrdersComponent},
+    { path: 'products', component: AdminProductsComponent},
+    { path: 'shelf', component: ShelfOverviewComponent },
+    { path: 'shelf-edit/:id', component: ShelfEditComponent }
   ]},
   { path: 'login', component: AuthenticationComponent, children: [
     { path: 'sign-in', component: SignInComponent},
@@ -59,7 +66,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

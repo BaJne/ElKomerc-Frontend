@@ -1,0 +1,13 @@
+
+.m-container > div > input {
+  width: 400px;
+  padding: 5px 10px;
+  font-family: 'Roboto-light';
+  border: 2px solid var(--admin);
+  /* border-radius: 7px; */
+  font-size: 15px;
+}
+
+.m-container > div > input:focus-visible{
+  outline: 0px solid black;
+}

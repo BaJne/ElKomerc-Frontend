@@ -1,6 +1,6 @@
-
+import { Producer } from './producer.model';
 export interface Artical {
-  id: number;
+  id?: number;
   article_code: string;
   article_name: string;
   profile_picture: string;
@@ -8,17 +8,13 @@ export interface Artical {
   user_discount?: number;
   price: number;
 
-  isOnWishList: boolean;
+  isOnWishList?: boolean;
 
-  article_rate: number;
+  article_rate?: number;
   number_of_rates?: number;
 
   uri?: string;
-  producer_info?: {
-    producer_name: string;
-​​    profile_image: string;
-    uri: string;
-  };
+  producer_info?: Producer;
   attributes?: {
     attribute_name: string;
     value: string;
@@ -28,6 +24,7 @@ export interface Artical {
     uri: string;
     purpose?: string;
   }[];
+  sub_category?: string;        // KABLOVI->(PPY | PP/R | PP/L | PPJ) Instalacioni
   comments?: {
     comment_id: number;
     user: string;

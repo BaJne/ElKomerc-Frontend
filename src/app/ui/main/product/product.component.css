@@ -30,10 +30,12 @@
   top: 30px;
 }
 .backLink{
-  font-size: 11px;
-  padding-right: 7px;
+  font-size: 14px;
   text-decoration: none;
   cursor: pointer;
+}
+.backLink i {
+  padding-right: 4px;
 }
 
  /* Status  */
@@ -47,9 +49,9 @@
 .product-status span{
   display: inline-flex;
   align-items: center;
-  padding: 4px;
+  padding: 4px 10px;
   margin-right: 8px;
-  font-size: 11px;
+  font-size: 12px;
   border-radius: 5px;
   font-weight: 600;
 }
@@ -57,14 +59,24 @@
   padding-right: 5px;
   font-size: 14px;
 }
+
 .positive{
-  background-color: #44aa74;
+  background-color: #9adf9c;
+  color:#224a23;
 }
+
+.info{
+  background-color: #aae1fa;
+  color: #044896;
+}
+
 .negative{
   background-color: #f797a1;
 }
+
 .warning{
   background-color: #ffe399;
+  color:#6d5100;
 }
 
  /* Komentari */
@@ -104,7 +116,7 @@
   flex-direction: column;
 }
 .comment-content{
-  font-size: 11px;
+  font-size: 12px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   padding: 5px;
   margin-bottom: 0px;
@@ -156,19 +168,35 @@
   margin-top: 15px;
   display: flex;
 }
-:host /deep/ .product-order .ui-spinner-input{
-  padding: 8px 34px 8px 8px !important;
-  width: 100px;
+:host /deep/ .product-order .p-inputnumber-button{
+  width: 40px;
+  background-color: #0078de;
+  border: 0px;
 }
-:host /deep/ .product-order .ui-inputtext:enabled:focus:not(.ui-state-error){
+:host /deep/ .product-order .p-inputnumber-button .pi{
+  font-size: 13px;
+}
+:host /deep/ .product-order .p-inputnumber-button:hover{
+  background-color: #0052AA;
+}
+:host /deep/ .product-order .p-inputtext{
+  padding-left: 12px;
+  padding: 8px 10px 8px 8px !important;
+  width: 100px;
+  height: 40px;
+  font-size: 14px;
+}
+:host /deep/ .product-order .p-inputtext:enabled:focus:not(.p-state-error){
   box-shadow: none;
 }
 .product-order button{
   font-family: 'Roboto-bold';
   width: 100%;
+  border-radius: 3px;
   margin-left: 5px;
   padding-top: 10px;
   padding-bottom: 10px;
+  font-size: 14px;
 }
 
 .product-spec-min{
@@ -176,29 +204,29 @@
 }
 
 .product-spec-min /deep/ .content{
-  border-color: #e8e8e8;
+  border-color: #f1f1f1da !important;
   border-width: 2px 0px 0px 0px;
 }
 .product-spec-min /deep/ ul a li {
   padding: 10px 12px;
-  font-size: 12px;
+  font-size: 14px;
   margin-right: 2px;
   margin-bottom: 1px;
 }
 .product-spec-min /deep/ ul a li:not(.active){
-  background-color: #e8e8e8 !important;
+  background-color: #f1f1f1da !important;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
   color: #333;
 }
-.table /deep/ .ui-table{
+.table /deep/ .p-datatable{
   margin-top: 15px
 }
-.table /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tbody > tr > td{
+.table /deep/ .p-datatable /deep/ .p-datatable-wrapper /deep/ .p-datatable-tbody > tr > td{
   padding: 6px 10px  !important;
   font-size: 13px;
 }
-.table /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-thead > tr > th{
+.table /deep/ .p-datatable /deep/ .p-datatable-wrapper /deep/ .p-datatable-thead > tr > th{
   border:1px solid rgb(85, 85, 85);
   background-color: #c8c8c8;
   /* color: white; */

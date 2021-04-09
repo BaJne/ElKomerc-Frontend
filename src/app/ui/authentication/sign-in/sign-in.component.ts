@@ -22,7 +22,7 @@ export class SignInComponent implements OnInit, OnDestroy {
     private router: Router
   ) { }
 
-  // Razmisliti dali je potrebno uvesti odgovarajuce ogranicenje ukoliko neko pokusa mnogo puta da se loguje!
+  // TODO Razmisliti dali je potrebno uvesti odgovarajuce ogranicenje ukoliko neko pokusa mnogo puta da se loguje!
   ngOnInit() {
     this.returnSub = this.transitService.logInLink.subscribe(l => {
       this.returnPage = l;
@@ -40,17 +40,15 @@ export class SignInComponent implements OnInit, OnDestroy {
     const e = form.value.email;
     const p = form.value.password;
 
-    // TODO Potrebno vratiti na stranicu sa koje je otisao
     this.authService.signin(e, p).subscribe((responseData) => {
       this.isLoading = false;
-      // if (responseData.is_stuff) {
-      //   this.router.navigate(['/admin/dashboard']);
-      // } else {
-      //   this.router.navigate([this.returnPage]);
-      // }
-      if (this.returnPage !== null) {
+      if (responseData.is_stuff) {
+        this.router.navigate(['/admin/dashboard']);
+      }
+      else if (this.returnPage !== null) {
         this.router.navigate([this.returnPage]);
-      } else {
+      }
+      else {
         this.router.navigate(['/home']);
       }
     }, (errMessage) => {

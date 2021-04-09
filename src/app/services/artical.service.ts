@@ -42,11 +42,13 @@ export class ArticalService implements OnDestroy {
       this.idToDisplay = this.articalToDisplay.value.id;
       this.toPay = +JSON.parse(localStorage.getItem('toPay'));
     }
-    if (JSON.parse(localStorage.getItem('cart')) === null) {
+
+    const tempCart = JSON.parse(localStorage.getItem('cart'));
+    if ( tempCart === null) {
       this.cart.next([]);
       this.toPay = 0;
     } else {
-      this.cart.next(JSON.parse(localStorage.getItem('cart')));
+      this.cart.next(tempCart);
     }
   }
   ngOnDestroy() {
@@ -102,6 +104,7 @@ export class ArticalService implements OnDestroy {
       localStorage.setItem('toDisplay', JSON.stringify(this.articalToDisplay.value));
     });
   }
+
   // Metoda kojom se prosledjuje artikal radi ispisivanja njegovih detalja
   setArticalToDisplay(a: Artical) {
     this.idToDisplay = a.id;
@@ -118,6 +121,7 @@ export class ArticalService implements OnDestroy {
       ).pipe(take(1))
     );
   }
+
   // Dohvati Artikal po ID
   getArtical(id: number) {
     this.idToDisplay = id;

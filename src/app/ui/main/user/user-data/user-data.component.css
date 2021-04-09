@@ -6,23 +6,27 @@
 .myForm{
   min-width: 100%;
 }
-.auto-complete /deep/ .ui-widget{
+.auto-complete /deep/ .p-autocomplete-items {
+  font-size: 13px;
+}
+.auto-complete /deep/ .p-autocomplete {
   width: 100%;
 }
-.auto-complete /deep/ .ui-inputtext{
+.auto-complete /deep/ .p-inputtext{
   height: 34px;
   padding: 6px 12px;
   font-size: 14px;
   line-height: 1.42857143;
   border: 1px solid #ccc;
+  width: 100%;
   border-radius: 4px;
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
   transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
-.auto-complete /deep/ .ui-inputtext:enabled:hover:not(.ui-state-error) {
+.auto-complete /deep/ .p-inputtext:enabled:hover:not(.p-state-error) {
   border-color: #ccc;
 }
-.auto-complete /deep/ .ui-inputtext:enabled:focus:not(.ui-state-error){
+.auto-complete /deep/ .p-inputtext:enabled:focus:not(.p-state-error){
   border-color: #66afe9;
   outline: 0;
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
@@ -100,4 +104,13 @@
   font-size: 20px;
   color: #06203a;
   width: 100%;
+}
+
+.error{
+  padding-top: 4px;
+  color: rgb(255, 145, 145);
+  text-align: left;
+}
+input.ng-invalid.ng-touched {
+  border-color: rgb(255, 145, 145);
 }

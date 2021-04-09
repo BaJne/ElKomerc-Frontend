@@ -10,7 +10,6 @@ import { GalleryComponent } from './shared/components/gallery/gallery.component'
 // Primeface components
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {InputMaskModule} from 'primeng/inputmask';
-import {SpinnerModule} from 'primeng/spinner';
 import {SidebarModule} from 'primeng/sidebar';
 import {CarouselModule} from 'primeng/carousel';
 import {DropdownModule} from 'primeng/dropdown';
@@ -27,6 +26,13 @@ import {TooltipModule} from 'primeng/tooltip';
 import {PanelModule} from 'primeng/panel';
 import {ChartModule} from 'primeng/chart';
 import {GMapModule} from 'primeng/gmap';
+import {RippleModule} from 'primeng/ripple';
+import {InputNumberModule} from 'primeng/inputnumber';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import {ConfirmPopupModule} from 'primeng/confirmpopup';
+import {SliderModule} from 'primeng/slider';
+import {TabMenuModule} from 'primeng/tabmenu';
 
 import { ProducerService } from './services/producer.service';
 import { AppRoutingModule } from './app-routing.module';
@@ -69,7 +75,10 @@ import { AdminDashboardComponent } from './ui/admin/admin-dashboard/admin-dashbo
 import { AdminOrdersComponent } from './ui/admin/admin-orders/admin-orders.component';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 import { FooterComponent } from './ui/footer/footer.component';
-
+import { ShelfComponent } from './shared/components/shelf/shelf.component';
+import { ShelfOverviewComponent } from './ui/admin/shelf-overview/shelf-overview.component';
+import { ShelfEditComponent } from './ui/admin/shelf-edit/shelf-edit.component';
+import { AdminProductsComponent } from './ui/admin/admin-products/admin-products.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -110,7 +119,11 @@ import { FooterComponent } from './ui/footer/footer.component';
     AdminDashboardComponent,
     SidebarComponent,
     AdminOrdersComponent,
-    FooterComponent
+    FooterComponent,
+    ShelfComponent,
+    ShelfOverviewComponent,
+    ShelfEditComponent,
+    AdminProductsComponent
   ],
   imports: [
     AutoCompleteModule,
@@ -129,7 +142,7 @@ import { FooterComponent } from './ui/footer/footer.component';
     OverlayPanelModule,
     PaginatorModule,
     SidebarModule,
-    SpinnerModule,
+    InputNumberModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -137,7 +150,13 @@ import { FooterComponent } from './ui/footer/footer.component';
     AppRoutingModule,
     HttpClientModule,
     ChartModule,
-    GMapModule
+    GMapModule,
+    RippleModule,
+    MessageModule,
+    MessagesModule,
+    ConfirmPopupModule,
+    SliderModule,
+    TabMenuModule
   ],
   providers: [
     ProducerService

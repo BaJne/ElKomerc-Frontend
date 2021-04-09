@@ -212,8 +212,8 @@ export class AuthService {
       userUpdate,
       {headers: header}
     ).subscribe(responseData => {
-      // Proveriti koje sve greske ovde mogu da se jave
-      // Azurirati usera
+      // TODO Proveriti koje sve greske ovde mogu da se jave
+      // TODO Azurirati usera
       this.user.value.details = {
         profile_image: responseData.profile_image,
         address: responseData.address,

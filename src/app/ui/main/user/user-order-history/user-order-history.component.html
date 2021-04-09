@@ -7,17 +7,17 @@
     <p-accordion [multiple]="false">
         <p-accordionTab *ngFor="let item of orders">
           <p-header>
-            <div class="ui-g item-head">
-              <div class="ui-md-1 ui-sm-2">
+            <div class="row item-head">
+              <div class="col-lg-3 col-md-3 col-sm-12">
                 #{{item.id}}
               </div>
-              <div class="ui-md-4 ui-sm-10">
+              <div class="col-lg-3 col-md-3 col-sm-12">
                 {{item.status}}
               </div>
-              <div class="ui-md-4 ui-sm-12">
+              <div class="col-lg-3 col-md-3 col-sm-12">
                 {{item.time_created | date}}
               </div>
-              <div class="ui-md-3 ui-sm-12">
+              <div class="col-lg-3 col-md-3 col-sm-12">
                 {{item.total_cost}} din.
               </div>
             </div>

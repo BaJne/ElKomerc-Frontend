@@ -108,7 +108,7 @@ h5 {
 }
 .cartTable /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tfoot > tr > td{
   padding: 8px 5px;
-  font-size: 11px;
+  font-size: 12px;
 }
 .cartTable /deep/ .ui-table /deep/ .ui-table-wrapper /deep/ .ui-table-tfoot > tr > td:last-child{
   text-align: right;

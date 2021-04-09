@@ -163,21 +163,25 @@ a:hover {
   background-color: #23527C;
 }
 
-#shoppingChart /deep/ .ui-overlaypanel-content {
+#shoppingChart /deep/ .p-overlaypanel-content {
   border-color: #23527C;
   padding: 0px;
   z-index: 3000;
 }
-#shoppingChart /deep/ .ui-overlaypanel {
+#shoppingChart /deep/ .p-component{
+  font-size: 14px;
+}
+
+#shoppingChart /deep/ .p-overlaypanel {
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
-#shoppingChart /deep/ .ui-scrollpanel-content {
+#shoppingChart /deep/ .p-scrollpanel-content {
   height: 100%;
   width: 100%;
   padding: 0px;
 }
-.scroll /deep/.ui-scrollpanel-content {
+.scroll /deep/.p-scrollpanel-content {
   width: calc(100% + 18px) !important;
   overflow-x: hidden;
 }

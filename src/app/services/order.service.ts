@@ -1,5 +1,5 @@
 import { ArticalService } from './artical.service';
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Order, OrderPreview } from '../models/order.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Globals } from './globals';
@@ -7,6 +7,7 @@ import { MessageService } from './message.service';
 import { messagetype } from '../models/message.model';
 import { take, map } from 'rxjs/operators';
 
+// TODO ERROR handling
 @Injectable({ providedIn: 'root' })
 export class OrderService {
   constructor(
@@ -14,9 +15,7 @@ export class OrderService {
     private http: HttpClient,
     private messageService: MessageService,
     private globals: Globals
-  ) {
-
-  }
+  ) {}
 
   makeOrder(
     token: string,
@@ -45,7 +44,10 @@ export class OrderService {
       });
     });
   }
+
   getOrders(token: string) {
+    console.log(token);
+
     const header = new HttpHeaders()
       .append('Authorization', 'JWT ' + token);
     return this.http.get(
@@ -53,12 +55,13 @@ export class OrderService {
       '/api/product/payments/order/',
       {headers: header}
     ).pipe(
-    take(1),
-    map(data => {
-      let orders: OrderPreview[] = [];
-      console.log(data);
-      orders = data['results'];
-      return orders;
-    }));
+      take(1),
+      map(data => {
+        let orders: OrderPreview[] = [];
+        orders = data['results'];
+        return orders;
+      })
+    );
   }
+
 }

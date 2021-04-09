@@ -63,6 +63,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   openedTab = 0;
   selectedCategory = 0;
   artCount = 0;
+  paginatorState = 0;
 
   categorySubscription: Subscription;
 
@@ -97,6 +98,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
       }
       this.user = u;
     });
+
     if (this.header.nativeElement.getBoundingClientRect().width <= 630) {
       this.isSmallHeader = true;
       this.renderer.addClass(this.header.nativeElement, 'header-min');
@@ -160,6 +162,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
   // Updejtovanje kategorija i prikaza
   selectGroup(index: number) {
+    this.resetPaginators();
     this.showProducers = !this.showProducers;
     this.searchFiledCategories = null;
     if (index !== -1) {
@@ -186,10 +189,12 @@ export class CategoryComponent implements OnInit, OnDestroy {
       page: this.topPag.getPage()
     });
   }
+
   // Test
   onCategorySwitch(id: number) {
     this.openedTab = id;
   }
+
   onSubCategorySelect(id: any) {
     this.isWindowSmall = false;
     this.onResizeWindow();
@@ -206,11 +211,13 @@ export class CategoryComponent implements OnInit, OnDestroy {
     this.selectedCategory = this.openedTab;
     this.saveContext();
   }
+
   clearFeatureList() {
     if (this.selectedValues.length === 0) { return; }
     this.selectedValues = [];
     this.onFeatureChange();
   }
+
   onFeatureChange() {
     this.getArticals(this.selectedSubcategory, this.selectedValues, 1, this.selectedProducer);
   }
@@ -223,38 +230,28 @@ export class CategoryComponent implements OnInit, OnDestroy {
     this.bottomPag.updatePageLinks();
     this.bottomPag.updatePaginatorState();
   }
-  topPageChange(event, isUpdate: boolean) {
-    if (isUpdate) {
-      this.botPageChange(event, false);
+
+  topPageChange(event) {
+    if(this.paginatorState === 0){
+      this.saveContext();
+      this.getArticals(this.selectedSubcategory, [], event.page + 1, this.selectedProducer);
+      this.paginatorState = 1;
+      this.bottomPag.changePage(this.topPag.getPage());
     } else {
-      const pc = this.topPag.getPageCount();
-      const p = event.page;
-      if (p >= 0 && p < pc) {
-        this.topPag._first = this.topPag.rows * p;
-        this.topPag.updatePageLinks();
-        this.topPag.updatePaginatorState();
-      }
-      return;
+      this.paginatorState = 0;
     }
-    this.saveContext();
-    this.getArticals(this.selectedSubcategory, [], event.page + 1, this.selectedProducer);
   }
-  botPageChange(event, isUpdate: boolean) {
-    if (isUpdate) {
-      this.topPageChange(event, false);
+
+  botPageChange(event) {
+    if(this.paginatorState === 0){
+      this.saveContext();
+      this.getArticals(this.selectedSubcategory, [], event.page + 1, this.selectedProducer);
+      setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 200);
+      this.paginatorState = 2;
+      this.topPag.changePage(this.bottomPag.getPage());
     } else {
-      const pc = this.bottomPag.getPageCount();
-      const p = event.page;
-      if (p >= 0 && p < pc) {
-        this.bottomPag._first = this.bottomPag.rows * p;
-        this.bottomPag.updatePageLinks();
-        this.bottomPag.updatePaginatorState();
-      }
-      return;
+      this.paginatorState = 0;
     }
-    this.saveContext();
-    this.getArticals(this.selectedSubcategory, [], event.page + 1, this.selectedProducer);
-    setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 200);
   }
 
   // ARTICLES

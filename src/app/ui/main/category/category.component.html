@@ -48,14 +48,14 @@
               <span *ngIf="selectedProducer === null" >Izaberite grupu</span>
             </span>
 
-            <img *ngIf="selectedProducer !== null" src="{{selectedProducer.producer_icon}}">
+            <img *ngIf="selectedProducer !== null" src="{{selectedProducer.profile_image}}">
             <span id="producerName" *ngIf="selectedProducer !== null">{{selectedProducer.producer_name}}</span>
             <i *ngIf="selectedProducer !== null" (click)="(selectGroup(-1))" class="far fa-window-close right" id="closeGroup"></i>
           </div>
 
           <div class="header-right">
             <p-dropdown [options]="filter" [(ngModel)]="selectedFilter" placeholder="--Sortiraj po--"></p-dropdown>
-            <p-paginator #top [rows]="20" [totalRecords]="artCount" (onPageChange)="topPageChange($event, true)" ></p-paginator>
+            <p-paginator #top [rows]="20" [totalRecords]="artCount" (onPageChange)="topPageChange($event)" class="my-paginator"></p-paginator>
           </div>
 
         </div>
@@ -67,7 +67,7 @@
         <h4>Rezultat pretrage ne sadrži nijedan proizvod</h4>
       </div>
 
-      <p-sidebar [(visible)]="display"  position="right">
+      <p-sidebar [(visible)]="display"  position="right" class="my-sidebar">
         <button class="btn btn-primary" (click)="clearFeatureList()" >
           <i class="fas fa-broom"></i>
           Očisti filter
@@ -98,7 +98,7 @@
       <div class="header-search" style="transition: all;transition-duration: 300ms;"
        [ngStyle]="{'opacity': ( articals!== undefined && artCount > 20 && showBottomPag)? '1':'0'}">
         <div class="header-container" [ngStyle]="{'visibility': (showBottomPag)? 'visible':'hidden'}">
-          <p-paginator #bottom [rows]="20" [alwaysShow]="false" [totalRecords]="artCount" (onPageChange)="botPageChange($event, true)"></p-paginator>
+          <p-paginator class="my-paginator" #bottom [rows]="20" [alwaysShow]="false" [totalRecords]="artCount" (onPageChange)="botPageChange($event)"></p-paginator>
         </div>
       </div>
     </div>

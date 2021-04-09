@@ -1,17 +1,18 @@
-import { MenuItem } from 'primeng/api';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { MenuItem, PrimeNGConfig } from 'primeng/api';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
-export class AdminComponent implements OnInit, AfterViewInit {
+export class AdminComponent implements OnInit {
   items: MenuItem[];
-  constructor() { }
+
+  constructor(private primengConfig: PrimeNGConfig) { }
 
   ngOnInit(): void {
+    this.primengConfig.ripple = true;
     this.items = [
       {
         label: 'DashBoard',
@@ -28,10 +29,25 @@ export class AdminComponent implements OnInit, AfterViewInit {
         //   {label: 'New', icon: 'pi pi-fw pi-plus'},
         //   {label: 'Download', icon: 'pi pi-fw pi-download'}
         // ]
+      },
+      {
+        label: 'Proizvodi',
+        icon: 'fas fas fa-tags',
+        routerLink: 'products'
+      },
+      {
+        label: 'Police',
+        icon: 'fas fas fa-columns',
+        items: [
+          {label: 'Pregled', icon: 'fas fa-search', routerLink: 'shelf'},
+          {label: 'Napravi', icon: 'fas fa-plus', routerLink: 'shelf-edit/new'}
+        ]
       }
+
     ];
   }
-  ngAfterViewInit() {
+
+  /*ngAfterViewInit() {
     const buttons = document.querySelectorAll('a');
     buttons.forEach(btn => {
       btn.addEventListener('mousedown', (e) => {
@@ -47,5 +63,5 @@ export class AdminComponent implements OnInit, AfterViewInit {
         }, 400);
       });
     });
-  }
+  }*/
 }

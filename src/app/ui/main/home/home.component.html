@@ -1,12 +1,14 @@
-<div>
-  <p-carousel [value]="pictures" [autoplayInterval]="3000" [circular]="true">
-    <p-header>
-        <h3>Vertical</h3>
-    </p-header>
-    <ng-template let-car pTemplate="item">
-        <div style="height:300px;background-color:red;width: 350px;margin-right: auto;margin-left: auto;">{{car}}</div>
+<div class="carousel-back">
+  <p-carousel [value]="carouselData" [autoplayInterval]="3000" [circular]="true">
+    <ng-template let-item pTemplate="item">
+        <div class="content" [ngStyle]="{'background-image': item.picture}"></div>
     </ng-template>
   </p-carousel>
 </div>
+
+<div *ngFor="let shelf of shelves">
+  <app-shelf [data]="shelf"></app-shelf>
+</div>
+
 <!-- Ovde dolazi footer -->
 

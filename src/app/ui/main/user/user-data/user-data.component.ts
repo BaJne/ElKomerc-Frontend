@@ -60,9 +60,9 @@ export class UserDataComponent implements OnInit, OnDestroy {
 
       if (this.user.details.account_type === 'USR') {
         this.signUpForm.controls['person'].setValue({
-          name: this.user.details.first_name,
-          lastName: this.user.details.last_name,
-          birthDate: this.user.details.date_of_birth
+          name: this.user.details.first_name === undefined ? '': this.user.details.first_name,
+          lastName: this.user.details.last_name === undefined ? '': this.user.details.last_name,
+          birthDate: this.user.details.date_of_birth === undefined ? '': this.user.details.date_of_birth
         });
         this.signUpForm.get('company').disable();
       } else {

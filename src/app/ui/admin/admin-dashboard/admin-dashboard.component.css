@@ -89,9 +89,10 @@
 }
 
 /* Statistics */
-.statistic /deep/ .ui-panel .ui-panel-titlebar {
+.statistic /deep/ .p-panel .p-panel-header {
   background-color: #ffb78d;
+  color: white;
   border-color: #ba6b10;
-  padding: 0px 8px;
+  padding: 4px 15px;
   font-family: 'Roboto-midium';
 }

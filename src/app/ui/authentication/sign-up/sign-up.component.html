@@ -143,11 +143,11 @@
     <!-- Broj Faksa -->
     <div class="labelLink">
       <label for="fax-num">Broj faksa</label>
-      <p-inputMask id="fax-num"
+      <p-inputMask inputId="fax-num"
                    formControlName="fax"
                    mask="(999) 999-999?9"
                    placeholder="(011) 555-555?5"
-                   class="pAutoComplete"
+                   class="no-border-radius my-p-input"
       ></p-inputMask>
     </div>
 
@@ -168,13 +168,14 @@
       </div>
     </div>
     <!-- Grad -->
-    <div class="labelLink pAutoComplete">
+    <div class="labelLink">
       <label for="town" class="required-label" >Grad</label>
       <p-autoComplete [suggestions]="cities"
                       (completeMethod)="searchForCity($event)"
                       (onSelect)="onCitySelected($event)"
                       formControlName="city"
-                      id="town"
+                      inputId="town"
+                      class="pAutocomplete"
       ></p-autoComplete>
       <div *ngIf="!signUpForm.get('city').valid && signUpForm.get('city').touched ">
         <div class="error" *ngIf="signUpForm.get('city').errors['required']" >
@@ -191,11 +192,11 @@
     <!-- Telefon -->
     <div class="labelLink">
       <label for="phone" class="required-label">Telefon</label>
-      <p-inputMask id="phone"
+      <p-inputMask inputId="phone"
                    formControlName="phone"
                    mask="(999) 999-999?9"
                    placeholder="(011) 555-555?5"
-                   class="pAutoComplete"
+                   class="my-p-input no-border-radius"
       ></p-inputMask>
       <div class="error" *ngIf="!signUpForm.get('phone').valid && signUpForm.get('phone').touched ">
           Morate popuniti ovo polje.
@@ -204,10 +205,10 @@
     <!-- Post broj -->
     <div class="labelLink">
       <label for="zip" class="required-label" >Post kod</label>
-      <p-inputMask id="zip"
+      <p-inputMask inputId="zip"
                    formControlName="post"
                    mask="9999?9999"
-                   class="pAutoComplete"
+                   class="my-p-input no-border-radius"
       ></p-inputMask>
       <div *ngIf="!signUpForm.get('post').valid && signUpForm.get('post').touched ">
         <div class="error" *ngIf="signUpForm.get('post').errors['required']" >
@@ -237,7 +238,7 @@
                    formControlName="pib"
                    mask="999999999"
                    placeholder="10000001 do 999999999"
-                   class="pAutoComplete"
+                   class="no-border-radius my-p-input"
       ></p-inputMask>
         <div *ngIf="!signUpForm.get('company.pib').valid && signUpForm.get('company.pib').touched ">
           <div class="error" *ngIf="signUpForm.get('company.pib').errors['required']" >

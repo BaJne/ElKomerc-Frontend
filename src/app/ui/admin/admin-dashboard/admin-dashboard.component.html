@@ -1,7 +1,7 @@
-<div class="ui-g">
-  <div class="dash-items ui-g ui-sm-12 ui-md-12 ui-lg-12">
+<div class="p-grid" style="padding: 10px 15px;">
+  <div class="dash-items p-grid p-sm-12 p-md-12 p-lg-12">
 
-    <div class="ui-xl-4 ui-lg-4 ui-md-4 ui-sm-12">
+    <div class="p-xl-4 p-lg-4 p-md-4 p-sm-12">
       <div id="first" class="dash-item ">
         <div class="banner"></div>
           <div class="icon">
@@ -18,7 +18,7 @@
         </div>
       </div>
     </div>
-    <div class="ui-xl-4 ui-lg-4 ui-md-4 ui-sm-12">
+    <div class="p-xl-4 p-lg-4 p-md-4 p-sm-12">
       <div id="second" class="dash-item ">
         <div class="banner"></div>
           <div class="icon">
@@ -35,7 +35,7 @@
         </div>
       </div>
     </div>
-    <div class="ui-xl-4 ui-lg-4 ui-md-4 ui-sm-12">
+    <div class="p-xl-4 p-lg-4 p-md-4 p-sm-12">
       <div id="third" class="dash-item ">
         <div class="banner"></div>
           <div class="icon">
@@ -54,16 +54,16 @@
     </div>
 
   </div>
-  <div class="statistic ui-sm-12 ui-md-12 ui-lg-12">
+  <div class="statistic p-sm-12 p-md-12 p-lg-12">
     <p-panel>
       <p-header>
         <h5>Pregled statistike</h5>
       </p-header>
-      <div class="ui-g">
-        <div class="ui-lg-8 ui-md-8 ui-sm-12">
+      <div class="p-grid">
+        <div class="p-lg-8 p-md-8 p-sm-12">
           <p-chart type="line" showDelay="12" [data]="sales"></p-chart>
         </div>
-        <div class="ui-lg-4 ui-md-4 ui-sm-12" style="">
+        <div class="p-lg-4 p-md-4 p-sm-12">
           <p-chart type="pie" [data]="orderStatistic"></p-chart>
         </div>
       </div>

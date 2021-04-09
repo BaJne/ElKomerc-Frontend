@@ -1,0 +1,162 @@
+
+.items{
+  width: 100%;
+  display: grid;
+  gap:5px;
+  grid-template-columns: repeat(auto-fill, 270px);
+}
+
+.item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  overflow: hidden;
+  border-radius: 8px;
+  cursor: pointer;
+  height: 270px;
+  background: url('../../../../assets/img/ishelf.jpg') no-repeat;
+  background-size: 270px 270px;
+  transition: all 200ms;
+}
+
+.item:hover{
+  -webkit-box-shadow: -1px 1px 7px 3px rgba(209,202,209,1);
+  -moz-box-shadow: -1px 1px 7px 3px rgba(209,202,209,1);
+  box-shadow: -1px 1px 7px 3px rgba(209,202,209,1);
+}
+.item #name{
+  display: grid;
+  color: #333;
+  font-weight: bold;
+  padding: 15px 15px 8px 15px;
+  font-size: 16px;
+  text-align: left;
+  text-overflow: ellipsis;
+}
+.item #name span{
+  margin-top: auto;
+  margin-bottom: auto;
+  display: block;
+}
+#picture img {
+  max-width: 100%;
+  /* height: auto; */
+  /* height: 250px; */
+  height: 270px;
+  padding: 5px;
+}
+
+/* PROC */
+.proc{
+  text-align: left;
+  padding: 12px 0px 0px 30px;
+}
+
+.proc > span {
+  font-size: 16px;
+  font-family: 'Roboto-midium';
+}
+
+.procDesc{
+  text-align: left;
+  padding: 3px 0px 0px 30px;
+}
+
+.procDesc > span {
+  font-size: 12px;
+  font-family: 'Roboto-midium';
+}
+
+/* COUNT */
+.count{
+  margin-top: 40px;
+  text-align: left;
+  padding: 0px 0px 0px 30px;
+}
+
+.count > span {
+  font-size: 16px;
+  font-family: 'Roboto-midium';
+}
+
+.countDesc{
+  text-align: left;
+  padding: 7px 0px 0px 30px;
+}
+
+.countDesc > span {
+  font-size: 12px;
+  font-family: 'Roboto-midium';
+}
+
+/* TITLE */
+
+.title{
+  text-align: left;
+  margin-top: 46px;
+  padding: 0px 0px 0px 30px;
+}
+
+.title > span{
+  font-size: 17px;
+  font-family: 'Roboto-midium';
+}
+
+.titleDesc{
+  text-align: left;
+  padding: 0px 0px 0px 30px;
+}
+
+.titleDesc > span{
+  font-size: 12px;
+  font-family: 'Roboto-midium';
+}
+
+
+.modify,
+.remove{
+  position: absolute;
+  font-size: 16px;
+  padding: 10px;
+  top: 10px;
+  transition: all 200ms;
+}
+
+.modify{
+  right: 35px;
+}
+
+.remove{
+  right: 10px;
+}
+
+.modify:hover{
+  rotate: 15deg;
+  color: rgb(185, 162, 99);
+}
+.remove:hover{
+  color: #f15d5d;
+}
+
+.overlay /deep/ .p-overlaypanel-content{
+  width: 400px;
+}
+.m-table /deep/ .p-datatable .p-datatable-tbody > tr > td{
+  font-size: 13px;
+}
+.m-table /deep/ .p-datatable .p-datatable-thead > tr > th {
+  font-size: 14px;
+}
+
+.m-table /deep/ .p-datatable /deep/ .p-paginator button{
+  font-size: 14px;
+}
+
+.m-table /deep/ .p-datatable /deep/ .p-paginator button .p-paginator-icon{
+  font-size: 14px;
+}
+
+.product-image{
+  width: 50px;
+}

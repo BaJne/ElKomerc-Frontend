@@ -22,6 +22,7 @@ export interface OrderPreview {
   attribute_notes: string;
   city: string;
   id: number;
+  email?: string;
   items: {
     id: number;
     article_id: number;
@@ -30,15 +31,14 @@ export interface OrderPreview {
     user_discount: number;
     number_of_pieces: number;
     article_price: number;
-    price: number;
     reject_comment: string;
     unit_of_measure: string;
     payment_order_id: string;
   }[];
   method_of_payment: string;
-  note: string;​​​
+  note: string;
   status: string;
-  time_created: Date;​
-  total_cost: number;​​​
+  time_created: Date;
+  total_cost: number;
   zip_code: string;
 }

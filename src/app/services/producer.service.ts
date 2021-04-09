@@ -20,7 +20,7 @@ export class ProducerService {
             id: obj.id,
             producer_name: obj.producer_name,
             uri: obj.uri,
-            producer_icon: obj.profile_image,
+            profile_image: obj.profile_image,
             sub_categories_id: []
           };
 

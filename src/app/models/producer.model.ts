@@ -1,7 +1,7 @@
 export interface Producer {
-  id: number;
   producer_name: string;
   uri: string;
-  producer_icon: string;
+  profile_image: string;
+  id?: number;
   sub_categories_id?: number[];
 }
