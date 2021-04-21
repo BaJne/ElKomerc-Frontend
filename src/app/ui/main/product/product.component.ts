@@ -32,7 +32,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute
   ) { }
-
+// TODO UKOLIKO ID OD ARTIKLA NIJE DOBAR LOADER SE VRTI BESKRAJNO
   ngOnInit() {
     this.userSub = this.authService.user.subscribe(u => {
       this.user = u;

@@ -158,6 +158,101 @@
   cursor: not-allowed;
 }
 
+/* TABLE */
+ .content .body /deep/ .p-datatable /deep/ .p-datatable-wrapper{
+  font-family: 'Roboto';
+}
+/* .content .body /deep/ .p-datatable /deep/ .p-datatable-wrapper /deep/ .p-datatable-tbody > tr > td{
+  padding: 4px 5px  !important;
+  font-size: 10px;
+}
+.content .body /deep/ .p-datatable /deep/ .p-datatable-wrapper /deep/ .p-datatable-tbody > tr > td:last-child{
+  text-align: right;
+}  */
+.content .body /deep/ .p-datatable .p-datatable-thead > tr{
+  font-family: 'Roboto-light' !important;
+}
+.content .body /deep/ .p-datatable .p-datatable-thead > tr > th{
+  /* border:1px solid #005b9f; */
+  background-color: var(--orange-300);
+  border-color: var(--orange-400);
+  color: #37371F;
+  font-size: 14px;
+}
+.content .body /deep/ .p-datatable .p-datatable-tbody > tr > td{
+  font-family: 'Roboto-light';
+  font-size: 14px;
+  padding: 6px 10px;
+}
+
+.content .body /deep/ .p-datatable .p-sortable-column-icon{
+  color: #37371F;
+}
+
+.content .body /deep/ .p-datatable .p-datatable-thead > tr > th.p-highlight .p-sortable-column-icon,
+.content .body /deep/ .p-datatable .p-datatable-thead > tr > th.p-highlight{
+  color: #ffffff;
+}
+.content .body /deep/ .p-datatable .p-datatable-thead > tr > th.p-highlight,
+.content .body /deep/ .p-datatable .p-sortable-column:hover{
+  background-color: var(--orange-400);
+}
+.content .body /deep/ .p-datatable .p-sortable-column:focus{
+  box-shadow: none;
+}
+
+.content .body /deep/ .p-datatable .p-datatable-tfoot > tr > td{
+  border-color: var(--orange-400);
+  padding: 0px;
+}
+
+.content .body /deep/ .p-datatable .p-datatable-tfoot > tr > td .p-paginator{
+  padding: 8px 0px;
+}
+
+.content .body /deep/ .p-datatable .p-datatable-tfoot > tr > td .p-paginator .p-paginator-page.p-highlight{
+  font-size: 13px;
+  font-family: 'Roboto-bold';
+  background-color: var(--orange-300);
+  color: white;
+  box-shadow: none;
+}
+
+.content .body /deep/ .p-tabview .p-tabview-nav {
+  font-size: 15px;
+}
+
+.content .body /deep/ .p-tabview .p-tabview-nav li.p-highlight > .p-tabview-nav-link{
+  color: var(--orange-500);
+  border-color: var(--orange-400)
+}
+.content .body /deep/ .p-tabview .p-tabview-nav .p-tabview-nav-link{
+  box-shadow: none;
+}
+.content .body /deep/ .p-tabview .p-tabview-nav .p-tabview-nav-link .p-tabview-left-icon{
+  font-size: 14px;
+}
+
+.body /deep/.p-togglebutton.p-button{
+  font-size: 16px;
+}
+.body /deep/.p-togglebutton.p-button:focus{
+  box-shadow: none;
+}
+.body /deep/.p-togglebutton.p-button.p-highlight{
+  background-color: var(--orange-500);
+  border-color: var(--orange-600);
+  color: white;
+}
+
+.body /deep/.p-togglebutton.p-button.p-button-icon-only{
+  width: 35px;
+  padding: 6px 0px;
+}
+.body /deep/.p-togglebutton .p-button-icon{
+  font-size:16px
+}
+
 @media screen and (min-width: 700px) {
   .main{
     display: grid;

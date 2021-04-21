@@ -27,6 +27,7 @@ import { ShelfComponent } from './shared/components/shelf/shelf.component';
 import { ShelfEditComponent } from './ui/admin/shelf-edit/shelf-edit.component';
 import { ShelfOverviewComponent } from './ui/admin/shelf-overview/shelf-overview.component';
 import { AdminProductsComponent } from './ui/admin/admin-products/admin-products.component';
+import { AdminOrderPreviewComponent } from './ui/admin/admin-order-preview/admin-order-preview.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/products', pathMatch: 'full' },
@@ -37,6 +38,7 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent, children: [
     { path: 'dashboard', component: AdminDashboardComponent},
     { path: 'orders', component: AdminOrdersComponent},
+    { path: 'order/:id', component: AdminOrderPreviewComponent},
     { path: 'products', component: AdminProductsComponent},
     { path: 'shelf', component: ShelfOverviewComponent },
     { path: 'shelf-edit/:id', component: ShelfEditComponent }

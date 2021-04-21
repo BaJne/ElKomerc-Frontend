@@ -7,7 +7,9 @@ import {MenuItem} from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { OrderService } from '../../../services/order.service';
-import { PaymentItem } from '../../../models/order.model';
+import { PaymentItemCreate } from '../../../models/order.model';
+import { MessageService } from '../../../services/message.service';
+import { messagetype } from '../../../models/message.model';
 
 @Component({
   selector: 'app-order',
@@ -37,6 +39,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private articalService: ArticalService,
+    private messageService: MessageService,
     private orderService: OrderService,
     private router: Router
   ) { }
@@ -50,6 +53,7 @@ export class OrderComponent implements OnInit, OnDestroy {
       this.city = this.user.details.city;
       this.post = this.user.details.zip_code;
     });
+
     this.cartSub = this.articalService.cart.subscribe(c => {
       if(c.length === 0) {
         this.router.navigate(['/home']);
@@ -57,12 +61,14 @@ export class OrderComponent implements OnInit, OnDestroy {
       this.cart = c;
       this.toPay = this.articalService.toPay;
     });
+
     this.items = [
       {label: 'Adresa dostave'},
       {label: 'Način dostave'},
       {label: 'Način plaćanja'},
       {label: 'Pregled narudžbine'}
     ];
+
     const data = JSON.parse(localStorage.getItem('orderProggress'));
     if (data !== null) {
       this.address = data.address;
@@ -72,13 +78,14 @@ export class OrderComponent implements OnInit, OnDestroy {
       this.activeIndex = data.activeIndex;
       this.agree = data.agree;
     }
-
   }
+
   ngOnDestroy() {
     this.logSub.unsubscribe();
     this.cartSub.unsubscribe();
     localStorage.removeItem('orderProggress');
   }
+
   proceed() {
     if (this.activeIndex === 0 && (this.post === '' || this.address === '' || this.city === '')) {
       this.error = true;
@@ -88,30 +95,51 @@ export class OrderComponent implements OnInit, OnDestroy {
       if (!this.agree) {
         return;
       }
-      const paymentItems: PaymentItem[] = [];
+      const paymentItems: PaymentItemCreate[] = [];
+
       this.cart.forEach(value => {
-        const p: PaymentItem = {
+        const p: PaymentItemCreate = {
           article_id: value.art.id,
           number_of_pieces: value.num,
-          item_attributes: []
+          article_attributes: "[]"
         };
         paymentItems.push(p);
       });
+
       this.orderService.makeOrder(
         this.user.token,
         {
           address: this.address,
+          phone: this.user.details.phone_number,
           city: this.city,
           zip_code: this.post,
-          method_of_payment: 'PS',
-          note: this.note,
+          method_of_payment: 0,
+          comment: this.note,
           payment_items: paymentItems
         }
+      ).subscribe(data => {
+          this.messageService.sendMessage({
+            key: '',
+            text: 'Narudžbina je uspešno kreirana.',
+            type: messagetype.succes
+          });
+
+          this.articalService.clearCart();
+          this.router.navigate(['/user/orders']);
+        },
+        error => {
+          console.log(error);
+
+          this.messageService.sendMessage({
+            key: '',
+            text: 'Narudžbina nije uspešno kreirana. Molimo pokušajte kasnije',
+            type: messagetype.err
+          });
+        }
       );
-      this.articalService.clearCart();
-      this.router.navigate(['/user/orders']);
       return;
     }
+
     this.error = false;
     this.activeIndex++;
     localStorage.setItem('orderProggress', JSON.stringify({
@@ -123,9 +151,11 @@ export class OrderComponent implements OnInit, OnDestroy {
       agree : this.agree
     }));
   }
+
   back() {
     this.activeIndex--;
   }
+
   change(i: number) {
     if (i < this.activeIndex) {
       this.activeIndex = i;

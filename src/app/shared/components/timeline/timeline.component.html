@@ -1,0 +1,18 @@
+<div class="timeline">
+
+  <div *ngFor="let event of events" class="container"
+     [ngClass]="{'left': event.isLeft === true,'right': event.isLeft === false}">
+
+    <div class="date" [ngStyle]="{'color': 'var('+event.color+'700)'}">{{event.time | date}}</div>
+    <i class="icon {{event.icon}}"
+      [ngStyle]="{'background-color': 'var('+event.color+'400)', 'color': 'var('+event.color+'100'}"></i>
+    <div class="content" [ngStyle]="{'background-color': 'var('+event.color+'100)'}" >
+      <h2 [ngStyle]="{'color': 'var('+event.color+'800)'}">{{event.title}}</h2>
+      <p [ngStyle]="{'color': 'var('+event.color+'700)'}">
+        “ {{event.message}} ”
+      </p>
+    </div>
+
+  </div>
+
+</div>

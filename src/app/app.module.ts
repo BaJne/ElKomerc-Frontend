@@ -32,7 +32,8 @@ import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import {ConfirmPopupModule} from 'primeng/confirmpopup';
 import {SliderModule} from 'primeng/slider';
-import {TabMenuModule} from 'primeng/tabmenu';
+import {TabViewModule} from 'primeng/tabview';
+import {TimelineModule} from 'primeng/timeline';
 
 import { ProducerService } from './services/producer.service';
 import { AppRoutingModule } from './app-routing.module';
@@ -79,6 +80,8 @@ import { ShelfComponent } from './shared/components/shelf/shelf.component';
 import { ShelfOverviewComponent } from './ui/admin/shelf-overview/shelf-overview.component';
 import { ShelfEditComponent } from './ui/admin/shelf-edit/shelf-edit.component';
 import { AdminProductsComponent } from './ui/admin/admin-products/admin-products.component';
+import { AdminOrderPreviewComponent } from './ui/admin/admin-order-preview/admin-order-preview.component';
+import { TimelineComponent } from './shared/components/timeline/timeline.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -123,7 +126,9 @@ import { AdminProductsComponent } from './ui/admin/admin-products/admin-products
     ShelfComponent,
     ShelfOverviewComponent,
     ShelfEditComponent,
-    AdminProductsComponent
+    AdminProductsComponent,
+    AdminOrderPreviewComponent,
+    TimelineComponent
   ],
   imports: [
     AutoCompleteModule,
@@ -156,7 +161,8 @@ import { AdminProductsComponent } from './ui/admin/admin-products/admin-products
     MessagesModule,
     ConfirmPopupModule,
     SliderModule,
-    TabMenuModule
+    TabViewModule,
+    TimelineModule
   ],
   providers: [
     ProducerService

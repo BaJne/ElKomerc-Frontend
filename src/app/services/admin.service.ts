@@ -7,7 +7,7 @@ import { map} from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from './auth.service';
 import { User } from '../models/user.model';
-import { OrderService } from './order.service';
+import { OrderService, OrderSortBundle } from './order.service';
 
 @Injectable({ providedIn: 'root' })
 export class AdminService implements OnDestroy{
@@ -130,8 +130,16 @@ export class AdminService implements OnDestroy{
   }
 
   // ORDERS API
-  getOrders(){
-    return this.orderService.getOrders(this.user?.token);
+  // TODO ADD ALL PARAMETRES FOR SORTING AND FILTERING...
+  // TODO MAKE BETTER DESIGN
+  // DEFINE ALL FUNCTIONALITIES
+  getOrders(bundle: OrderSortBundle){
+    console.log(this.user?.token);
+    return this.orderService.getOrders(this.user?.token, bundle);
+  }
+
+  getOrderDetails(id: number){
+    return this.orderService.getOrder(id, this.user?.token);
   }
 
 }

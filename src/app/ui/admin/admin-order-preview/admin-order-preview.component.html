@@ -1,0 +1,178 @@
+<div class="products-header">
+  <h4 class="p-ml-4">
+    Narudžbina
+    <span *ngIf="order !== null">#{{order.id}}</span>
+  </h4>
+
+  <button class="bt secondary p-mr-5" >
+    <i class="fas fa-hammer"></i>
+    Interval
+  </button>
+</div>
+
+<div id="h_tabs" class="p-mt-4 p-mx-4" *ngIf="order !== null">
+  <div id="tabs" class="m-container">
+
+    <p-tabView>
+      <p-tabPanel header="Detalji narudžbine" leftIcon="fas fa-shipping-fast">
+        <div class="data-details">
+          <div>Datum podnošenja narudžbine</div>
+          <div>{{ order.time_created | date}}</div>
+          <div>Datum poslednje modifikacije</div>
+          <div>{{ order.time_modified | date}}</div>
+          <div>Adresa dostave</div>
+          <div>{{ order.address + ', ' + order.zip_code + ' ' + order.city }}</div>
+          <div>Način plaćanja</div>
+          <div>{{ order.method_of_payment }}</div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="Kupac" leftIcon="fas fa-user">
+        <div class="data-details">
+          <div>Korisnik</div>
+          <div>{{ order.full_name }}</div>
+          <div>Email</div>
+          <div>{{ order.email }}</div>
+          <div>Telefon</div>
+          <div>{{ order.phone }}</div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="Istorijat"  leftIcon="far fa-calendar-alt" [selected]="true">
+        <app-timeline [events]="commentHistory"></app-timeline>
+      </p-tabPanel>
+    </p-tabView>
+
+  </div>
+
+  <div id="payment_details" class="m-container">
+    <span id="payment_title">Vrednost narudžbine</span>
+    <table id="payment_details_table">
+      <tr>
+        <td>Vrednost robe</td>
+        <td class="up" style="color: #333">{{order.total_cost | number : '1.2-2'}} din.</td>
+      </tr>
+      <tr>
+        <td class="light">Popust</td>
+        <td class="light">0 %</td>
+      </tr>
+      <tr>
+        <td>Porez(20%)</td>
+        <td>{{order.total_cost * 20 / 100 | number : '1.2-2'}} din.</td>
+      </tr>
+      <tr>
+        <td>Troškovi dostave</td>
+        <td>{{ 500 | number : '1.2-2'}} din.</td>
+      </tr>
+      <tr>
+        <td class="p-pb-0">Sve ukupno</td>
+        <td class="p-pb-0 correct up">{{order.total_cost + order.total_cost * 20 / 100 + 500 | number : '1.2-2'}} din.</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="m-container" *ngIf="order !== null">
+  <div class="p-mb-3 p-d-flex p-jc-between p-ai-center">
+    <h5 class="h p-m-0">Proizvodi</h5>
+    <p-toggleButton styleClass="m"
+        onIcon="fas fa-eye"
+        offIcon="fas fa-eye-slash"
+        iconPos="left"
+        offLabel="Prikazi izmene"
+        onLabel="Sakrij izmene"
+        [(ngModel)]="showChanges">
+    </p-toggleButton>
+  </div>
+
+  <p-table [value]="items.nodes" >
+    <ng-template pTemplate="header">
+      <tr>
+        <th colspan="3">Naziva artikla</th>
+        <th colspan="2">MP Cena</th>
+        <th>Popust</th>
+        <th>Količina</th>
+        <th>Mera</th>
+        <th colspan="2">Ukupno</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-art>
+      <tr *ngIf="(showChanges===true && art.state.state === 3)" class="not-valid">
+        <td colspan="3">{{art.items.name.old_value}}</td>
+        <td colspan="2">{{art.items.price.old_value}} din.</td>
+        <td>-{{art.items.discount.old_value}}%</td>
+        <td>{{art.items.count.old_value}}</td>
+        <td>{{art.items.measure.old_value}}</td>
+        <td colspan="2">
+          {{
+            (art.items.price.old_value - (art.items.price.old_value * art.items.discount.old_value/100)) *
+            art.items.count.old_value
+            | number : '1.2-2'}} din.
+        </td>
+      </tr>
+
+      <tr class="changed" *ngIf="art.state.state === 2">
+        <td colspan="3">
+          <span *ngIf="(showChanges===true && art.items.name.old_value !== art.items.name.value)">
+            {{art.items.name.old_value}}
+          </span>
+          {{art.items.name.value}}
+        </td>
+        <td colspan="2">
+          <span *ngIf="(showChanges===true && art.items.price.old_value !== art.items.price.value)">
+            {{art.items.price.old_value}}
+          </span>
+          {{art.items.price.value}} din.
+        </td>
+        <td>
+          -
+          <span *ngIf="(showChanges===true && art.items.discount.old_value !== art.items.discount.value)">
+            {{art.items.discount.old_value}}
+          </span>
+          {{art.items.discount.value}}%
+        </td>
+        <td>
+          <span *ngIf="(showChanges===true && art.items.count.old_value !== art.items.count.value)">
+            {{art.items.count.old_value}}
+          </span>
+          {{art.items.count.value}}
+        </td>
+        <td>
+          <span *ngIf="(showChanges===true && art.items.measure.old_value !== art.items.measure.value)">
+            {{art.items.measure.old_value}}
+          </span>
+          {{art.items.measure.value}}
+        </td>
+        <td colspan="2">
+          <span *ngIf="(showChanges===true &&
+           ((art.items.price.old_value - (art.items.price.old_value * art.items.discount.old_value/100)) * art.items.count.old_value) !==
+           ((art.items.price.value - (art.items.price.value * art.items.discount.value/100)) * art.items.count.value))">
+          {{
+            (art.items.price.old_value - (art.items.price.old_value * art.items.discount.old_value/100)) *
+            art.items.count.old_value
+            | number : '1.2-2'}}
+          </span>
+          {{
+            (art.items.price.value - (art.items.price.value * art.items.discount.value/100)) *
+            art.items.count.value
+            | number : '1.2-2'}} din.
+        </td>
+      </tr>
+
+      <tr *ngIf="(art.state.state === 0 || art.state.state === 1)" [ngClass]="{'valid': (art.state.state === 1 && showChanges===true)}">
+        <td colspan="3">{{art.items.name.value}}</td>
+        <td colspan="2">{{art.items.price.value}} din.</td>
+        <td>-{{art.items.discount.value}}%</td>
+        <td>{{art.items.count.value}}</td>
+        <td>{{art.items.measure.value}}</td>
+        <td colspan="2">
+          {{
+            (art.items.price.value - (art.items.price.value * art.items.discount.value/100)) *
+            art.items.count.value
+            | number : '1.2-2'}} din.
+        </td>
+      </tr>
+
+
+    </ng-template>
+  </p-table>
+
+</div>

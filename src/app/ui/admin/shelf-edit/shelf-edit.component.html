@@ -49,8 +49,8 @@
 
   <div *ngIf="!isAddingArticles">
     <hr>
-    <div class="p-d-flex p-jc-between p-ai-center">
-      <h5 class="h p-m-b-1">Proizvodi</h5>
+    <div class="p-mb-3 p-d-flex p-jc-between p-ai-center">
+      <h5 class="h p-mb-0">Proizvodi</h5>
       <a (click)="isAddingArticles = true">Dodajte proizvode</a>
     </div>
     <p-messages *ngIf="articles.length <= 0" severity="warn" class="m-info">

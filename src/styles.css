@@ -8,6 +8,10 @@
   font-family: Roboto;
 }
 @font-face {
+  src: url('assets/fonts/Roboto/Roboto-LightItalic.ttf');
+  font-family: Roboto-light-italic;
+}
+@font-face {
   src: url('assets/fonts/Roboto/Roboto-Light.ttf');
   font-family: Roboto-light;
 }

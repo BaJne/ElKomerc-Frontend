@@ -17,50 +17,103 @@
   </button>
 </div>
 <div class="m-container">
-  <p-tabMenu [model]="items" [activeItem]="items[0]"></p-tabMenu>
-  <p-table [value]="orders">
+  <p-tabView>
+    <p-tabPanel header="U obradi" leftIcon="fas fa-home">
+    </p-tabPanel>
+    <p-tabPanel header="Odbijene" leftIcon="far fa-calendar">
+    </p-tabPanel>
+    <p-tabPanel header="Sve" leftIcon="fas fa-pencil-ruler">
+    </p-tabPanel>
+  </p-tabView>
+
+  <div class="p-mt-3"></div>
+
+  <p-table [value]="orders" (sortFunction)="sort($event)" [customSort]="customSort">
     <ng-template pTemplate="header">
       <tr>
-        <th pSortableColumn="article_code">
+        <th pSortableColumn="id">
           ID Narudžbine
-          <p-sortIcon field="article_code"></p-sortIcon>
+          <p-sortIcon field="id"></p-sortIcon>
         </th>
-        <th pSortableColumn="article_name">
+        <th pSortableColumn="full_name">
           Kupac
-          <p-sortIcon field="article_name"></p-sortIcon>
-          <p-columnFilter type="text" field="article_name" display="menu"></p-columnFilter>
+          <p-sortIcon field="full_name"></p-sortIcon>
+          <p-columnFilter type="text" field="full_name" display="menu"></p-columnFilter>
         </th>
-        <th pSortableColumn="price">
+        <th pSortableColumn="time_created">
           Datum porudžbine
-          <p-sortIcon field="price"></p-sortIcon>
+          <p-sortIcon field="time_created"></p-sortIcon>
         </th>
-        <th pSortableColumn="att.sub_category">
+        <th pSortableColumn="time_modified">
+          Zadnja modifikacija
+          <p-sortIcon field="time_modified"></p-sortIcon>
+        </th>
+        <th pSortableColumn="total_cost">
           Vrednost narudžbine
-          <p-sortIcon field="att.sub_category"></p-sortIcon>
+          <p-sortIcon field="total_cost"></p-sortIcon>
+          <p-columnFilter field="total_cost" matchMode="between" display="menu" [showMatchModes]="false"
+               [showOperator]="false" [showAddButton]="false">
+
+            <ng-template pTemplate="filter" let-filter="filterCallback">
+                <p-slider [ngModel]="activityValues" [range]="true" (onSlideEnd)="filter($event.values*900000/100)" styleClass="p-m-3"></p-slider>
+                <div class="p-d-flex p-ai-center p-jc-between p-px-2">
+                    <span>{{activityValues[0]}}</span>
+                    <span>{{activityValues[1]}}</span>
+                </div>
+            </ng-template>
+        </p-columnFilter>
         </th>
-        <th pSortableColumn="att.producer_info.producer_name">
+        <th pSortableColumn="status">
           Status
-          <p-sortIcon field="att.producer_info.producer_name"></p-sortIcon>
+          <p-sortIcon field="status"></p-sortIcon>
+          <p-columnFilter field="status" matchMode="equals" display="menu"
+             [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)"
+                  optionLabel="text" placeholder="Any">
+                    <ng-template let-option pTemplate="item">
+                        <span class="status"
+                          [ngStyle]="{'color': 'var('+option.color+'800)',
+                           'background-color': 'var('+option.color+'100)'}"
+                        >
+                          {{option.text}}
+                        </span>
+                    </ng-template>
+                </p-dropdown>
+            </ng-template>
+        </p-columnFilter>
         </th>
-        <th></th>
+        <th style="width: 70px;"></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-att let-rowIndex="rowIndex">
       <tr [pSelectableRow]="att" [pSelectableRowIndex]="rowIndex">
         <td>{{att.id}}</td>
-        <td>{{att?.email}}</td>
+        <td>{{att.full_name}}</td>
         <td>{{att.time_created | date}}</td>
-        <td>{{att.total_cost}}  din.</td>
-        <td>{{att.status}}</td>
-        <td></td>
+        <td>{{att.time_modified | date}}</td>
+        <td>{{att.total_cost | number : '1.2-2'}}  din.</td>
+        <td>
+          <span class="status"
+           [ngStyle]="{
+            'color': 'var('+statuses[att.status].color+'800)',
+            'background-color': 'var('+statuses[att.status].color+'100)'}"
+          >
+            {{statuses[att.status].text}}
+          </span>
+        </td>
+        <td style="width: 70px;">
+          <button class="bt primary" (click)="previewOrder(att.id)">
+            <i class="fas fa-eye p-p-0" style="width: 16px;" pRipple ></i>
+          </button>
+        </td>
       </tr>
     </ng-template>
     <ng-template pTemplate="footer">
       <tr>
-        <td colspan="6">
-          <p-paginator #top [rows]="20">
-            <!-- [totalRecords]="count"
-            (onPageChange)="changePage($event)"   -->
+        <td colspan="7">
+          <p-paginator #top [rows]="20" [totalRecords]="totalOrders" (onPageChange)="changePage($event)">
           </p-paginator>
         </td>
       </tr>
